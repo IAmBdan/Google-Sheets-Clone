@@ -24,6 +24,8 @@ export const env = createEnv({
     ),
     DISCORD_CLIENT_ID: z.string(),
     DISCORD_CLIENT_SECRET: z.string(),
+    // USERNAME: 
+    // PASSWORD: TODO: need to update the schema here to reflect new environment variables
   },
 
   /**
