@@ -14,3 +14,8 @@ export interface Argument {
     sheet: string;
     id: number;
 }
+
+async function updatePublished({publisher, sheet, id}: Argument): Promise<void> {
+    //
+    
+}
