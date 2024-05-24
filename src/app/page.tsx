@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 // import { getServerAuthSession } from "~/server/auth";
 // import { api } from "~/trpc/server";
 
