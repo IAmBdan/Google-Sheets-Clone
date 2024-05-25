@@ -1,10 +1,11 @@
 import axios from "axios";
 import qs from "qs";
 import base64 from "base-64";
+import "dotenv/config";
 
 // Replace these with your actual username and password
-const username = "testuser";
-const password = "testpassword";
+const username = process.env.USERNAME;
+const password = process.env.PASSWORD;
 
 // Encode the username and password in base64
 const auth = base64.encode(`${username}:${password}`);
