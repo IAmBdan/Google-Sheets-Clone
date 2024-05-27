@@ -1,5 +1,8 @@
-import { Formula } from './formula';
+
+import { Term } from "./term";
+
 
 export interface Cell {
-    value: string | number | Formula | null;
+    ref : string;
+    value: Term;
 }
