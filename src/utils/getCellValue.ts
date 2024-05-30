@@ -12,4 +12,4 @@ export function getCellValue(ref: Ref, sheet: Sheet): Term {
     }
     return value;
 }
-/*
+*/

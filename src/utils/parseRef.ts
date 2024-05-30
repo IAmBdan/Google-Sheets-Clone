@@ -1,5 +1,5 @@
 
-import { Ref } from "types/Ref";
+import { Ref } from "../classes/ref";
 
 export function parseRef(ref: string): Ref {
     const refPattern = /^\$([A-Za-z]+)(\d+)$/;
@@ -11,10 +11,7 @@ export function parseRef(ref: string): Ref {
     const colStr = match[1];
     const rowStr = match[2];
 
-
-    return {
-        dollar: "$",
-        col: colStr.toUpperCase(),
-        row: parseInt(rowStr, 10),
-    };
+    const parsedRef: Ref = new Ref(colStr.toUpperCase(), parseInt(rowStr, 10));
+    
+    return parsedRef;
 }
