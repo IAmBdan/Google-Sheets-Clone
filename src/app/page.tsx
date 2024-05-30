@@ -7,6 +7,8 @@ import Grid from "~/grid";
 import Header from "./header";
 import InputLine from './inputline';
 import ButtonToolbar from './btnmenu';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './login';
 
 export default async function Home() {
   // const hello = await api.post.hello({ text: "from tRPC" });
