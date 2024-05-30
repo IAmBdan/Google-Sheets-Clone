@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { api } from '~/trpc/server';
+import { api } from '../trpc/server';
 import { mockDeep, mockReset, DeepMockProxy } from 'jest-mock-extended';
 
 // Mock Prisma client
