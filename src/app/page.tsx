@@ -16,6 +16,7 @@ export default async function Home() {
 
   return (
     <main className="flex h-full flex-col">
+      <Login />
       <Header />
       <ButtonToolbar/>
       <InputLine />
