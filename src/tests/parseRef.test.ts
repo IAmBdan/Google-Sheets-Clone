@@ -1,5 +1,5 @@
 
-import {parseRef} from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseRef"
+import parseRef from "../utils/parseRef";
 
 describe('parseRef', () => {
     test('parses A correctly', () => { expect(parseRef('$A1')).toEqual({dollar: '$', col: 'A', row: 1});
