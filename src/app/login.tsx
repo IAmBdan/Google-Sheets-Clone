@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import React, { useState } from "react";
+import { TextField, Button, Container, Typography } from "@mui/material";
 
 const Login: React.FC = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // setPassword(event.target.value);
-  };
-
   return (
     <Container maxWidth="xs">
       <Typography variant="h4" component="h1" gutterBottom>
         Login
       </Typography>
-      <form >
+      <form>
         <TextField
           label="Email"
           variant="outlined"
