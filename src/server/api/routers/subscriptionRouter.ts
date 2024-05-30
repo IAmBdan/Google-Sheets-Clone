@@ -8,7 +8,7 @@ export const subscriptionRouter = createTRPCRouter({
   getUpdatesForSubscription: publicProcedure
     .input(z.object({ publisher: z.string(), sheet: z.string(), id: z.string() }))
     .query(async ({ input }) => {
-      const publisher = await prisma.publisher.findUnique({ where: { name: input.publisher } });
+      const publisher = await prisma.publisher.findUnique({ where: { id: input.publisher } });
       if (!publisher) throw new Error('Publisher not found');
 
       const sheet = await prisma.sheet.findUnique({ where: { publisherId_name: { publisherId: publisher.id, name: input.sheet } } });
