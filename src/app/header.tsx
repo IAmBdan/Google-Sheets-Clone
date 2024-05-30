@@ -3,6 +3,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+// Change login button to sign up modal
 const Header: React.FC = () => {
   return (
     <>
