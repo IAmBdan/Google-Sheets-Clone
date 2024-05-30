@@ -1,6 +1,4 @@
 
-export { Ref };
-
 class Ref {
         column: string;
         row: number;
@@ -54,10 +52,6 @@ class Ref {
     setRow(row: number): void {
         this.row = row;
     }
-
-    
-
-    
-
-
 }
+
+export default Ref;
