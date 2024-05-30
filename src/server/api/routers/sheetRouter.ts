@@ -8,7 +8,7 @@ export const sheetRouter = createTRPCRouter({
   createSheet: publicProcedure
     .input(z.object({ publisher: z.string(), sheet: z.string() }))
     .mutation(async ({ input }) => {
-      const publisher = await prisma.publisher.findUnique({ where: { name: input.publisher } });
+      const publisher = await prisma.publisher.findUnique({ where: { id: input.publisher } });
       if (!publisher) throw new Error('Publisher not found');
 
       await prisma.sheet.create({
@@ -16,24 +16,26 @@ export const sheetRouter = createTRPCRouter({
       });
       return { success: true, message: 'Sheet created', value: [] };
     }),
+
   getSheets: publicProcedure
     .input(z.object({ publisher: z.string() }))
     .query(async ({ input }) => {
-      const publisher = await prisma.publisher.findUnique({ where: { name: input.publisher } });
+      const publisher = await prisma.publisher.findUnique({ where: { id: input.publisher } });
       if (!publisher) throw new Error('Publisher not found');
 
       const sheets = await prisma.sheet.findMany({ where: { publisherId: publisher.id } });
       const result = sheets.map(s => ({ publisher: input.publisher, sheet: s.name }));
       return { success: true, message: 'Sheets retrieved', value: result };
     }),
+
   deleteSheet: publicProcedure
     .input(z.object({ publisher: z.string(), sheet: z.string() }))
     .mutation(async ({ input }) => {
-      const publisher = await prisma.publisher.findUnique({ where: { name: input.publisher } });
+      const publisher = await prisma.publisher.findUnique({ where: { id: input.publisher } });
       if (!publisher) throw new Error('Publisher not found');
 
       await prisma.sheet.delete({
-        where: { publisherId_name: { publisherId: publisher.id, name: input.sheet } },
+        where: { id: publisher.id, publisherId: publisher.id, name: input.sheet },
       });
       return { success: true, message: 'Sheet deleted', value: [] };
     }),
