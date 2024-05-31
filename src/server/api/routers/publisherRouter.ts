@@ -11,10 +11,10 @@ type Publisher = {
 export const publisherRouter = createTRPCRouter({
   // Register a publisher
   register: publicProcedure
-    .input(z.object({ name: z.string().nullish() }))
-    .mutation((opts) => {
+    .input(z.object({ name: z.string() }))
+    .mutation(({ input }) => {
       try {
-        console.log(opts);
+        console.log(input.name);
         // console.log(input);
         // await prisma.publisher.create({ data: { name: input.name } });
         return { success: true };
