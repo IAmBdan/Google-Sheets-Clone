@@ -1,4 +1,4 @@
-import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { createCallerFactory, createTRPCRouter } from '../../server/api/trpc'
 import { publisherRouter } from "./routers/publisherRouter";
 import { sheetRouter } from "./routers/sheetRouter";
 import { subscriptionRouter } from "./routers/subscriptionRouter";
