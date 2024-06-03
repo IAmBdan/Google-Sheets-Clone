@@ -2,10 +2,10 @@
 import { Cell } from './cell';
 import { Ref } from './ref';
 import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/term"
-import { stringToNumber } from '/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/stringToNumber'
+import { columnToNumber } from '../utils/columnToNumber'
 
  class Sheet {
-
+//should add name and user and shared users list
     private cells: Cell[][];
 
 
@@ -46,7 +46,7 @@ import { stringToNumber } from '/Users/bdan/Desktop/Computer Engineering/compute
         if (typeof col === "number") {
             columnIndex = col - 1; //adjusts for 1-indexed columns
         } else if (typeof col === "string") {
-            columnIndex = stringToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
+            columnIndex = columnToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
         } else {
             throw new Error("Invalid column type");
         }
@@ -74,8 +74,6 @@ import { stringToNumber } from '/Users/bdan/Desktop/Computer Engineering/compute
         const cell = this.getCell(ref);
         cell.setValue(value);
     }
-
-
 
 
 
