@@ -4,7 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="50c92c23-81d8-4389-a306-3a57b7ee7dab" name="Changes" comment="Deleted original template" />
+    <list default="true" id="50c92c23-81d8-4389-a306-3a57b7ee7dab" name="Changes" comment="Deleted original template">
+      <change afterPath="$PROJECT_DIR$/src/server/api/routers/publisherRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/api/routers/sheetRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/api/routers/subscriptionRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/api/routers/updateRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/api/routers/userRouter.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tests/userRoutes.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/jest.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/jest.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prisma/schema.prisma" beforeDir="false" afterPath="$PROJECT_DIR$/prisma/schema.prisma" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/cell.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/cell.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/ref.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/ref.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/api/root.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/api/root.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/api/routers/post.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tests/parseRef.test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/tests/parseRef.test.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/parseRef.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/parseRef.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,7 +50,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "Merging brian-dev-branch",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -38,6 +60,8 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "show.migrate.to.gradle.popup": "false",
+    "ts.external.directory.path": "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -51,6 +75,8 @@
       <updated>1715874249531</updated>
       <workItem from="1715874252717" duration="552000" />
       <workItem from="1716327186957" duration="605000" />
+      <workItem from="1717428398369" duration="11000" />
+      <workItem from="1717428417711" duration="10000" />
     </task>
     <task id="LOCAL-00001" summary="Deleted original template">
       <option name="closed" value="true" />
