@@ -3,20 +3,29 @@ import { Cell } from './cell';
 import { Ref } from './ref';
 import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/term"
 import { columnToNumber } from '../utils/columnToNumber'
+import { set } from 'zod';
 
  class Sheet {
 //should add name and user and shared users list
     private cells: Cell[][];
+    private title: string;
+    private owner: string;
+    private sharedUsers: string[];
 
 
-
-    constructor(numColumns: number, numRows: number) {
+    constructor(numColumns: number, numRows: number, title: string, owner: string, sharedUsers: string[]) {
         if (numColumns < 1 || numRows < 1) {
             throw new Error("Invalid sheet dimensions");
         }
         this.cells = Array.from({ length: numRows }, () =>
             Array.from({ length: numColumns }, () => new Cell(null))
         );
+        if (title || owner === "") {
+            throw new Error("can't be blank");
+        }
+        this.title = title;
+        this.owner = owner;
+        this.sharedUsers = sharedUsers;
     }
 
     getCell(ref: Ref): Cell {
@@ -75,7 +84,43 @@ import { columnToNumber } from '../utils/columnToNumber'
         cell.setValue(value);
     }
 
+    getAllUsers(): string[] {
+        return [this.owner, ...this.sharedUsers];
+    }
 
+    getOwner(): string {
+        return this.owner;
+    }
+
+    getTitle(): string {
+        return this.title;
+    }
+
+    getSharedUsers(): string[] {
+        return this.sharedUsers;
+    }
+
+    setTitle(title: string): void {
+        if(title !== "")
+        this.title = title;
+    }
+
+    setOwner(owner: string): void {
+        if(owner !== "")
+        this.owner = owner;
+    }
+
+    setSharedUsers(sharedUsers: string[]): void {
+        this.sharedUsers = sharedUsers;
+    }
+
+    addSharedUser(user: string): void {
+        if (user !== "" || user !== this.owner || !this.sharedUsers.includes(user))
+        this.sharedUsers.push(user);
+    }
+    addSharedUsers(users: string[]): void {
+        this.sharedUsers.push(...users);
+    }
 
 }
 
