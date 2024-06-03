@@ -1,7 +1,7 @@
 
 export { Cell };
   
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import Ref from "./ref";
 
     class Cell {
         value: number | string | { formula: string } | null;

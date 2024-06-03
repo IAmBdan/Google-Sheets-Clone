@@ -1,6 +1,4 @@
 
-export { Ref };
-
 class Ref {
         column: string;
         row: number;
