@@ -5,6 +5,7 @@ import Grid from "~/grid";
 import Header from "./header";
 import InputLine from "./inputline";
 import ButtonToolbar from "./btnmenu";
+import Dashboard from "./dashboard";
 
 export default async function Home() {
   const data = await api.publisher.getPublishers();
@@ -15,6 +16,7 @@ export default async function Home() {
   return (
     <main className="flex h-full flex-col">
       <Header />
+      <Dashboard />
       <ButtonToolbar />
       <InputLine />
       <Grid numColumns={26} numRows={100} />
