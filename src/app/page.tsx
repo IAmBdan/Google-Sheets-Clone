@@ -1,4 +1,3 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { api } from "~/trpc/server";
 import axios from "axios";
 
