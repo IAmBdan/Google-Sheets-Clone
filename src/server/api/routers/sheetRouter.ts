@@ -5,6 +5,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export const sheetRouter = createTRPCRouter({
+  // Giastina
+  getAll: publicProcedure.query(async () => {
+    const sheets = await prisma.sheet.findMany();
+    const result = sheets.map(s => ({ publisher: s.publisherId, name: s.name }));
+    return { success: true, message: 'Sheets', value: result };
+  }),
+
   createSheet: publicProcedure
     .input(z.object({ publisher: z.string(), sheet: z.string() }))
     .mutation(async ({ input }) => {
