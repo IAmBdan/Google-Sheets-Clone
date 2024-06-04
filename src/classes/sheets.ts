@@ -3,29 +3,32 @@ import { Cell } from './cell';
 import { Ref } from './ref';
 import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/term"
 import { columnToNumber } from '../utils/columnToNumber'
-import { set } from 'zod';
+import { Publisher } from '~/server/tests/testGetPublishers';
 
- class Sheet {
+
+ export class Sheet {
 //should add name and user and shared users list
     private cells: Cell[][];
-    private title: string;
-    private owner: string;
-    private sharedUsers: string[];
+    private sheetTitle: string;
+    private publisher: Publisher;
+    private sharedUsers: Publisher[];
+    private sheetID: number;
 
 
-    constructor(numColumns: number, numRows: number, title: string, owner: string, sharedUsers: string[]) {
+    constructor(numColumns: number, numRows: number, sheetTitle: string, publisher: Publisher, sharedUsers: Publisher[]){
         if (numColumns < 1 || numRows < 1) {
             throw new Error("Invalid sheet dimensions");
         }
         this.cells = Array.from({ length: numRows }, () =>
             Array.from({ length: numColumns }, () => new Cell(null))
         );
-        if (title || owner === "") {
+        if (sheetTitle === "") {
             throw new Error("can't be blank");
         }
-        this.title = title;
-        this.owner = owner;
+        this.sheetTitle = sheetTitle;
+        this.publisher = new Publisher(publisher.name, publisher.id, publisher.sheets);
         this.sharedUsers = sharedUsers;
+        this.sheetID = NaN;
     }
 
     getCell(ref: Ref): Cell {
@@ -122,6 +125,12 @@ import { set } from 'zod';
         this.sharedUsers.push(...users);
     }
 
+    getCellValueWithRef(ref: Ref): any {
+        return this.getCell(ref).getValue();
+    }
+    getCellValueWithCoords(col: number | string, row: number): any {
+        return this.getCellByCoords(col, row).getValue();
+    }
 }
 
 

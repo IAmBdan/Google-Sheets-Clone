@@ -1,5 +1,5 @@
 
-class Ref {
+export class Ref {
         column: string;
         row: number;
 
