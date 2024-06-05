@@ -1,5 +1,5 @@
 
-import { columnToNumber } from '../utils/columnToNumber';
+import { columnToNumber } from '../../utils/columnToNumber';
 
 describe('columnToNumber', () => {
     test('A to 1', () => {

@@ -1,5 +1,5 @@
 
-import { numberToColumnLabel } from '../utils/numberToColumnLabel';
+import { numberToColumnLabel } from '../../utils/numberToColumnLabel';
 
 describe('numberToColumnLabel', () => {
     test('1 to A', () => {

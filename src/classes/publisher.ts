@@ -1,14 +1,15 @@
-import { Sheet } from "./sheets";
+import { hasSpecialChar } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/hasSpecialChar";
+import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets"
 
-class publisher {
+export class Publisher {
     name: string;
     id: number;
     sheets: Sheet[];
 
     constructor(name: string, id: number, sheets: Sheet[]) {
-        if(name === undefined || id === undefined || sheets === undefined) throw new Error("Invalid parameters");
+        if(name === undefined || hasSpecialChar(name)) throw new Error("Invalid name");
         this.name = name; 
-        if(id < 0) throw new Error("Invalid id");
+        if(id < 0 || id === (Infinity || -Infinity) || Number.isNaN(id)) throw new Error("Invalid id");
         this.id = id;
         this.sheets = sheets;
     }

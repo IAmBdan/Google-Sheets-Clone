@@ -1,4 +1,4 @@
-import { Ref } from "~/classes/ref";
+import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
 
 
 export function parseRef(ref: string): Ref {
