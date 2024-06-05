@@ -1,9 +1,20 @@
-//Alan Zhang
+import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-import type { NextRequest } from "next/server"
-import { NextApiRequest, NextApiResponse } from "next";
+const prisma = new PrismaClient();
 
-//getPublishers is a GET request
-export async function GET (req: NextApiRequest, res: NextApiResponse) {
-    return new Response("getPublishers working");
+// Get all registered publishers
+export async function GET(req: NextRequest) {
+    try {
+        const publishers = await prisma.publisher.findMany();
+
+        const response = publishers.map(publisher => ({
+            publisher: publisher.name
+        }));
+
+        return NextResponse.json(response, { status: 200 });
+    } catch (error) {
+        console.error('Error fetching publishers:', error);
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    }
 }

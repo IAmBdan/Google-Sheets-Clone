@@ -1,9 +1,71 @@
-//Alan Zhang
+import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-import type { NextRequest } from "next/server"
-import { NextApiRequest, NextApiResponse } from "next";
+const prisma = new PrismaClient();
 
-//getUpdatesForSubscription is a POST request
-export async function POST (req: NextApiRequest, res: NextApiResponse) {
-    return new Response("getUpdatesForSubscription working");
+// Get updates for a given publisher, sheet, and id
+export async function POST(req: NextRequest) {
+    try {
+        const { publisher, sheet, id } = await req.json();
+
+        if (!publisher || !sheet || !id) {
+            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        }
+
+        const foundPublisher = await prisma.publisher.findFirst({
+            where: {
+                name: publisher
+            }
+        });
+
+        if (!foundPublisher) {
+            return NextResponse.json({ message: 'Publisher not found' }, { status: 404 });
+        }
+
+        const foundSheet = await prisma.sheet.findFirst({
+            where: {
+                publisherId: foundPublisher.id,
+                name: sheet
+            }
+        });
+
+        if (!foundSheet) {
+            return NextResponse.json({ message: 'Sheet not found' }, { status: 404 });
+        }
+
+        const subscription = await prisma.subscription.findFirst({
+            where: {
+                sheetId: foundSheet.id,
+            }
+        });
+
+        if (!subscription) {
+            return NextResponse.json({ message: 'Subscription not found' }, { status: 404 });
+        }
+
+        const updates = await prisma.subscriptionUpdate.findMany({
+            where: {
+                subscriptionId: subscription.id,
+                id: {
+                    gt: id
+                }
+            },
+            orderBy: {
+                id: 'asc'
+            }
+        });
+
+        const payload = updates.map(update => update.payload);
+        const lastId = updates.length > 0 ? updates[updates.length - 1]?.id : id;
+
+        const response = {
+            payload,
+            id: lastId
+        };
+
+        return NextResponse.json(response, { status: 200 });
+    } catch (error) {
+        console.error('Error fetching updates:', error);
+        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+    }
 }
