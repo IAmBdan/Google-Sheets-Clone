@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 // Helper function to parse basic auth
 function parseBasicAuth(req: NextRequest) {
     const authHeader = req.headers.get('authorization');
-    if (!authHeader || !authHeader.startsWith('Basic ')) {
+    if (!authHeader?.startsWith('Basic ')) {
         return null;
     }
 
