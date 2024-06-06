@@ -73,4 +73,32 @@ describe('evaluateFormula', () => {
   it('should evaluate a formula with AVG function with literals', () => {
     expect(evaluateFormula('=AVG(10,20,30)', mockGetCellValue)).toBe(20);
   });
+
+  it('should evaluate a formula with IF function when condition is true', () => {
+    expect(evaluateFormula('=IF(1,"true","false")', mockGetCellValue)).toBe('true');
+  });
+
+  it('should evaluate a formula with IF function when condition is false', () => {
+    expect(evaluateFormula('=IF(0,"true","false")', mockGetCellValue)).toBe('false');
+  });
+
+  it('should throw an error for IF function with invalid condition', () => {
+    expect(() => evaluateFormula('=IF("true",$A1,$B1)', mockGetCellValue)).toThrow('IF condition must be a number');
+  });
+
+  it('should evaluate a formula with IF function and reference condition', () => {
+    expect(evaluateFormula('=IF($A1,"true","false")', mockGetCellValue)).toBe('true');
+  });
+
+  it('should evaluate a formula with IF function and reference condition being zero', () => {
+    expect(evaluateFormula('=IF($F1,"true","false")', mockGetCellValue)).toBe('true');
+  });
+
+  it('should evaluate a formula with IF function and nested formulas', () => {
+    expect(evaluateFormula('=IF($A1, SUM($A1,$B1), "false")', mockGetCellValue)).toBe(3);
+  });
+
+  it('should throw an error for IF function with missing arguments', () => {
+    expect(() => evaluateFormula('=IF($A1,"true")', mockGetCellValue)).toThrow('IF function requires 3 arguments');
+  });
 });
