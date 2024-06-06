@@ -92,6 +92,9 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
     case 'MIN':
       if (args.some(arg => typeof arg !== 'number')) throw new Error('MIN arguments must be numbers');
       return Math.min(...(args as number[]));
+    case 'MAX':
+      if (args.some(arg => typeof arg !== 'number')) throw new Error('MAX arguments must be numbers');
+      return Math.max(...(args as number[]));
     default:
       throw new Error(`Unknown function ${func}`);
   }
