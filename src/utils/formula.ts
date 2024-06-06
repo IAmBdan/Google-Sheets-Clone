@@ -106,6 +106,8 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
             if (condition === undefined || condition === null) throw new Error('IF condition must be defined');
             if (typeof condition !== 'number') throw new Error('IF condition must be a number');
             return condition !== 0 ? trueValue : falseValue;
+        case 'DEBUG':
+            return args[0] !== undefined ? args[0] : null;
         default:
             throw new Error(`Unknown function ${func}`);
     }

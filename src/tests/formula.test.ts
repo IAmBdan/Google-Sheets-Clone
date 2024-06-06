@@ -101,4 +101,12 @@ describe('evaluateFormula', () => {
   it('should throw an error for IF function with missing arguments', () => {
     expect(() => evaluateFormula('=IF($A1,"true")', mockGetCellValue)).toThrow('IF function requires 3 arguments');
   });
+
+  it('should evaluate a formula with DEBUG function', () => {
+    expect(evaluateFormula('=DEBUG($A1)', mockGetCellValue)).toBe(1);
+  });
+
+  it('should evaluate a formula with DEBUG function and literal', () => {
+    expect(evaluateFormula('=DEBUG("test")', mockGetCellValue)).toBe('test');
+  });
 });
