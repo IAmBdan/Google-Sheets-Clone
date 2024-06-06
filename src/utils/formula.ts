@@ -86,7 +86,9 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
   switch (func.toUpperCase()) {
     case 'SUM':
       if (args.some(arg => typeof arg !== 'number')) throw new Error('SUM arguments must be numbers');
-      return (args as number[]).reduce((acc, arg) => acc + (arg as number), 0);
+      return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0);
+    case 'CONCAT':
+      return args.map(arg => (arg !== null ? String(arg) : '')).join('');
     default:
       throw new Error(`Unknown function ${func}`);
   }
