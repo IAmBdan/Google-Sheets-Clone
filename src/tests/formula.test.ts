@@ -1,4 +1,4 @@
-import { evaluateFormula } from '../utils/formula'
+import { evaluateFormula } from '../utils/formula';
 
 describe('evaluateFormula', () => {
   const mockGetCellValue = (ref: string): string | number | null => {
@@ -7,7 +7,8 @@ describe('evaluateFormula', () => {
       '$B1': 2,
       '$C1': 3,
       '$D1': 'hello',
-      '$E1': 'world'
+      '$E1': 'world',
+      '$F1': -1
     };
     return mockSheet[ref] || null;
   };
@@ -46,5 +47,13 @@ describe('evaluateFormula', () => {
 
   it('should evaluate a formula with CONCAT function with references and literals', () => {
     expect(evaluateFormula('=CONCAT($D1," ",$E1)', mockGetCellValue)).toBe('hello world');
+  });
+
+  it('should evaluate a formula with MIN function', () => {
+    expect(evaluateFormula('=MIN($A1,$B1,$C1,$F1)', mockGetCellValue)).toBe(-1);
+  });
+
+  it('should evaluate a formula with MIN function with literals', () => {
+    expect(evaluateFormula('=MIN(10,20,30,5)', mockGetCellValue)).toBe(5);
   });
 });

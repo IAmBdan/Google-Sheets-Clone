@@ -89,6 +89,9 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
       return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0);
     case 'CONCAT':
       return args.map(arg => (arg !== null ? String(arg) : '')).join('');
+    case 'MIN':
+      if (args.some(arg => typeof arg !== 'number')) throw new Error('MIN arguments must be numbers');
+      return Math.min(...(args as number[]));
     default:
       throw new Error(`Unknown function ${func}`);
   }
