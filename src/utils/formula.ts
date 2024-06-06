@@ -95,6 +95,9 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
     case 'MAX':
       if (args.some(arg => typeof arg !== 'number')) throw new Error('MAX arguments must be numbers');
       return Math.max(...(args as number[]));
+    case 'AVG':
+      if (args.some(arg => typeof arg !== 'number')) throw new Error('AVG arguments must be numbers');
+      return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0) / args.length;
     default:
       throw new Error(`Unknown function ${func}`);
   }
