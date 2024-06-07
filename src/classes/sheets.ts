@@ -16,11 +16,11 @@ export class Sheet {
   }
 
   getCell(ref: Ref): Cell {
-    const columnIndex = ref.getColumnIndex() - 1;
+    const columnIndex = ref.getColumnIndex();
     const rowIndex = ref.row - 1; //assumes rows are 1-indexed, adjust to 0-indexed need to test idk
 
     if (columnIndex < 0 || columnIndex >= this.cells.length) {
-      throw new Error(`Column ${ref.column} is out of bounds`);
+      throw new Error(`Column ${ref.column} (${columnIndex}) is out of bounds`);
     }
 
     const column = this.cells[columnIndex];

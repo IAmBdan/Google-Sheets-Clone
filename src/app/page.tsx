@@ -4,6 +4,7 @@ import { Sheet } from "~/classes/sheets";
 import Grid from "./grid";
 import Header from "./header";
 import InputLine from "./inputline";
+import Ref from "~/classes/ref";
 
 export default async function Home() {
   // const data = await api.publisher.getPublishers();
@@ -14,6 +15,7 @@ export default async function Home() {
   // console.log(publishers);
 
   const sheet = new Sheet(100, 26);
+  sheet.setCell(new Ref("A", 1), "hello!");
 
   return (
     <main className="flex h-full flex-col">

@@ -1,7 +1,11 @@
 import { Fragment } from "react";
 import Cell from "./cell";
 import { Sheet } from "../classes/sheets";
+import Ref from "~/classes/ref";
 
+/**
+ * Renders a grid of cells, including row and column headers.
+ */
 export default function Grid({ sheet }: { sheet: Sheet }) {
   const { columns, rows } = sheet.getSize();
 
@@ -33,7 +37,13 @@ export default function Grid({ sheet }: { sheet: Sheet }) {
           </span>
 
           {Array.from({ length: columns }, (_, j) => (
-            <Cell key={j} />
+            <Cell
+              key={j}
+              sheet={sheet}
+              cellRef={
+                new Ref(String.fromCharCode("A".charCodeAt(0) + j), i + 1)
+              }
+            />
           ))}
         </Fragment>
       ))}

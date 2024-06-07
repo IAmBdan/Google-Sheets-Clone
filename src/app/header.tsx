@@ -1,9 +1,9 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min";
-
+/**
+ * Renders the header of the application, including the sheet name, menus, and login/logout buttons.
+ */
 export default function Header() {
   return (
-    <header className="bg-gray-200 p-4">
+    <header className="bg-gray-200 p-2">
       <div className="flex flex-row justify-between">
         <div className="flex flex-col gap-2">
           <span className="text-2xl">My Spreadsheet</span>
