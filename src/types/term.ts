@@ -1,2 +1,2 @@
 
-export type Term = number | string | { formula: string };
+export type Term = number | string | { formula: string } | null;
