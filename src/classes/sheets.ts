@@ -3,7 +3,7 @@ import Ref from "./ref";
 import { Term } from "../types/term";
 import { stringToNumber } from "../utils/stringToNumber";
 
-class Sheet {
+export class Sheet {
   private cells: Cell[][];
 
   constructor(numColumns: number, numRows: number) {
@@ -69,5 +69,9 @@ class Sheet {
   setCell(ref: Ref, value: Term): void {
     const cell = this.getCell(ref);
     cell.setValue(value);
+  }
+
+  getSize(): { columns: number; rows: number } {
+    return { columns: this.cells.length, rows: this.cells[0]?.length ?? 0 };
   }
 }

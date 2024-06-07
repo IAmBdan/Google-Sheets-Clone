@@ -1,5 +1,6 @@
 // import { api } from "~/trpc/server";
 
+import { Sheet } from "~/classes/sheets";
 import Grid from "./grid";
 import Header from "./header";
 import InputLine from "./inputline";
@@ -12,12 +13,14 @@ export default async function Home() {
   // const publishers = await api.publisher.register({ name: "test" });
   // console.log(publishers);
 
+  const sheet = new Sheet(100, 26);
+
   return (
     <main className="flex h-full flex-col">
       {/* <Dummy /> */}
       <Header />
       <InputLine />
-      <Grid numColumns={26} numRows={100} />
+      <Grid sheet={sheet} />
     </main>
   );
 }
