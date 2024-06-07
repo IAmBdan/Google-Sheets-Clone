@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Ref from "~/classes/ref";
 import { Sheet } from "~/classes/sheets";
 
@@ -11,7 +12,19 @@ export default function Cell({
   cellRef: Ref;
   sheet: Sheet;
 }) {
-  const value = sheet.getCell(cellRef).getValue();
+  const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+
+  useEffect(() => {
+    const listener = () => {
+      setValue(sheet.getCell(cellRef).getValue());
+    };
+
+    sheet.addListener(listener);
+
+    return () => {
+      sheet.removeListener(listener);
+    };
+  }, [sheet, cellRef]);
 
   const stringValue =
     typeof value === "number"
@@ -22,5 +35,13 @@ export default function Cell({
           ? value?.formula
           : "";
 
-  return <input className="border border-black" value={stringValue} />;
+  return (
+    <input
+      className="border border-black"
+      value={stringValue}
+      onChange={(e) => {
+        sheet.setCell(cellRef, e.currentTarget.value);
+      }}
+    />
+  );
 }

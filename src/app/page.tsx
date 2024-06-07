@@ -1,10 +1,6 @@
 // import { api } from "~/trpc/server";
 
-import { Sheet } from "~/classes/sheets";
-import Grid from "./grid";
-import Header from "./header";
-import InputLine from "./inputline";
-import Ref from "~/classes/ref";
+import Sheet from "./sheet";
 
 export default async function Home() {
   // const data = await api.publisher.getPublishers();
@@ -14,15 +10,7 @@ export default async function Home() {
   // const publishers = await api.publisher.register({ name: "test" });
   // console.log(publishers);
 
-  const sheet = new Sheet(100, 26);
-  sheet.setCell(new Ref("A", 1), "hello!");
+  "use client";
 
-  return (
-    <main className="flex h-full flex-col">
-      {/* <Dummy /> */}
-      <Header />
-      <InputLine />
-      <Grid sheet={sheet} />
-    </main>
-  );
+  return <Sheet />;
 }

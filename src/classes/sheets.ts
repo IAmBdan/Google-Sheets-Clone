@@ -5,6 +5,7 @@ import { stringToNumber } from "../utils/stringToNumber";
 
 export class Sheet {
   private cells: Cell[][];
+  private listeners: (() => void)[] = [];
 
   constructor(numColumns: number, numRows: number) {
     if (numColumns < 1 || numRows < 1) {
@@ -66,9 +67,25 @@ export class Sheet {
     return cell;
   }
 
+  addListener(listener: () => void): void {
+    this.listeners.push(listener);
+  }
+
+  removeListener(listener: () => void): void {
+    const index = this.listeners.indexOf(listener);
+
+    if (index === -1) {
+      console.warn("Listener not found!");
+    } else {
+      this.listeners.splice(index, 1);
+    }
+  }
+
   setCell(ref: Ref, value: Term): void {
     const cell = this.getCell(ref);
     cell.setValue(value);
+
+    this.listeners.forEach((l) => l());
   }
 
   getSize(): { columns: number; rows: number } {
