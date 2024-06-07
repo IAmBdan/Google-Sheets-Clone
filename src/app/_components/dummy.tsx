@@ -6,9 +6,9 @@ import { useEffect } from "react";
 export default function Dummy() {
   async function registerPublisher() {
     const result = await axios.post(
-      "http://localhost:3000/api/trpc/publisher.register",
+      "http://localhost:3000/api/v1/register",
       {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
