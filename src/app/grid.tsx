@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Cell from "./cell";
 import { Sheet } from "../classes/sheets";
-import Ref from "~/classes/ref";
+import { Ref } from "~/classes/ref";
 
 /**
  * Renders a grid of cells, including row and column headers.
