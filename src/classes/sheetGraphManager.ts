@@ -43,19 +43,22 @@ Value: Array of publisherId (number)
         this.publishers.set(publisher.getId(), publisher);
     }
 
+    
     removePublisher(publisherId: number): void {
         if (!this.publishers.has(publisherId)) {
             throw new Error("Publisher not found");
         }
-        //removes thier sheets as well
+        
         for (let [sheetId, pubId] of this.sheetPublisherMap) {
             if (pubId === publisherId) {
+                
                 this.sheets.delete(sheetId);
                 this.sheetPublisherMap.delete(sheetId);
                 this.sharedUsersMap.delete(sheetId);
             }
         }
         this.publishers.delete(publisherId);
+        
     }
 
 
@@ -66,11 +69,12 @@ Value: Array of publisherId (number)
         if (!this.publishers.has(publisher.getId())) {
             throw new Error("Publisher not found");
         }
-
+    
         this.sheets.set(sheet.getId(), sheet);
         this.sheetPublisherMap.set(sheet.getId(), publisher.getId());
         this.sharedUsersMap.set(sheet.getId(), sharedUsers.map(user => user.getId()));
     }
+
 
     removeSheet(sheetId: number): void {
         if (!this.sheets.has(sheetId)) {
@@ -85,25 +89,31 @@ Value: Array of publisherId (number)
     }
 
     getSheet(sheetId: number): Sheet | undefined {
-        if (!this.sheets.has(sheetId)) {
-            throw new Error("Sheet not found");
-        } else{
+        if (!this.sheets.has(sheetId)){
+        return undefined; }
+        else {
             return this.sheets.get(sheetId);
         }
+        
     }
 
     getPublisher(publisherId: number): Publisher | undefined {
-        if (!this.publishers.has(publisherId)) {
-            throw new Error("Publisher not found");
-        } else {
+       if (!this.publishers.has(publisherId)) 
+        {return undefined; }
+        else  {
             return this.publishers.get(publisherId);
-        }
+        }   
     }
 
     getPublisherForSheet(sheetId: number): Publisher | undefined {
+        if (this.sheets.has(sheetId)) {
+           
+        }
+
         const publisherId = this.sheetPublisherMap.get(sheetId);
         return publisherId !== undefined ? this.publishers.get(publisherId) : undefined;
-    }
+    
+}
 
     getSharedUsersForSheet(sheetId: number): Publisher[] {
         const sharedUserIds = this.sharedUsersMap.get(sheetId);
@@ -151,19 +161,23 @@ Value: Array of publisherId (number)
 
 
     addSheetToPublisher(sheetId: number, publisherId: number): void {
-        if (!this.sheets.has(sheetId)) {
-            throw new Error("Sheet not found");
-        }
-        if (!this.publishers.has(publisherId)) {
-            throw new Error("Publisher not found");
-        }
+        if (!this.sheets.has(sheetId) || !this.publishers.has(publisherId)) {
+
+
         this.sheetPublisherMap.set(sheetId, publisherId);
         //add the shared users to the map
         const sheet = this.getSheet(sheetId);
+        const sharedUsers = this.getSharedUsersForSheet(sheetId);
         if (sheet) {
-            this.sharedUsersMap.set(sheetId, sheet.getSharedUsers().map(user => user.getId()));
+            //add the shared users to the map 
+            this.sharedUsersMap.set(sheetId, sharedUsers.map(user => user.getId())); 
+            //add the sheet to the publisher
         }
     }
+    }
+
+    
+
 
     removeSheetFromPublisher(sheetId: number): void {
         if (!this.sheets.has(sheetId)) {

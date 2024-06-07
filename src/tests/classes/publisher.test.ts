@@ -3,34 +3,57 @@ import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-ser
 import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets";
 
 describe('Publisher', () => {
-   const publisher1Brian = new Publisher('Brian', 1, []); //no sheets
-   const onebyonesheet = new Sheet(1, 1, '1x1 Sheet', publisher1Brian, []); //no shared users
-   const publisher2Alan = new Publisher('Alan', 2, [onebyonesheet]); //subbed to Alans
-   console.log(publisher2Alan.getSheets());
-   console.log(onebyonesheet.getSharedUsers());
-   
-   onebyonesheet.addSharedUser(publisher2Alan);
-   const twobytwosheet = new Sheet(2, 2, '2x2 Sheet', publisher2Alan, [publisher2Alan]); //subbed to Alans
+   const publisher1Brian = new Publisher('Brian', 1,); //no sheets
+   const publisher2Alan = new Publisher('Alan', 2,); //subbed to Alans
 
 
 
-    test('invalid constructor', () => {
-        expect(() => new Publisher('br!an', 10, [onebyonesheet])).toThrow('Invalid name');
-        expect(() => new Publisher('brian', -10, [onebyonesheet])).toThrow('Invalid id');
-        expect(() => new Publisher('#$%%^^', 15, [onebyonesheet])).toThrow('Invalid name');
-        expect(() => new Publisher('brian', NaN, [onebyonesheet])).toThrow('Invalid id');
-        expect(() => new Publisher('brian', Infinity, [onebyonesheet])).toThrow('Invalid id');
-        expect(() => new Publisher('brian', -Infinity, [onebyonesheet])).toThrow('Invalid id'); 
+
+
+    test('invalid constructor', () => { //test invalid constructors
+        expect(() => new Publisher('br!an', 10 )).toThrow('Invalid name');
+        expect(() => new Publisher('brian', -10 )).toThrow('Invalid id');
+        expect(() => new Publisher('#$%%^^', 15 )).toThrow('Invalid name');
+        expect(() => new Publisher('brian', NaN )).toThrow('Invalid id');
+        expect(() => new Publisher('brian', Infinity )).toThrow('Invalid id');
+        expect(() => new Publisher('brian', -Infinity )).toThrow('Invalid id'); 
     });
 
-    test('valid constructor', () => {
+    test('valid constructor', () => { //test valid constructors
         expect(publisher1Brian.getName()).toBe('Brian');
         expect(publisher1Brian.getId()).toBe(1);
-        expect(publisher1Brian.getSheets()).toEqual([]);
         expect(publisher2Alan.getName()).toBe('Alan');
-        expect(onebyonesheet.getSharedUsers()).toEqual([publisher2Alan]);
-        expect(publisher2Alan.getId()).toBe(2);
-        expect(publisher2Alan.getSheets()).toEqual([onebyonesheet]);
     });
 
+    test('setName', () => { //test setName
+        publisher1Brian.setName('Alan');
+        expect(publisher1Brian.getName()).toBe('Alan');
+        publisher1Brian.setName('Brian d');
+        expect(publisher1Brian.getName()).toBe('Brian d');
+    });
+
+    test('setId', () => { //test setId
+        publisher1Brian.setId(2);
+        expect(publisher1Brian.getId()).toBe(2);
+        publisher1Brian.setId(0);
+        expect(publisher1Brian.getId()).toBe(0);
+    });
+
+    test('invalid setName', () => { //test invalid setName
+        expect(() => publisher1Brian.setName('')).toThrow('Invalid name');
+    });
+
+    test('invalid setId', () => { //test invalid setId
+        publisher1Brian.setId(1);
+        expect(() => publisher1Brian.setId(NaN)).toThrow('Invalid id');
+        expect(() => publisher1Brian.setId(Infinity)).toThrow('Invalid id');
+        expect(() => publisher1Brian.setId(-Infinity)).toThrow('Invalid id');
+        expect(() => publisher1Brian.setId(-10)).toThrow('Invalid id');
+        expect(publisher1Brian.getId()).toBe(1)
+    });
+
+    test('equals', () => { //test equals
+        expect(publisher1Brian.equals(publisher2Alan)).toBe(false);
+        expect(publisher1Brian.equals(publisher1Brian)).toBe(true);
+    });
 });

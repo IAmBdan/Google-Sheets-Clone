@@ -13,7 +13,6 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
     private cells: Cell[][];
     private sheetTitle: string;
     private publisher: Publisher;
-    private sharedUsers: Publisher[];
     private sheetID: number;
 
 
@@ -28,9 +27,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
             throw new Error("can't be blank");
         }
         this.sheetTitle = sheetTitle;
-        this.publisher = new Publisher(publisher.name, publisher.id, publisher.sheets);
-        this.publisher.sheets.push(this);
-        this.sharedUsers = sharedUsers;
+        this.publisher = new Publisher(publisher.name, publisher.id);
         this.sheetID = NaN;
     }
 
@@ -48,10 +45,11 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         }
 
         const cell = column[rowIndex];
-        if (!cell) {
-            throw new Error(`Cell at ${ref.row}, ${ref.column} is undefined`);
-        }
 
+        if (!cell) {
+            throw new Error(`Cell at row ${ref.row}, column ${ref.column} is undefined`);
+        }
+        
         return cell;
     }
 
@@ -86,13 +84,15 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
     }
 
     setCell(ref: Ref, value: Term): void {
+        if (ref && value) {
         const cell = this.getCell(ref);
         cell.setValue(value);
     }
-
+}
     getCells(): Cell[][] {
         return this.cells;
     }
+    
 
     getPublisher(): Publisher {
         return this.publisher;
@@ -102,61 +102,36 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return this.sheetTitle;
     }
 
-    getSharedUsers(): Publisher[] {
-        return this.sharedUsers;
-    }
 
     setTitle(title: string): void {
         if(title !== "")
         this.sheetTitle = title;
+        else{
+            throw new Error("Invalid title");
+        }
     }
 
     setPublisher(owner: Publisher): void {
+        if(owner){
         this.publisher = owner;
     }
+}
 
-    setSharedUsers(sharedUsers: Publisher[]): void {
-        this.sharedUsers = sharedUsers;
-    }
-
-    addSharedUser(user: Publisher): void {
-        if (user.id !== this.publisher.id || !this.sharedUsers.includes(user))
-        console.log('user' + user);
-        console.log('shared users' + this.sharedUsers);
-        this.sharedUsers.push(user);
-        console.log('final su' + this.sharedUsers);
-    }
-
-    addSharedUsers(users: (Publisher | undefined)[]): void {
-        //filters out undefined users
-        const validUsers = users.filter((user): user is Publisher => user !== undefined);
-        for (const user of validUsers) {
-            this.addSharedUser(user); //will use logic from addSharedUser to avoid duplicates
-        }
-    }
-
-    removeSharedUser(user: Publisher): void {
-        this.sharedUsers = this.sharedUsers.filter(u => u !== user);
-    }
-
-    removeSharedUsers(users: Publisher[]): void {
-        for (const user of users) {
-            this.removeSharedUser(user);
-        }
-    }
+   
 
     getId(): number {
         return this.sheetID;
     }
 
     setId(id: number): void {
-        if(id >= 0){
-        this.sheetID = id;}
+        if(id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
+            throw new Error("Invalid id")
+            
+        } else {
+            this.sheetID = id;
+        }
     }
 
-    removeAllSharedUsers(): void {
-        this.sharedUsers = [];
-    }
 
     getCellsInRange(start: Ref, end: Ref): Cell[] { //inclusive of start and end
         const startColIndex = start.getColumnIndex();
@@ -177,6 +152,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
     getCellValueWithRef(ref: Ref): any {
         return this.getCell(ref).getValue();
     }
+    
     getCellValueWithCoords(col: number | string, row: number): any {
         return this.getCellByCoords(col, row).getValue();
     }
@@ -202,32 +178,36 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
     }
 
 
-toString(): string {
-    const cellDisplay: string[] = [];
-    const header = `Sheet Title: ${this.sheetTitle}\nPublisher: ${this.publisher.name}\nShared Users: ${this.sharedUsers.map(user => user.name).join(', ')}\nSheet ID: ${this.sheetID}\n`;
-    const columnLabels = Array.from({ length: this.cells[0]?.length ?? 0 }, (_, i) => numberToColumnLabel(i + 1));
-    const columnHeader = '    ' + columnLabels.join(' | ') + '\n';
-
-    cellDisplay.push(header);
-    cellDisplay.push(columnHeader);
-
-    for (let rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
-        const row = this.cells[rowIndex];
-        const rowLabel = (rowIndex + 1).toString().padStart(3, ' ');
-        const rowValues = row?.map(cell => {
-            const value = cell.getValue();
-            if (value === null) {
-                return ' ';
-            } else if (typeof value === 'object' && 'formula' in value) {
-                return `=${value.formula}`;
-            } else {
-                return value.toString();
-            }
-        }).join(' | ');
-
-        cellDisplay.push(`${rowLabel} | ${rowValues}`);
+    toString(): string {
+        const cellDisplay: string[] = [];
+        const header = `Sheet Title: ${this.sheetTitle}\nPublisher: ${this.publisher.getName()}\nSheet ID: ${this.sheetID}\n`;
+        const numCols = this.cells[0]?.length ?? 0;
+        const columnLabels = Array.from({ length: numCols }, (_, i) => numberToColumnLabel(i + 1).padStart(3, ' '));
+        const columnHeader = '    ' + columnLabels.join(' | ') + '\n';
+    
+        cellDisplay.push(header);
+        cellDisplay.push(columnHeader);
+    
+        for (let rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
+            const row = this.cells[rowIndex];
+            const rowLabel = (rowIndex + 1).toString().padStart(3, ' ');
+            if (row){
+            const rowValues = row.map(cell => {
+                const value = cell.getValue();
+                if (value === null) {
+                    return '   ';
+                } else if (typeof value === 'object' && 'formula' in value) {
+                    return `=${value.formula}`.padStart(3, ' ');
+                } else {
+                    return value.toString().padStart(3, ' ');
+                }
+            }).join(' | ');
+    
+            cellDisplay.push(`${rowLabel} | ${rowValues}`);
+        }}
+    
+        return cellDisplay.join('\n');
     }
+    
+ }
 
-    return cellDisplay.join('\n');
-}
- } 
