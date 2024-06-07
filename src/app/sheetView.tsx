@@ -1,8 +1,8 @@
 "use client";
 
 import Grid from "./grid";
-import Header from "./header";
-import InputLine from "./inputline";
+import Header from "./frontend/components/header";
+import InputLine from "./frontend/components/inputline";
 import { Ref } from "~/classes/ref";
 import { useState } from "react";
 import { Sheet } from "~/classes/sheets";
