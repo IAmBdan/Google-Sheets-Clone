@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Ref from "~/classes/ref";
+import { Ref } from "~/classes/ref";
+import { Term } from "~/types/term";
 import { Sheet } from "~/classes/sheets";
 
 /**
@@ -16,7 +17,8 @@ export default function Cell({
 
   useEffect(() => {
     const listener = () => {
-      setValue(sheet.getCell(cellRef).getValue());
+      const newValue = sheet.getCell(cellRef).getValue();
+      setValue(newValue);
     };
 
     sheet.addListener(listener);
@@ -30,18 +32,34 @@ export default function Cell({
     typeof value === "number"
       ? String(value)
       : typeof value === "string"
-        ? value
-        : value?.formula
-          ? value?.formula
-          : "";
+      ? value
+      : value?.formula
+      ? value?.formula
+      : "";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.currentTarget.value;
+    let parsedValue: Term;
+
+    if (newValue === "") {
+      parsedValue = null;
+    } else {
+      parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
+    }
+
+    sheet.setCell(cellRef, parsedValue);
+    setValue(parsedValue);
+
+    if (newValue.startsWith('=')) {
+      sheet.evaluateCellFormula(cellRef);
+    }
+  };
 
   return (
     <input
       className="border border-black"
       value={stringValue}
-      onChange={(e) => {
-        sheet.setCell(cellRef, e.currentTarget.value);
-      }}
+      onChange={handleChange}
     />
   );
 }
