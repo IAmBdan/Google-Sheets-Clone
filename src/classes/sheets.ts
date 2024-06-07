@@ -4,6 +4,7 @@ import { Term } from "../types/term";
 import { Publisher } from "./publisher";
 import { columnToNumber } from "~/utils/columnToNumber";
 import { numberToColumnLabel } from "~/utils/numberToColumnLabel";
+import { evaluateFormula } from "~/utils/formula";
 
 type CellValue = number | string | { formula: string } | null;
 
@@ -12,7 +13,6 @@ export class Sheet {
   private sheetTitle: string;
   private publisher: Publisher;
   private sheetID: number;
-  //should add name and user and shared users list
   private listeners: (() => void)[] = [];
 
   constructor(
@@ -38,7 +38,7 @@ export class Sheet {
 
   getCell(ref: Ref): Cell {
     const columnIndex = ref.getColumnIndex() - 1;
-    const rowIndex = ref.row - 1; //assumes rows are 1-indexed, adjust to 0-indexed need to test idk
+    const rowIndex = ref.row - 1;
 
     if (columnIndex < 0 || columnIndex >= this.cells.length) {
       throw new Error(`Column ${ref.column} (${columnIndex}) is out of bounds`);
@@ -119,6 +119,27 @@ export class Sheet {
       cell.setValue(value);
 
       this.listeners.forEach((l) => l());
+    }
+  }
+
+  evaluateCellFormula(ref: Ref): void {
+    const cell = this.getCell(ref);
+    const value = cell.getValue();
+    if (typeof value === "string" && value.startsWith('=')) {
+      const getCellValue = (cellRef: string): string | number | null => {
+        const cellRefObj = new Ref(cellRef.slice(1, 2), parseInt(cellRef.slice(2)));
+        const cellValue = this.getCell(cellRefObj).getValue();
+        if (cellValue === null) {
+          throw new Error(`Reference ${cellRef} not found`);
+        }
+        if (typeof cellValue === "object" && cellValue !== null && 'formula' in cellValue) {
+          return cellValue.formula;
+        }
+        return cellValue;
+      };
+  
+      const result = evaluateFormula(value, getCellValue);
+      this.setCell(ref, result as Term);
     }
   }
 
