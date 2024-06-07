@@ -1,5 +1,5 @@
 
-import { singleUpdate } from "types/singleUpdate";
+import { singleUpdate } from "~/types/singleUpdate";
 import { parseSingleUpdate } from "./parseSingleUpdate";
 
 
