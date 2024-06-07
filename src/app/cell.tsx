@@ -39,9 +39,15 @@ export default function Cell({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    const parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
+    let parsedValue: Term;
 
-    sheet.setCell(cellRef, parsedValue as Term);
+    if (newValue === "") {
+      parsedValue = null;
+    } else {
+      parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
+    }
+
+    sheet.setCell(cellRef, parsedValue);
     setValue(parsedValue);
 
     if (newValue.startsWith('=')) {
