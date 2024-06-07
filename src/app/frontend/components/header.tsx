@@ -1,15 +1,29 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import "bootstrap/dist/js/bootstrap.bundle.min";
+import { Sheet } from "~/classes/sheets";
 
-export default function Header() {
-  return <>
-  <header className="bg-gray-200 p-8">Welcome to Husksheet!</header>
-
-  <div className="btn-toolbar">
-    <div className='btn-group'>
-      <button className='btn-primary'>Log In</button>
-      <button className='btn-primary'>Sign Up</button>
-    </div>
-  </div>
-  </>
+/**
+ * Renders the header of the application, including the sheet name, menus, and login/logout buttons.
+ */
+export default function Header({ sheet }: { sheet: Sheet }) {
+  return (
+    <header className="bg-gray-200 p-2">
+      <div className="flex flex-row justify-between">
+        <div className="flex flex-col gap-2">
+          <span className="text-2xl">{sheet.getTitle()}</span>
+          <div className="flex flex-row gap-2">
+            <button className="hover:underline">File</button>
+            <button className="hover:underline">Edit</button>
+            <button className="hover:underline">Help</button>
+          </div>
+        </div>
+        <div className="flex flex-row gap-2 self-start">
+          <button className="text-gray-600 hover:text-black hover:underline">
+            Log In
+          </button>
+          <button className="text-gray-600 hover:text-black hover:underline">
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </header>
+  );
 }
