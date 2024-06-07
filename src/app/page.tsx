@@ -1,3 +1,9 @@
+"use client"
+
+//Landing Page
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 const SHEETS = [
   {
     name: "my awesome spreadsheet",
@@ -13,17 +19,71 @@ const SHEETS = [
   },
 ];
 
-export default async function Home() {
-  // const data = await api.publisher.getPublishers();
-  // console.log(data);
-  // const users = await api.user.getAll();
-  // console.log(users);
-  // const publishers = await api.publisher.register({ name: "test" });
-  // console.log(publishers);
+export default function Home() {
+  const [client, setClient] = useState("");
+  const [sheetName, setSheetName] = useState("");
+  const [sheets, setSheets] = useState([]);
+
+  useEffect(() => {
+    const fetchSheets = async () => {
+      try {
+        const response = await axios.post("/api/v1/getSheets", {
+          publisher: client,
+        });
+        setSheets(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching sheets:", error);
+      }
+    };
+
+    void fetchSheets();
+  }, []);
+
+  const createSheet = async () => {
+    try {
+      const response = await axios.post("/api/v1/createSheet", {
+        publisher: client,
+        sheet: sheetName,
+      }); // Adjust the payload as needed
+      setSheets([...sheets, response.data]);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error creating sheet:", error);
+    }
+  };
+
+  const deleteSheet = async (id: number) => {
+    try {
+      await axios.post("/api/v1/deleteSheet", {
+        publisher: client,
+        sheet: sheetName,
+      }); // Adjust to your actual endpoint
+      setSheets(sheets.filter((sheet) => sheet.id !== id));
+      console.log(`Sheet with id ${id} deleted`);
+    } catch (error) {
+      console.error("Error deleting sheet:", error);
+    }
+  };
 
   return (
     <div className="mx-auto my-16 flex max-w-sm flex-col gap-4">
       <h1 className="text-center text-2xl">Spreadsheets</h1>
+      <div className="mb-4">
+        <input
+          type="text"
+          value={client}
+          onChange={(e) => setClient(e.target.value)}
+          placeholder="Enter client name"
+          className="w-full rounded-md border p-2"
+        />
+        <button
+          onClick={createSheet}
+          className="ml-4 rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
+        >
+          Create New Sheet
+        </button>
+      </div>
       {SHEETS.map(({ name, author }) => (
         <a
           key={name}
