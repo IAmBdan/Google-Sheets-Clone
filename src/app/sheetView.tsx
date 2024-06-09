@@ -1,8 +1,6 @@
 "use client";
 
 import Grid from "./grid";
-import Header from "./frontend/components/header";
-import InputLine from "./frontend/components/inputline";
 import { Ref } from "~/classes/ref";
 import { useState } from "react";
 import { Sheet } from "~/classes/sheets";
@@ -24,8 +22,6 @@ export default function SheetView() {
   return (
     <main className="flex h-full flex-col">
       {/* <Dummy /> */}
-      <Header sheet={sheet} />
-      <InputLine />
       <Grid sheet={sheet} />
     </main>
   );
