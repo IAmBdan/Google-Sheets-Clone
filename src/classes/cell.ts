@@ -1,12 +1,13 @@
+//Brian Daniels
 import { Ref } from "./ref";
 
 export { Cell };
   
 
-
+    // Cell class that represents a cell in a sheet
     class Cell {
         value: number | string | { formula: string } | null;
-        ref?: Ref;
+        ref?: Ref | undefined;
         refAsString?: string;
 
         constructor(value: number | string | { formula: string } | null, ref?: Ref | string) {
@@ -22,26 +23,29 @@ export { Cell };
             }
         }
 
-
+        // Getters and setters
         getValue(): number | string | { formula: string } | null {
             return this.value;
         }
 
+        // Setters
         setValue(value: number | string | { formula: string } | null): void {
             this.value = value;
         }
 
+        // Getters
         setRef(ref: Ref): void {
             this.ref = ref;
             this.refAsString = ref.toString();
         }
         
+        //  Setters
         setRefAsString(refAsString: string): void {
             this.refAsString = refAsString;
             this.ref = new Ref(refAsString);
         }
 
-
+        // Getters
         getRef(): Ref {
             if (this.ref) {
                 return this.ref;
@@ -50,6 +54,7 @@ export { Cell };
             }
         }
 
+        // Getters
         getRefString(): string {
             if (this.ref) {
                 return this.ref.toString();
@@ -58,6 +63,7 @@ export { Cell };
             }
         }
 
+        // equals method to compare two cells
         equals(cell: Cell): boolean {
             return this.value?.toString() === cell.value?.toString() && (this.ref?.toString() === cell.ref?.toString()) && this.refAsString === cell.refAsString;
         }

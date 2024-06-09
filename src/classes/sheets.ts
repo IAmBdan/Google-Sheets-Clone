@@ -5,9 +5,13 @@ import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-co
 import { columnToNumber } from '../utils/columnToNumber'
 import { Publisher } from './publisher'
 import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/numberToColumnLabel"
+import { singleUpdate } from 'types/singleUpdate';
+
+//Brian Daniels
+//Sheet class that has a 2D array of cells and a title
 
 
-
+//Sheet class that has a 2D array of cells and a title and a publisher
  export class Sheet {
 //should add name and user and shared users list
     private cells: Cell[][];
@@ -31,6 +35,12 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         this.sheetID = NaN;
     }
 
+    //returns the number of total cells in the sheet
+    getCellCount(): number {
+        return this.cells.flat().length;
+    }
+
+    //returns the cell at the given reference
     getCell(ref: Ref): Cell {
         const columnIndex = ref.getColumnIndex() - 1;
         const rowIndex = ref.row - 1; //assumes rows are 1-indexed, adjust to 0-indexed need to test idk
@@ -53,6 +63,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return cell;
     }
 
+    //returns the cell at the given coordinates
     getCellByCoords(col: number | string, row: number): Cell {
         let columnIndex: number;
 
@@ -83,7 +94,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return cell;
     }
 
-    setCell(ref: Ref, value: Term): void {
+    setCell(ref: Ref | undefined, value: Term | undefined): void {
         if (ref && value) {
         const cell = this.getCell(ref);
         cell.setValue(value);
@@ -133,6 +144,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
     }
 
 
+    //returns the cells in the given range
     getCellsInRange(start: Ref, end: Ref): Cell[] { //inclusive of start and end
         const startColIndex = start.getColumnIndex();
         const startRowIndex = start.row;
@@ -149,22 +161,27 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return cells;
     }
 
+    //returns the value of the cell at the given reference
     getCellValueWithRef(ref: Ref): any {
         return this.getCell(ref).getValue();
     }
-    
+
+    //returns the value of the cell at the given coordinates
     getCellValueWithCoords(col: number | string, row: number): any {
         return this.getCellByCoords(col, row).getValue();
     }
 
+    //sets the value of the cell at the given reference
     setCellValueWithRef(ref: Ref, value: Term): void {
         this.setCell(ref, value);
     }
 
+    //sets the value of the cell at the given coordinates
     setCellValueWithCoords(col: number | string, row: number, value: Term): void {
         this.getCellByCoords(col, row).setValue(value);
     }
 
+    //returns all cells with the given value
     getCellsWithValue(value: Term): Cell[] {
         const cells: Cell[] = [];
         for (const column of this.cells) {
@@ -177,7 +194,7 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return cells;
     }
 
-
+    //returns a string representation of the sheet
     toString(): string {
         const cellDisplay: string[] = [];
         const header = `Sheet Title: ${this.sheetTitle}\nPublisher: ${this.publisher.getName()}\nSheet ID: ${this.sheetID}\n`;
@@ -209,5 +226,21 @@ import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/co
         return cellDisplay.join('\n');
     }
     
+    //returns a string representation of the sheet with the given range
+    singleUpdate(ref: Ref, value: Term): void {
+        this.setCell(ref, value);
+    }
+
+    //returns a string representation of the sheet with the given range
+    singleUpdateWithSingleUpdate(singleUpdate: singleUpdate): void {
+        this.setCell(singleUpdate.ref, singleUpdate.term);
+    }
+
+    //returns a string representation of the sheet with the given range
+    multiUpdate(values: singleUpdate[]): void {
+        for (const { ref, term } of values) {
+            this.setCell(ref, term);
+        }
+    }
  }
 

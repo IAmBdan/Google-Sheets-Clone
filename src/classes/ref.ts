@@ -1,4 +1,7 @@
+//Brian Daniels
+// Purpose: Contains the Ref class which is used to represent a cell reference in a spreadsheet
 
+// Ref class that represents a cell reference in a spreadsheet 
 export class Ref {
         column: string;
         row: number;
@@ -75,10 +78,12 @@ export class Ref {
        }
     }
 
+    //checks if two refs are equal
     equals(ref: Ref): boolean {
         return this.column === ref.column && this.row === ref.row;
     }
 
+    //converts the ref to a string
     refToString(): string {
         return "$"  + this.column + this.row;
     }

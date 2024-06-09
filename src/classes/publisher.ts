@@ -1,6 +1,7 @@
+//Brian Daniels
 import { hasSpecialChar } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/hasSpecialChar";
 
-
+// Publisher class that has a name and id
 export class Publisher {
     name: string;
     id: number;
@@ -41,6 +42,7 @@ export class Publisher {
       
     }
 
+    // Compares two publishers to see if they are equal
     equals(publisher: Publisher): boolean {
         return this.name === publisher.name && this.id === publisher.id;
     }
