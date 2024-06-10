@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: server
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_URL: mysql://root:password@localhost:3306/software_serve
+      SERVER_PORT: 3000
+
+volumes:
+  mysql-data:

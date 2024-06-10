@@ -1,15 +1,14 @@
-
-import { Cell } from './cell';
-import { Ref } from './ref';
-import { Term } from "../types/term";
-import { columnToNumber } from '../utils/columnToNumber'
-import { Publisher } from './publisher'
-import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/numberToColumnLabel"
-import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/types/singleUpdate"
-
 //Brian Daniels
 //Sheet class that has a 2D array of cells and a title
+import { Cell } from "./cell";
+import { Ref } from "./ref";
+import { Term } from "../types/term";
+import { Publisher } from "./publisher";
+import { columnToNumber } from "~/utils/columnToNumber";
+import { numberToColumnLabel } from "~/utils/numberToColumnLabel";
+import { evaluateFormula } from "~/utils/formula";
 
+type CellValue = number | string | { formula: string } | null;
 
 //Sheet class that has a 2D array of cells and a title and a publisher
  export class Sheet {
@@ -18,21 +17,46 @@ import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-
     private sheetTitle: string;
     private publisher: Publisher;
     private sheetID: number;
+   private listeners: (() => void)[] = [];
 
+  constructor(
+    numColumns: number,
+    numRows: number,
+    sheetTitle: string,
+    publisher: Publisher,
+    sharedUsers: Publisher[],
+  ) {
+    if (numColumns < 1 || numRows < 1) {
+      throw new Error("Invalid sheet dimensions");
+    }
+    this.cells = Array.from({ length: numRows }, () =>
+      Array.from({ length: numColumns }, () => new Cell(null)),
+    );
+    if (sheetTitle === "") {
+      throw new Error("can't be blank");
+    }
+    this.sheetTitle = sheetTitle;
+    this.publisher = new Publisher(publisher.name, publisher.id);
+    this.sheetID = NaN;
+  }
+   
+  //returns the cell at the given reference
+  getCell(ref: Ref): Cell {
+    const columnIndex = ref.getColumnIndex() - 1;
+    const rowIndex = ref.row - 1;
 
-    constructor(numColumns: number, numRows: number, sheetTitle: string, publisher: Publisher, sharedUsers: Publisher[]){
-        if (numColumns < 1 || numRows < 1) {
-            throw new Error("Invalid sheet dimensions");
-        }
-        this.cells = Array.from({ length: numRows }, () =>
-            Array.from({ length: numColumns }, () => new Cell(null))
-        );
-        if (sheetTitle === "") {
-            throw new Error("can't be blank");
-        }
-        this.sheetTitle = sheetTitle;
-        this.publisher = new Publisher(publisher.name, publisher.id);
-        this.sheetID = NaN;
+    if (columnIndex < 0 || columnIndex >= this.cells.length) {
+      throw new Error(`Column ${ref.column} (${columnIndex}) is out of bounds`);
+    }
+
+    const column = this.cells[columnIndex];
+    if (!column || rowIndex < 0 || rowIndex >= column.length) {
+      throw new Error(`Row ${ref.row} is out of bounds`);
+    }
+
+    const cell = column[rowIndex];
+    if (!cell) {
+      throw new Error(`Cell at ${ref.row}, ${ref.column} is undefined`);
     }
 
     //returns the number of total cells in the sheet
@@ -40,109 +64,116 @@ import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-
         return this.cells.flat().length;
     }
 
-    //returns the cell at the given reference
-    getCell(ref: Ref): Cell {
-        const columnIndex = ref.getColumnIndex() - 1;
-        const rowIndex = ref.row - 1; //assumes rows are 1-indexed, adjust to 0-indexed need to test idk
+  getCellByCoords(col: number | string, row: number): Cell {
+    let columnIndex: number;
 
-        if (columnIndex < 0 || columnIndex >= this.cells.length) {
-            throw new Error(`Column ${ref.column} is out of bounds`);
-        }
-
-        const column = this.cells[columnIndex];
-        if (!column || rowIndex < 0 || rowIndex >= column.length) {
-            throw new Error(`Row ${ref.row} is out of bounds`);
-        }
-
-        const cell = column[rowIndex];
-
-        if (!cell) {
-            throw new Error(`Cell at row ${ref.row}, column ${ref.column} is undefined`);
-        }
-        
-        return cell;
+    if (typeof col === "number") {
+      columnIndex = col - 1; //adjusts for 1-indexed columns
+    } else if (typeof col === "string") {
+      columnIndex = columnToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
+    } else {
+      throw new Error("Invalid column type");
     }
 
-    //returns the cell at the given coordinates
-    getCellByCoords(col: number | string, row: number): Cell {
-        let columnIndex: number;
+    const rowIndex = row - 1; //adjusts for 1-indexed rows
 
-        if (typeof col === "number") {
-            columnIndex = col - 1; //adjusts for 1-indexed columns
-        } else if (typeof col === "string") {
-            columnIndex = columnToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
-        } else {
-            throw new Error("Invalid column type");
-        }
-
-        const rowIndex = row - 1; //adjusts for 1-indexed rows
-
-        if (columnIndex < 0 || columnIndex >= this.cells.length) {
-            throw new Error(`Column ${col} is out of bounds`);
-        }
-
-        const column = this.cells[columnIndex];
-        if (!column || rowIndex < 0 || rowIndex >= column.length) {
-            throw new Error(`Row ${row} is out of bounds`);
-        }
-
-        const cell = column[rowIndex];
-        if (!cell) {
-            throw new Error(`Cell at row ${row}, column ${col} is undefined`);
-        }
-
-        return cell;
+    if (columnIndex < 0 || columnIndex >= this.cells.length) {
+      throw new Error(`Column ${col} is out of bounds`);
     }
 
-    setCell(ref: Ref | undefined, value: Term | undefined): void {
-        if (ref && value) {
-        const cell = this.getCell(ref);
-        cell.setValue(value);
+    const cell = column[rowIndex];
+    if (!cell) {
+      throw new Error(`Cell at row ${row}, column ${col} is undefined`);
     }
-}
-    getCells(): Cell[][] {
-        return this.cells;
-    }
+
+    return cell;
+  }
+
+  getCells(): Cell[][] {
+    return this.cells;
+  }
+
+  getPublisher(): Publisher {
+    return this.publisher;
+  }
+
+  getTitle(): string {
+    return this.sheetTitle;
+  }
+
     
+  addListener(listener: () => void): void {
+    this.listeners.push(listener);
+  }
 
-    getPublisher(): Publisher {
-        return this.publisher;
+  removeListener(listener: () => void): void {
+    const index = this.listeners.indexOf(listener);
+
+    if (index === -1) {
+      console.warn("Listener not found!");
+    } else {
+      this.listeners.splice(index, 1);
     }
+  }
 
-    getTitle(): string {
-        return this.sheetTitle;
+  setCell(ref: Ref, value: Term): void {
+    if (ref && value) {
+      const cell = this.getCell(ref);
+      cell.setValue(value);
+
+      this.listeners.forEach((l) => l());
     }
+  }
 
-
-    setTitle(title: string): void {
-        if(title !== "")
-        this.sheetTitle = title;
-        else{
-            throw new Error("Invalid title");
+  evaluateCellFormula(ref: Ref): void {
+    const cell = this.getCell(ref);
+    const value = cell.getValue();
+    if (typeof value === "string" && value.startsWith('=')) {
+      const getCellValue = (cellRef: string): string | number | null => {
+        const cellRefObj = new Ref(cellRef.slice(1, 2), parseInt(cellRef.slice(2)));
+        const cellValue = this.getCell(cellRefObj).getValue();
+        if (cellValue === null) {
+          throw new Error(`Reference ${cellRef} not found`);
         }
+        if (typeof cellValue === "object" && cellValue !== null && 'formula' in cellValue) {
+          return cellValue.formula;
+        }
+        return cellValue;
+      };
+  
+      const result = evaluateFormula(value, getCellValue);
+      this.setCell(ref, result as Term);
     }
+  }
 
-    setPublisher(owner: Publisher): void {
-        if(owner){
-        this.publisher = owner;
+  getSize(): { columns: number; rows: number } {
+    return { columns: this.cells.length, rows: this.cells[0]?.length ?? 0 };
+  }
+
+  setTitle(title: string): void {
+    if (title !== "") this.sheetTitle = title;
+    else {
+      throw new Error("Invalid title");
     }
-}
+  }
 
+  setPublisher(owner: Publisher): void {
+    if (owner) {
+      this.publisher = owner;
+    }
+  }
+
+  getId(): number {
+    return this.sheetID;
+  }
    
-
-    getId(): number {
-        return this.sheetID;
+  setId(id: number): void {
+    if (id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
+      throw new Error("Invalid id");
+    } else {
+      this.sheetID = id;
     }
-
-    setId(id: number): void {
-        if(id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
-            throw new Error("Invalid id")
-            
-        } else {
-            this.sheetID = id;
-        }
-    }
-
+  }
 
     //returns the cells in the given range
     getCellsInRange(start: Ref, end: Ref): Cell[] { //inclusive of start and end
@@ -174,7 +205,6 @@ import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-
     //sets the value of the cell at the given reference
     setCellValueWithRef(ref: Ref, value: Term): void {
         this.setCell(ref, value);
-    }
 
     //sets the value of the cell at the given coordinates
     setCellValueWithCoords(col: number | string, row: number, value: Term): void {
@@ -242,5 +272,3 @@ import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-
             this.setCell(ref, term);
         }
     }
- }
-
