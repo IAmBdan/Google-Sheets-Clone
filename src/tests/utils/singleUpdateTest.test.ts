@@ -1,14 +1,16 @@
-import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/publisher"
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
-import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets"
-import { Cell } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/cell"
-import { parseSingleCellUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/singleCellUpdate"
-import parseRef from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseRef"
-import { parseTerm } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseTerm"
+//all tests work
+
+import { Publisher } from "../../classes/publisher"
+import { Ref } from "../../classes/ref"
+import { Sheet } from "../../classes/sheets"
+import { Cell } from "../../classes/cell"
+import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
+import parseRef from "../../utils/parseRef"
+import { parseTerm } from "../../utils/parseTerm"
 
 //Brian Daniels
-jest.mock("/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseRef");
-jest.mock("/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseTerm");
+jest.mock("../../utils/parseRef");
+jest.mock("../../utils/parseTerm");
 
 describe('singleCellUpdate', () => {
     beforeEach(() => {

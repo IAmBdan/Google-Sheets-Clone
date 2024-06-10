@@ -4,10 +4,10 @@ import { Cell } from "./cell";
 import { Ref } from "./ref";
 import { Term } from "../types/term";
 import { Publisher } from "./publisher";
-import { columnToNumber } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/columnToNumber"
-import { numberToColumnLabel } from "~/utils/numberToColumnLabel";
-import { evaluateFormula } from "~/utils/formula";
-import { singleUpdate } from "~/types/singleUpdate";
+import { columnToNumber } from "../utils/columnToNumber"
+import { numberToColumnLabel } from "../utils/numberToColumnLabel";
+import { evaluateFormula } from "../utils/formula";
+import { singleUpdate } from "../types/singleUpdate";
 
 type CellValue = number | string | { formula: string } | null;
 

@@ -3,7 +3,6 @@ import { Ref } from "./ref";
 
 export { Cell };
   
-
     // Cell class that represents a cell in a sheet
     class Cell {
         value: number | string | { formula: string } | null;

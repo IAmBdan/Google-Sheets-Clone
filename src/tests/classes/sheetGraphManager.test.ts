@@ -1,7 +1,8 @@
+//all tests work
 
-import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/publisher"
-import { SheetGraphManager } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheetGraphManager"
-import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets"
+import { Publisher } from "../../classes/publisher"
+import { SheetGraphManager } from "../../classes/sheetGraphManager"
+import { Sheet } from "../../classes/sheets"
 
 //Brian Daniels
 // Utility function to create a new Sheet with a publisher

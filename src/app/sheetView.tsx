@@ -1,10 +1,10 @@
 "use client";
 
 import Grid from "./grid";
-import { Ref } from "~/classes/ref";
+import { Ref } from "../classes/ref";
 import { useState } from "react";
-import { Sheet } from "~/classes/sheets";
-import { Publisher } from "~/classes/publisher";
+import { Sheet } from "../classes/sheets";
+import { Publisher } from "../classes/publisher";
 
 export default function SheetView() {
   const [sheet] = useState(() => {

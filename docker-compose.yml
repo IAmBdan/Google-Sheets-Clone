@@ -19,7 +19,7 @@ services:
     depends_on:
       - mysql
     environment:
-      DATABASE_URL: mysql://root:password@localhost:3306/software_serve
+      DATABASE_URL: mysql://jkici60lj45ssgs8rkmr:pscale_pw_iG2LjcCBBgQuVi57gqJpbxJCArbGRWlTIoOePBorp4X@aws.connect.psdb.cloud/computer-serve?sslaccept=strict
       SERVER_PORT: 3000
 
 volumes:

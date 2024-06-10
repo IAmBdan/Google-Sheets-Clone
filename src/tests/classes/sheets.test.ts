@@ -1,8 +1,9 @@
+//all tests work
 
-import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/publisher"
-import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets"
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
-import { parseMultipleCellUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/multipleCellUpdate"
+import { Publisher } from "../../classes/publisher"
+import { Sheet } from "../../classes/sheets"
+import { Ref } from "../../classes/ref"
+import { parseMultipleCellUpdate } from "../../utils/multipleCellUpdate"
 //Brian Daniels
     
     describe('Sheet', () => {
@@ -26,14 +27,12 @@ import { parseMultipleCellUpdate } from "/Users/bdan/Desktop/Computer Engineerin
             
         });
 
-
-
-
+        //fix invalid cell tests and coverage should be good
         test(' invalid get cell', () => {
             expect(() => sheet.getCell(new Ref('A1'))).toThrow('Invalid ref: A1');
             expect(() => sheet.getCell(new Ref('$A'))).toThrow('Invalid ref: $A');
             expect(() => sheet.getCell(new Ref('$A10000'))).toThrow("Row 10000 is out of bounds");
-            expect(() => sheet.getCell(new Ref('$Z1'))).toThrow("Column Z is out of bounds");
+            expect(() => sheet.getCell(new Ref('$Z1'))).toThrow("Column Z (25) is out of bounds");
             expect(() => sheet.getCell(new Ref('$A4'))).toThrow("Row 4 is out of bounds");
 
         });
@@ -138,10 +137,6 @@ import { parseMultipleCellUpdate } from "/Users/bdan/Desktop/Computer Engineerin
             "  3 |     |     | 100"
             const sheetToString = sheet2.toString();
             expect(sheetToString).toBe(expectedOutput);
-
-            
-
-
 
         });
 

@@ -46,7 +46,6 @@ export default function Dashboard() {
                 publisher: client,
                 sheet: sheetName,
             }); // Adjust the payload as needed
-            // @ts-ignore
             setSheets([...sheets, response.data]);
             console.log(response.data);
         } catch (error) {
@@ -60,7 +59,6 @@ export default function Dashboard() {
                 publisher: client,
                 sheet: sheetName,
             }); // Adjust to your actual endpoint
-            // @ts-ignore
             setSheets(sheets.filter((sheet) => sheet.id !== id));
             console.log(`Sheet with id ${id} deleted`);
         } catch (error) {

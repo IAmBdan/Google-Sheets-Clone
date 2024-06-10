@@ -1,9 +1,11 @@
-import parseRef from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseRef";
-import { parseTerm } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseTerm";
-import { parseMultipleCellUpdate } from  "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/multipleCellUpdate";
-import { parseSingleCellUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/singleCellUpdate"
+//all tests work
 
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import parseRef from "../../utils/parseRef";
+import { parseTerm } from "../../utils/parseTerm";
+import { parseMultipleCellUpdate } from  "../../utils/multipleCellUpdate";
+import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
+
+import { Ref } from "../../classes/ref"
 //Brian Daniels
 
 describe('multipleCellUpdate', () => {

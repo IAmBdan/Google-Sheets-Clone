@@ -51,7 +51,7 @@ Value: Array of publisherId (number)
             throw new Error("Publisher not found");
         }
         
-        for (let [sheetId, pubId] of this.sheetPublisherMap) {
+        for (const [sheetId, pubId] of this.sheetPublisherMap) {
             if (pubId === publisherId) {
                 
                 this.sheets.delete(sheetId);
@@ -160,7 +160,7 @@ Value: Array of publisherId (number)
     //get all the sheets for a publisher
     getSheetsForPublisher(publisherId: number): Sheet[] {
         const sheets: Sheet[] = [];
-        for (let [sheetId, pubId] of this.sheetPublisherMap) {
+        for (const [sheetId, pubId] of this.sheetPublisherMap) {
             if (pubId === publisherId) {
                 sheets.push(this.sheets.get(sheetId)!);
             }

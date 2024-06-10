@@ -1,6 +1,8 @@
+//all tests work
+
 //test ref and all ref methods
 //Brian Daniels
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import { Ref } from "../../classes/ref"
 
 describe('Ref', () => {
 

@@ -1,4 +1,6 @@
-import { parseTerm } from  "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/parseTerm";
+//all tests work
+
+import { parseTerm } from  "../../utils/parseTerm";
 //Brian Daniels
 describe('parseTerm', () => {
     test('parses integer numbers', () => {

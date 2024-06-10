@@ -1,8 +1,10 @@
+//all tests work
+
 //test all cell methods
 //Brian Daniels
 
-import { Cell } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/cell"
-import  { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import { Cell } from "../../classes/cell"
+import  { Ref } from "../../classes/ref"
 
 describe('Cell', () => {
     test('Cell w number value', () => {
@@ -115,7 +117,7 @@ test ('getRef with undefined ref', () => {
     expect(() => cell.getRef()).toThrow('Ref is undefined');
 });
 
-test ('getref with new ref',  () => {
+test ('getRef with new ref',  () => {
     const ref = new Ref('$AA11');
     const cell = new Cell(5, ref);
     expect(cell.getRef()).toEqual(ref);

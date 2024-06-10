@@ -1,13 +1,11 @@
+//all tests work
 
-import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/publisher"
-import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets";
+import { Publisher } from "../../classes/publisher"
+import { Sheet } from "../../classes/sheets";
 //Brian Daniels
 describe('Publisher', () => {
    const publisher1Brian = new Publisher('Brian', 1,); //no sheets
    const publisher2Alan = new Publisher('Alan', 2,); //subbed to Alans
-
-
-
 
 
     test('invalid constructor', () => { //test invalid constructors

@@ -1,4 +1,4 @@
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import { Ref } from "../classes/ref"
 //Brian Daniels
 
 // Parses a reference string into a Ref object with a column and row
