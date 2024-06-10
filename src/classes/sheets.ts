@@ -1,11 +1,11 @@
 
 import { Cell } from './cell';
 import { Ref } from './ref';
-import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/term"
+import { Term } from "../types/term";
 import { columnToNumber } from '../utils/columnToNumber'
 import { Publisher } from './publisher'
 import { numberToColumnLabel } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/numberToColumnLabel"
-import { singleUpdate } from 'types/singleUpdate';
+import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/types/singleUpdate"
 
 //Brian Daniels
 //Sheet class that has a 2D array of cells and a title

@@ -1,5 +1,5 @@
 //Brian Daniels
-import { singleUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/singleUpdate";
+import { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";
 import { parseRef } from "./parseRef";
 

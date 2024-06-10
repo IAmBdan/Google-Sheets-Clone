@@ -18,6 +18,17 @@ import { parseMultipleCellUpdate } from "/Users/bdan/Desktop/Computer Engineerin
             expect(sheet.getPublisher().getName()).toBe('John Doe');
             expect(sheet.getId()).toBeNaN();
         });
+
+        test('huge sheet', () => {
+            const sheet2 = new Sheet(1000, 1000, 'Test Sheet', publisher, []);
+            expect(sheet2.getCellCount()).toBe(1000000);
+
+            
+        });
+
+
+
+
         test(' invalid get cell', () => {
             expect(() => sheet.getCell(new Ref('A1'))).toThrow('Invalid ref: A1');
             expect(() => sheet.getCell(new Ref('$A'))).toThrow('Invalid ref: $A');

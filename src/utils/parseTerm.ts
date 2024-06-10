@@ -1,5 +1,5 @@
 //Brian Daniels
-import { Term } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/types/term";
+import { Term } from "../types/term";
 
 // Parses a term string into a Term object with a number, string, or formula
 export function parseTerm(input: string): Term {
