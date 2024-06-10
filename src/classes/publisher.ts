@@ -1,5 +1,4 @@
 //Brian Daniels
-import { hasSpecialChar } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/hasSpecialChar";
 
 import { hasSpecialChar } from "../utils/hasSpecialChar";
 export class Publisher {

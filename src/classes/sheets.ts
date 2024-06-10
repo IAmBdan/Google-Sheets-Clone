@@ -4,9 +4,10 @@ import { Cell } from "./cell";
 import { Ref } from "./ref";
 import { Term } from "../types/term";
 import { Publisher } from "./publisher";
-import { columnToNumber } from "~/utils/columnToNumber";
+import { columnToNumber } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/columnToNumber"
 import { numberToColumnLabel } from "~/utils/numberToColumnLabel";
 import { evaluateFormula } from "~/utils/formula";
+import { singleUpdate } from "~/types/singleUpdate";
 
 type CellValue = number | string | { formula: string } | null;
 
@@ -59,35 +60,44 @@ type CellValue = number | string | { formula: string } | null;
       throw new Error(`Cell at ${ref.row}, ${ref.column} is undefined`);
     }
 
+    return cell;
+}
+
     //returns the number of total cells in the sheet
     getCellCount(): number {
         return this.cells.flat().length;
     }
 
+  //returns the cell at the given coordinates
   getCellByCoords(col: number | string, row: number): Cell {
     let columnIndex: number;
 
     if (typeof col === "number") {
-      columnIndex = col - 1; //adjusts for 1-indexed columns
+        columnIndex = col - 1; //adjusts for 1-indexed columns
     } else if (typeof col === "string") {
-      columnIndex = columnToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
+        columnIndex = columnToNumber(col) - 1; //converts column label to index and adjust for 1-indexed columns, need to test indexes
     } else {
-      throw new Error("Invalid column type");
+        throw new Error("Invalid column type");
     }
 
     const rowIndex = row - 1; //adjusts for 1-indexed rows
 
     if (columnIndex < 0 || columnIndex >= this.cells.length) {
-      throw new Error(`Column ${col} is out of bounds`);
+        throw new Error(`Column ${col} is out of bounds`);
+    }
+
+    const column = this.cells[columnIndex];
+    if (!column || rowIndex < 0 || rowIndex >= column.length) {
+        throw new Error(`Row ${row} is out of bounds`);
     }
 
     const cell = column[rowIndex];
     if (!cell) {
-      throw new Error(`Cell at row ${row}, column ${col} is undefined`);
+        throw new Error(`Cell at row ${row}, column ${col} is undefined`);
     }
 
     return cell;
-  }
+}
 
   getCells(): Cell[][] {
     return this.cells;
@@ -205,6 +215,7 @@ type CellValue = number | string | { formula: string } | null;
     //sets the value of the cell at the given reference
     setCellValueWithRef(ref: Ref, value: Term): void {
         this.setCell(ref, value);
+    }
 
     //sets the value of the cell at the given coordinates
     setCellValueWithCoords(col: number | string, row: number, value: Term): void {
@@ -272,3 +283,4 @@ type CellValue = number | string | { formula: string } | null;
             this.setCell(ref, term);
         }
     }
+}

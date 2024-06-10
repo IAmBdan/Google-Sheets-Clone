@@ -51,6 +51,14 @@ export class Ref {
     return this.column;
   }
 
+    getRow(): number {
+        if (this.row < 1) {
+            throw new Error(`Invalid row: ${this.row}, cannot be less than 1`);
+        }
+        return this.row;
+    }
+
+
   //converts the column to a number (A=1, B=2, AA=27, AB = 28, etc)
   getColumnIndex(): number {
     this.column = this.column.toUpperCase();
@@ -74,7 +82,6 @@ export class Ref {
       this.column = column;
     }
   }
-
     //converts the ref to a string
     refToString(): string {
         return "$"  + this.column + this.row;
@@ -85,11 +92,4 @@ export class Ref {
     }
   }
 
-  equals(ref: Ref): boolean {
-    return this.column === ref.column && this.row === ref.row;
-  }
-
-  refToString(): string {
-    return "$" + this.column + this.row;
-  }
 }
