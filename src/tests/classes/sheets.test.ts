@@ -4,6 +4,9 @@ import { Publisher } from "../../classes/publisher"
 import { Sheet } from "../../classes/sheets"
 import { Ref } from "../../classes/ref"
 import { parseMultipleCellUpdate } from "../../utils/multipleCellUpdate"
+import { Cell } from "../../classes/cell"
+import { evaluateFormula } from "~/utils/formula"
+
 //Brian Daniels
     
     describe('Sheet', () => {
@@ -204,9 +207,42 @@ import { parseMultipleCellUpdate } from "../../utils/multipleCellUpdate"
 
         });
             
-            
+
+        test('cell by cordss invalid column', () => {
+            expect(() => sheet.getCellByCoords('Z', 1)).toThrow('Column Z is out of bounds');
+            expect(() => sheet.getCellByCoords('AA', 1)).toThrow('Column AA is out of bounds');
+        });
         
 
-    });
+       
 
-    
+        test('remove listener', () => {
+            const listener = jest.fn();
+            sheet.addListener(listener);
+            sheet.removeListener(listener);
+            sheet.setCellValueWithCoords(1, 1, 5);
+            expect(listener).not.toHaveBeenCalled();
+        });
+
+        test('get cell value with coors', () => {   
+            sheet.setCellValueWithCoords(1, 1, 5);
+            expect(sheet.getCellValueWithCoords(1, 1)).toBe(5);
+        });
+
+        test('single update with single update', () => {
+            const ref = new Ref('$A1');
+            sheet.singleUpdate(ref, 5);
+            const cell = sheet.getCell(ref);
+            expect(cell.getValue()).toBe(5);
+
+            sheet.singleUpdate(ref, 'test');
+            expect(cell.getValue()).toBe('test');
+        });
+
+
+        test('getSize', () => {
+            const size = sheet.getSize();
+            expect(size.columns).toBe(3);
+            expect(size.rows).toBe(3);
+        });
+      });

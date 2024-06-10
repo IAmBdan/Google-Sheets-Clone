@@ -135,6 +135,7 @@ type CellValue = number | string | { formula: string } | null;
     }
   }
 
+  //evaluates the formula of the cell at the given reference
   evaluateCellFormula(ref: Ref): void {
     const cell = this.getCell(ref);
     const value = cell.getValue();
@@ -156,6 +157,7 @@ type CellValue = number | string | { formula: string } | null;
     }
   }
 
+  //returns the size of the sheet
   getSize(): { columns: number; rows: number } {
     return { columns: this.cells.length, rows: this.cells[0]?.length ?? 0 };
   }
