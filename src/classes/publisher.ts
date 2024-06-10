@@ -1,5 +1,7 @@
-import { hasSpecialChar } from "../utils/hasSpecialChar";
+//Brian Daniels
+import { hasSpecialChar } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/hasSpecialChar";
 
+import { hasSpecialChar } from "../utils/hasSpecialChar";
 export class Publisher {
   name: string;
   id: number;
@@ -30,13 +32,16 @@ export class Publisher {
     }
   }
 
-  setId(id: number): void {
-    if (id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
-      throw new Error("Invalid id");
-    } else {
-      this.id = id;
+    setId(id: number): void {
+        if(id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
+            throw new Error("Invalid id")
+            
+        } else {
+            this.id = id;
+        }
+      
     }
-  }
+
 
   equals(publisher: Publisher): boolean {
     return this.name === publisher.name && this.id === publisher.id;

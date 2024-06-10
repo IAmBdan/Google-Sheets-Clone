@@ -1,8 +1,9 @@
 
-import { Publisher } from '../../classes/publisher';
-import { Sheet } from '../../classes/sheets';
-import { Ref } from '../../classes/ref';
-
+import { Publisher } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/publisher"
+import { Sheet } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/sheets"
+import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import { parseMultipleCellUpdate } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/utils/multipleCellUpdate"
+//Brian Daniels
     
     describe('Sheet', () => {
         const publisher = new Publisher('John Doe', 1);
@@ -17,6 +18,17 @@ import { Ref } from '../../classes/ref';
             expect(sheet.getPublisher().getName()).toBe('John Doe');
             expect(sheet.getId()).toBeNaN();
         });
+
+        test('huge sheet', () => {
+            const sheet2 = new Sheet(1000, 1000, 'Test Sheet', publisher, []);
+            expect(sheet2.getCellCount()).toBe(1000000);
+
+            
+        });
+
+
+
+
         test(' invalid get cell', () => {
             expect(() => sheet.getCell(new Ref('A1'))).toThrow('Invalid ref: A1');
             expect(() => sheet.getCell(new Ref('$A'))).toThrow('Invalid ref: $A');
@@ -24,6 +36,9 @@ import { Ref } from '../../classes/ref';
             expect(() => sheet.getCell(new Ref('$Z1'))).toThrow("Column Z is out of bounds");
             expect(() => sheet.getCell(new Ref('$A4'))).toThrow("Row 4 is out of bounds");
 
+        });
+        test("cell number", () => {
+            expect(sheet.getCellCount()).toBe(9);
         });
 
         test('getCell and cell is undefined', () => {
@@ -162,6 +177,39 @@ import { Ref } from '../../classes/ref';
             expect(cell6.getValue()).toBe(null);
 
         });
+
+        test('single update', () => {
+            const ref = new Ref('$A1');
+            sheet.singleUpdate(ref, 5);
+            const cell = sheet.getCell(ref);
+            expect(cell.getValue()).toBe(5);
+
+            sheet.singleUpdate(ref, 'test');
+            expect(cell.getValue()).toBe('test');
+
+        });
+
+        test('single update with singleUpdate', () => {
+            const ref = new Ref('$A1');
+            sheet.singleUpdate(ref, 5);
+            const cell = sheet.getCell(ref);
+            expect(cell.getValue()).toBe(5);
+
+            sheet.singleUpdate(ref, 'test');
+            expect(cell.getValue()).toBe('test');
+
+        });
+
+        test('multiple update', () => {
+            const inputLine = '$A1 5';
+            const result = parseMultipleCellUpdate(inputLine);
+            sheet.multiUpdate(result);
+            const cell = sheet.getCell(new Ref('$A1'));
+            expect(cell.getValue()).toBe(5);
+
+        });
+            
+            
         
 
     });

@@ -1,3 +1,5 @@
+//Brian Daniels
+//Sheet class that has a 2D array of cells and a title
 import { Cell } from "./cell";
 import { Ref } from "./ref";
 import { Term } from "../types/term";
@@ -8,12 +10,14 @@ import { evaluateFormula } from "~/utils/formula";
 
 type CellValue = number | string | { formula: string } | null;
 
-export class Sheet {
-  private cells: Cell[][];
-  private sheetTitle: string;
-  private publisher: Publisher;
-  private sheetID: number;
-  private listeners: (() => void)[] = [];
+//Sheet class that has a 2D array of cells and a title and a publisher
+ export class Sheet {
+//should add name and user and shared users list
+    private cells: Cell[][];
+    private sheetTitle: string;
+    private publisher: Publisher;
+    private sheetID: number;
+   private listeners: (() => void)[] = [];
 
   constructor(
     numColumns: number,
@@ -35,7 +39,8 @@ export class Sheet {
     this.publisher = new Publisher(publisher.name, publisher.id);
     this.sheetID = NaN;
   }
-
+   
+  //returns the cell at the given reference
   getCell(ref: Ref): Cell {
     const columnIndex = ref.getColumnIndex() - 1;
     const rowIndex = ref.row - 1;
@@ -54,8 +59,10 @@ export class Sheet {
       throw new Error(`Cell at ${ref.row}, ${ref.column} is undefined`);
     }
 
-    return cell;
-  }
+    //returns the number of total cells in the sheet
+    getCellCount(): number {
+        return this.cells.flat().length;
+    }
 
   getCellByCoords(col: number | string, row: number): Cell {
     let columnIndex: number;
@@ -72,11 +79,6 @@ export class Sheet {
 
     if (columnIndex < 0 || columnIndex >= this.cells.length) {
       throw new Error(`Column ${col} is out of bounds`);
-    }
-
-    const column = this.cells[columnIndex];
-    if (!column || rowIndex < 0 || rowIndex >= column.length) {
-      throw new Error(`Row ${row} is out of bounds`);
     }
 
     const cell = column[rowIndex];
@@ -99,6 +101,7 @@ export class Sheet {
     return this.sheetTitle;
   }
 
+    
   addListener(listener: () => void): void {
     this.listeners.push(listener);
   }
@@ -163,7 +166,7 @@ export class Sheet {
   getId(): number {
     return this.sheetID;
   }
-
+   
   setId(id: number): void {
     if (id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
       throw new Error("Invalid id");
@@ -172,86 +175,100 @@ export class Sheet {
     }
   }
 
-  getCellsInRange(start: Ref, end: Ref): Cell[] {
-    //inclusive of start and end
-    const startColIndex = start.getColumnIndex();
-    const startRowIndex = start.row;
-    const endColIndex = end.getColumnIndex();
-    const endRowIndex = end.row;
-    const cells: Cell[] = [];
+    //returns the cells in the given range
+    getCellsInRange(start: Ref, end: Ref): Cell[] { //inclusive of start and end
+        const startColIndex = start.getColumnIndex();
+        const startRowIndex = start.row;
+        const endColIndex = end.getColumnIndex();
+        const endRowIndex = end.row;
+        const cells: Cell[] = [];
 
-    for (let colIndex = startColIndex; colIndex <= endColIndex; colIndex++) {
-      for (let rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
-        const cell = this.getCell(
-          new Ref(numberToColumnLabel(colIndex), rowIndex),
-        );
-        cells.push(cell);
-      }
-    }
-    return cells;
-  }
-
-  getCellValueWithRef(ref: Ref): CellValue {
-    return this.getCell(ref).getValue();
-  }
-
-  getCellValueWithCoords(col: number | string, row: number): CellValue {
-    return this.getCellByCoords(col, row).getValue();
-  }
-
-  setCellValueWithRef(ref: Ref, value: Term): void {
-    this.setCell(ref, value);
-  }
-
-  setCellValueWithCoords(col: number | string, row: number, value: Term): void {
-    this.getCellByCoords(col, row).setValue(value);
-  }
-
-  getCellsWithValue(value: Term): Cell[] {
-    const cells: Cell[] = [];
-    for (const column of this.cells) {
-      for (const cell of column) {
-        if (cell.getValue() === value) {
-          cells.push(cell);
-        }
-      }
-    }
-    return cells;
-  }
-
-  toString(): string {
-    const cellDisplay: string[] = [];
-    const header = `Sheet Title: ${this.sheetTitle}\nPublisher: ${this.publisher.getName()}\nSheet ID: ${this.sheetID}\n`;
-    const numCols = this.cells[0]?.length ?? 0;
-    const columnLabels = Array.from({ length: numCols }, (_, i) =>
-      numberToColumnLabel(i + 1).padStart(3, " "),
-    );
-    const columnHeader = "    " + columnLabels.join(" | ") + "\n";
-
-    cellDisplay.push(header);
-    cellDisplay.push(columnHeader);
-
-    for (let rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
-      const row = this.cells[rowIndex];
-      const rowLabel = (rowIndex + 1).toString().padStart(3, " ");
-      if (row) {
-        const rowValues = row
-          .map((cell) => {
-            const value = cell.getValue();
-            if (value === null) {
-              return "   ";
-            } else if (typeof value === "object" && "formula" in value) {
-              return `=${value.formula}`.padStart(3, " ");
-            } else {
-              return value.toString().padStart(3, " ");
+        for (let colIndex = startColIndex; colIndex <= endColIndex; colIndex++) {
+            for (let rowIndex = startRowIndex; rowIndex <= endRowIndex; rowIndex++) {
+                const cell = this.getCell(new Ref(numberToColumnLabel(colIndex), rowIndex));
+                cells.push(cell);
             }
-          })
-          .join(" | ");
-
-        cellDisplay.push(`${rowLabel} | ${rowValues}`);
-      }
+        }
+        return cells;
     }
 
-    return cellDisplay.join("\n");
-  }
-}
+    //returns the value of the cell at the given reference
+    getCellValueWithRef(ref: Ref): any {
+        return this.getCell(ref).getValue();
+    }
+
+    //returns the value of the cell at the given coordinates
+    getCellValueWithCoords(col: number | string, row: number): any {
+        return this.getCellByCoords(col, row).getValue();
+    }
+
+    //sets the value of the cell at the given reference
+    setCellValueWithRef(ref: Ref, value: Term): void {
+        this.setCell(ref, value);
+
+    //sets the value of the cell at the given coordinates
+    setCellValueWithCoords(col: number | string, row: number, value: Term): void {
+        this.getCellByCoords(col, row).setValue(value);
+    }
+
+    //returns all cells with the given value
+    getCellsWithValue(value: Term): Cell[] {
+        const cells: Cell[] = [];
+        for (const column of this.cells) {
+            for (const cell of column) {
+                if (cell.getValue() === value) {
+                    cells.push(cell);
+                }
+            }
+        }
+        return cells;
+    }
+
+    //returns a string representation of the sheet
+    toString(): string {
+        const cellDisplay: string[] = [];
+        const header = `Sheet Title: ${this.sheetTitle}\nPublisher: ${this.publisher.getName()}\nSheet ID: ${this.sheetID}\n`;
+        const numCols = this.cells[0]?.length ?? 0;
+        const columnLabels = Array.from({ length: numCols }, (_, i) => numberToColumnLabel(i + 1).padStart(3, ' '));
+        const columnHeader = '    ' + columnLabels.join(' | ') + '\n';
+    
+        cellDisplay.push(header);
+        cellDisplay.push(columnHeader);
+    
+        for (let rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
+            const row = this.cells[rowIndex];
+            const rowLabel = (rowIndex + 1).toString().padStart(3, ' ');
+            if (row){
+            const rowValues = row.map(cell => {
+                const value = cell.getValue();
+                if (value === null) {
+                    return '   ';
+                } else if (typeof value === 'object' && 'formula' in value) {
+                    return `=${value.formula}`.padStart(3, ' ');
+                } else {
+                    return value.toString().padStart(3, ' ');
+                }
+            }).join(' | ');
+    
+            cellDisplay.push(`${rowLabel} | ${rowValues}`);
+        }}
+    
+        return cellDisplay.join('\n');
+    }
+    
+    //returns a string representation of the sheet with the given range
+    singleUpdate(ref: Ref, value: Term): void {
+        this.setCell(ref, value);
+    }
+
+    //returns a string representation of the sheet with the given range
+    singleUpdateWithSingleUpdate(singleUpdate: singleUpdate): void {
+        this.setCell(singleUpdate.ref, singleUpdate.term);
+    }
+
+    //returns a string representation of the sheet with the given range
+    multiUpdate(values: singleUpdate[]): void {
+        for (const { ref, term } of values) {
+            this.setCell(ref, term);
+        }
+    }

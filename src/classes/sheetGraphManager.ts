@@ -1,8 +1,9 @@
 import { Publisher } from './publisher'; 
 import { Sheet } from './sheets';
 // class that will handle the graph of sheets and publishers using ids to locate them
+//Brian Daniels
 
-
+// SheetGraphManager class that manages the relationships between sheets and publishers
 export class SheetGraphManager {
 
     private sheets: Map<number, Sheet>;  // sheet id to sheet
@@ -36,6 +37,7 @@ Value: Array of publisherId (number)
         this.sharedUsersMap = new Map();
     }
 
+    //add a publisher to the map
     addPublisher(publisher: Publisher): void {
         if (this.publishers.has(publisher.getId())) {
             throw new Error("Publisher already exists");
@@ -43,7 +45,7 @@ Value: Array of publisherId (number)
         this.publishers.set(publisher.getId(), publisher);
     }
 
-    
+    //remove a publisher from the map
     removePublisher(publisherId: number): void {
         if (!this.publishers.has(publisherId)) {
             throw new Error("Publisher not found");
@@ -61,7 +63,7 @@ Value: Array of publisherId (number)
         
     }
 
-
+    //add a sheet to the map with a publisher and shared users
     addSheet(sheet: Sheet, publisher: Publisher, sharedUsers: Publisher[] = []): void {
         if (this.sheets.has(sheet.getId())) {
             throw new Error("Sheet already exists");
@@ -75,7 +77,7 @@ Value: Array of publisherId (number)
         this.sharedUsersMap.set(sheet.getId(), sharedUsers.map(user => user.getId()));
     }
 
-
+    //remove a sheet from the map using id
     removeSheet(sheetId: number): void {
         if (!this.sheets.has(sheetId)) {
             throw new Error("Sheet not found");
@@ -88,6 +90,7 @@ Value: Array of publisherId (number)
         this.sharedUsersMap.delete(sheetId);
     }
 
+    //get a sheet from the map using id
     getSheet(sheetId: number): Sheet | undefined {
         if (!this.sheets.has(sheetId)){
         return undefined; }
@@ -97,6 +100,7 @@ Value: Array of publisherId (number)
         
     }
 
+    //get a publisher from the map using id
     getPublisher(publisherId: number): Publisher | undefined {
        if (!this.publishers.has(publisherId)) 
         {return undefined; }
@@ -105,6 +109,7 @@ Value: Array of publisherId (number)
         }   
     }
 
+    //get the publisher for a sheet
     getPublisherForSheet(sheetId: number): Publisher | undefined {
         if (this.sheets.has(sheetId)) {
            
@@ -115,11 +120,13 @@ Value: Array of publisherId (number)
     
 }
 
+    //get the shared users for a sheet
     getSharedUsersForSheet(sheetId: number): Publisher[] {
         const sharedUserIds = this.sharedUsersMap.get(sheetId);
         return sharedUserIds !== undefined ? sharedUserIds.map(userId => this.publishers.get(userId)!) : [];
     }
 
+    //add a shared user to a sheet
     addSharedUserToSheet(sheetId: number, sharedUser: Publisher): void {
         if (!this.sheets.has(sheetId)) {
             throw new Error("Sheet not found");
@@ -134,6 +141,7 @@ Value: Array of publisherId (number)
         sharedUsers.push(sharedUser.getId());
     }
 
+    //remove a shared user from a sheet
     removeSharedUserFromSheet(sheetId: number, sharedUserId: number): void {
         if (!this.sheets.has(sheetId)) {
             throw new Error("Sheet not found");
@@ -149,6 +157,7 @@ Value: Array of publisherId (number)
         sharedUsers.splice(index, 1);
     }
 
+    //get all the sheets for a publisher
     getSheetsForPublisher(publisherId: number): Sheet[] {
         const sheets: Sheet[] = [];
         for (let [sheetId, pubId] of this.sheetPublisherMap) {
@@ -159,7 +168,7 @@ Value: Array of publisherId (number)
         return sheets;
     }
 
-
+    //add a sheet to a publisher
     addSheetToPublisher(sheetId: number, publisherId: number): void {
         if (!this.sheets.has(sheetId) || !this.publishers.has(publisherId)) {
 
@@ -178,7 +187,7 @@ Value: Array of publisherId (number)
 
     
 
-
+    //remove a sheet from a publisher
     removeSheetFromPublisher(sheetId: number): void {
         if (!this.sheets.has(sheetId)) {
             throw new Error("Sheet not found");

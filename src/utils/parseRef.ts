@@ -1,6 +1,7 @@
 import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+//Brian Daniels
 
-
+// Parses a reference string into a Ref object with a column and row
 export function parseRef(ref: string): Ref {
     const refPattern = /^\$([A-Za-z]+)(\d+)$/;
     const match = ref.match(refPattern);
