@@ -15,11 +15,32 @@ import { LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
 const Register = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async () => {};
+  const handleRegister = async () => {
+    try {
+      const response = await fetch("/api/v1/createUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: email, password: password }),
+      });
+      console.log(response.status);
+      
+      if (response.status === 201) {
+        // Successfully registered
+        window.location.href = "/dashboard";
+      } else {
+        const data = await response.json();
+        alert(data.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -39,19 +60,6 @@ const Register = () => {
           <Typography variant="h5">Register</Typography>
           <Box sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-
               <Grid item xs={12}>
                 <TextField
                   required
@@ -81,7 +89,7 @@ const Register = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleRegister}
-                href={"/dashboard"}
+                // href={"/dashboard"}
               >
                 Register
               </Button>

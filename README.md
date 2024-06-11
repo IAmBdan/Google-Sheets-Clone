@@ -1,29 +1,79 @@
-# Create T3 App
+# Husksheets
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## Project Overview
+Husksheets is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. The project consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
 
-## What's next? How do I make an app with this?
+## Technologies Used
+- T3 Stack
+  - Next.js
+  - tRPC
+  - Prisma
+- React
+- TypeScript
+- PlanetScale
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Prerequisites
+- Node.js
+- npm or yarn
+- PlanetScale account
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Installation 
+|
+|
+|
+|
+|
+|
+|
 
-## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Running the Project
+To start the development server, run:
+- npm run dev
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Classes
 
-## How do I deploy this?
+## cell.ts
+The Cell class represents an individual cell in a spreadsheet.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Properties: value, ref, refAsString
+Methods: Get/set value, references, and comparison with other cells.
+
+## ref.ts
+The Ref class represents a reference to a cell location.
+
+Properties: column, row
+Methods: Convert to string, get/set column/row, comparison with other references.
+
+## sheet.ts
+The Sheet class represents a spreadsheet.
+
+Properties: cells, sheetTitle, publisher, sheetID, listeners
+Methods: Get/set cell values, evaluate formulas, manage listeners, retrieve sheet size and title.
+
+## sheetGraphManager.ts
+The SheetGraphManager class manages the relationships between sheets and publishers.
+
+Properties: sheets, publishers, sheetPublisherMap, sharedUsersMap
+Methods: Add/remove sheets and publishers, manage shared users, retrieve sheets and publishers.
+
+## publisher.ts
+The Publisher class represents the publisher of a sheet.
+
+Properties:
+- Add properties and methods as defined in your actual Publisher class implementation.
+
+## API Routes Overview
+
+Our project includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
+
+
+
+
+
+
+
+
+

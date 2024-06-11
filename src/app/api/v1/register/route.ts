@@ -45,11 +45,15 @@ export async function GET(req: NextRequest) {
         }
 
         // Create a new publisher with the username as the name
-        const newPublisher = await prisma.publisher.create({
-            data: {
-                name: user.username,
+        const existingPublisher = await prisma.publisher.findFirst({
+            where: {
+                name: username
             }
         });
+
+        if (existingPublisher) {
+            return NextResponse.json({ message: 'Publisher already exists' }, { status: 409 });
+        }
 
         return NextResponse.json({ message: 'Publisher created successfully' }, { status: 201 });
     } catch (error) {
