@@ -12,7 +12,6 @@ Husksheets is a collaborative spreadsheet application designed to allow multiple
 - TypeScript
 - PlanetScale
 
-## Getting Started 
 
 ## Prerequisites
 - Node.js
@@ -65,6 +64,14 @@ The Publisher class represents the publisher of a sheet.
 
 Properties:
 - Add properties and methods as defined in your actual Publisher class implementation.
+
+## API Routes Overview
+
+Our project includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
+
+
+
+
 
 
 
