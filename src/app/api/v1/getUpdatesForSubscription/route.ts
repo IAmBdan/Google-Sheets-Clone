@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     try {
         const { publisher, sheet, id } = await req.json();
 
-        if (!publisher || !sheet || !id) {
+        if (publisher === undefined || sheet === undefined || id === undefined) {
             return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
         }
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
             where: {
                 subscriptionId: subscription.id,
                 id: {
-                    gt: id
+                    gt: String(id)
                 }
             },
             orderBy: {
