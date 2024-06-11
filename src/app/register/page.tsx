@@ -15,21 +15,20 @@ import { LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
 const Register = () => {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
-    const credentials = btoa(`${name}:${password}`);
     try {
-      const response = await fetch("/api/register", {
-        method: "GET",
+      const response = await fetch("/api/v1/createUser", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Basic ${credentials}`,
         },
+        body: JSON.stringify({ username: email, password: password }),
       });
-
+      console.log(response.status);
+      
       if (response.status === 201) {
         // Successfully registered
         window.location.href = "/dashboard";
@@ -63,19 +62,6 @@ const Register = () => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  name="name"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
                   required
                   fullWidth
                   id="email"
@@ -103,7 +89,7 @@ const Register = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleRegister}
-                href={"/dashboard"}
+                // href={"/dashboard"}
               >
                 Register
               </Button>
