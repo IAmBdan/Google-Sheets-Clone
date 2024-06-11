@@ -32,10 +32,10 @@ export default function Cell({
     typeof value === "number"
       ? String(value)
       : typeof value === "string"
-      ? value
-      : value?.formula
-      ? value?.formula
-      : "";
+        ? value
+        : value?.formula
+          ? value?.formula
+          : "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -50,7 +50,7 @@ export default function Cell({
     sheet.setCell(cellRef, parsedValue);
     setValue(parsedValue);
 
-    if (newValue.startsWith('=')) {
+    if (newValue.startsWith("=")) {
       sheet.evaluateCellFormula(cellRef);
     }
   };
