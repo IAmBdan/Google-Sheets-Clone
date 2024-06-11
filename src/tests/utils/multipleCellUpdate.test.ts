@@ -1,29 +1,23 @@
-//all tests work
 
-import parseRef from "../../utils/parseRef";
-import { parseTerm } from "../../utils/parseTerm";
-import { parseMultipleCellUpdate } from  "../../utils/multipleCellUpdate";
-import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
-
-import { Ref } from "../../classes/ref"
+import { multipleCellUpdate } from '../../utils/multipleCellUpdate';
 //Brian Daniels
 
-describe('multipleCellUpdate', () => {
+describe ('multiple cell update', () => {
 
-    test('parses valid input', () => {
+    test('updates multiple cells', () => {
+
         const input = [
             '$A1 123',
             '$B2 456',
             '$C3 789'
         ].join('\n');
-        const result = parseMultipleCellUpdate(input);
+
+        const result = multipleCellUpdate(input);
+
         expect(result).toEqual([
             { ref: { column: 'A', row: 1 }, term: 123 },
             { ref: { column: 'B', row: 2 }, term: 456 },
             { ref: { column: 'C', row: 3 }, term: 789 }
         ]);
     });
-
 });
-
-
