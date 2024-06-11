@@ -14,6 +14,7 @@ export default function Cell({
   sheet: Sheet;
 }) {
   const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const listener = () => {
@@ -28,14 +29,13 @@ export default function Cell({
     };
   }, [sheet, cellRef]);
 
-  const stringValue =
-    typeof value === "number"
-      ? String(value)
-      : typeof value === "string"
-      ? value
-      : value?.formula
-      ? value?.formula
-      : "";
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
+  const handleFocus = () => {
+    setIsEditing(true);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -55,11 +55,41 @@ export default function Cell({
     }
   };
 
+  const getCellValueForDisplay = () => {
+    if (typeof value === "object" && value !== null && "formula" in value) {
+      try {
+        const result = sheet.evaluateCellFormula(cellRef);
+        return typeof result === "number"
+          ? String(result)
+          : typeof result === "string"
+          ? result
+          : "";
+      } catch (error) {
+        console.error(`Error evaluating formula for ${cellRef.toString()}:`, error);
+        return "ERROR";
+      }
+    }
+
+    return typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+      ? value
+      : "";
+  };
+
+  const displayValue = isEditing
+    ? (typeof value === "object" && value !== null && "formula" in value)
+      ? value.formula
+      : value ?? ''
+    : getCellValueForDisplay();
+
   return (
     <input
       className="border border-black"
-      value={stringValue}
+      value={displayValue}
       onChange={handleChange}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
     />
   );
 }
