@@ -3,7 +3,7 @@
 import { Publisher } from "../../classes/publisher"
 import { Sheet } from "../../classes/sheets"
 import { Ref } from "../../classes/ref"
-import { parseMultipleCellUpdate } from "../../utils/multipleCellUpdate"
+import { multipleCellUpdate } from "../../utils/multipleCellUpdate"
 import { Cell } from "../../classes/cell"
 import { evaluateFormula } from "~/utils/formula"
 
@@ -200,7 +200,7 @@ import { evaluateFormula } from "~/utils/formula"
 
         test('multiple update', () => {
             const inputLine = '$A1 5';
-            const result = parseMultipleCellUpdate(inputLine);
+            const result = multipleCellUpdate(inputLine);
             sheet.multiUpdate(result);
             const cell = sheet.getCell(new Ref('$A1'));
             expect(cell.getValue()).toBe(5);
