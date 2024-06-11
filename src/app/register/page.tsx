@@ -15,7 +15,7 @@ import { LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
@@ -25,7 +25,7 @@ const Register = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: email, password: password }),
+        body: JSON.stringify({ username: username, password: password }),
       });
       console.log(response.status);
       
@@ -64,11 +64,11 @@ const Register = () => {
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
+                  id="username"
+                  label="Username"
                   name="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>

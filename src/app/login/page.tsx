@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -23,7 +23,7 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    const credentials = encodeCredentials(email, password);
+    const credentials = encodeCredentials(username, password);
 
     try {
       const response = await fetch('/api/v1/checkUser', {
@@ -36,7 +36,7 @@ const Login = () => {
       if (response.status === 200) {
         window.location.href = "/dashboard";
       } else if (response.status === 401 || response.status === 404) {
-        setErrorMessage("Invalid email or password");
+        setErrorMessage("Invalid username or password");
       } else {
         setErrorMessage("An unexpected error occurred");
       }
@@ -66,12 +66,12 @@ const Login = () => {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
+              id="username"
+              label="Username"
+              name="username"
               autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
 
             <TextField
@@ -101,7 +101,7 @@ const Login = () => {
               Login
             </Button>
             <Grid container justifyContent={"flex-end"}></Grid>
-            <a href={"/register"}>Don't have an account? Register</a>
+            <a href={"/register"}>Don&apos;t have an account? Register</a>
           </Box>
         </Box>
       </Container>
