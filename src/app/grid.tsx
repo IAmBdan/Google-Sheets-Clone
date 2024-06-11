@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import Cell from "./cell";
 import { Sheet } from "../classes/sheets";
 import { Ref } from "../classes/ref";
+import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 
 /**
  * Renders a grid of cells, including row and column headers.
@@ -23,7 +24,7 @@ export default function Grid({ sheet }: { sheet: Sheet }) {
           key={i}
           className="border-l border-r border-gray-600 bg-gray-100 text-center"
         >
-          {String.fromCharCode("A".charCodeAt(0) + i)}
+          {numberToColumnLabel(i + 1)}
         </span>
       ))}
 
@@ -40,9 +41,7 @@ export default function Grid({ sheet }: { sheet: Sheet }) {
             <Cell
               key={j}
               sheet={sheet}
-              cellRef={
-                new Ref(String.fromCharCode("A".charCodeAt(0) + j), i + 1)
-              }
+              cellRef={new Ref(numberToColumnLabel(j + 1), i + 1)}
             />
           ))}
         </Fragment>
