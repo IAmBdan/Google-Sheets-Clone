@@ -1,9 +1,7 @@
 "use client"
 
 //Landing Page
-import axios from "axios";
-import { useState, useEffect } from "react";
-import Register from "./_components/register";
+import Register from "./register/page";
 
 export default function Home() {
   return (

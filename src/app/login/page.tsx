@@ -75,6 +75,7 @@ const Login = () => {
             </Button>
             <Grid container justifyContent={"flex-end"}>
             </Grid>
+            <a href={"/register"}>Don&apos;t have an account? Register</a>
           </Box>
         </Box>
       </Container>

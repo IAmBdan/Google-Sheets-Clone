@@ -19,7 +19,29 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async () => {};
+  const handleRegister = async () => {
+    const credentials = btoa(`${name}:${password}`);
+    try {
+      const response = await fetch("/api/register", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Basic ${credentials}`,
+        },
+      });
+
+      if (response.status === 201) {
+        // Successfully registered
+        window.location.href = "/dashboard";
+      } else {
+        const data = await response.json();
+        alert(data.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <>
