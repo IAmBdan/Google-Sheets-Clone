@@ -69,10 +69,17 @@ Properties:
 
 Our project includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
 
+## User Interface Overview
 
+The user interface (UI) components in our project are structured according to their functionality and purpose. We have distinct components for different pages and layouts, each serving a specific role in the application.
 
+Login Page: The login page component handles user authentication and login-related interactions. It ensures a smooth and secure login process for users accessing the application.
 
+The dashboard page serves as a central hub, providing users with an overview of their sheets and access to key functionalities.
 
+The register page allows new users to sign up and create accounts, facilitating their entry into the platform. This page guides users through the registration process, ensuring a smooth and efficient onboarding experience.
+
+Sheet Page: This component represents individual sheets within the application, allowing users to view, edit, and manipulate spreadsheet data. It provides a flexible interface for managing and analyzing data efficiently.
 
 
 
