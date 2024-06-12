@@ -34,6 +34,12 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
         }
 
+        await prisma.publishedUpdate.deleteMany({
+            where: {
+                sheetId: sheet.id
+            }
+        })
+
         await prisma.sheet.delete({
             where: {
                 id: sheet.id
@@ -42,6 +48,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true, message: 'Sheet deleted successfully', value: [], time: currentTime }, { status: 200 });
     } catch (error) {
+        console.error(console.error('Error deleting sheet:', error));
         return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }
 }

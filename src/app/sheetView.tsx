@@ -28,11 +28,11 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
           id: 0,
         });
 
-        console.log(response.data);
+        console.log(response.data.value);
 
         const sheet = new Sheet(26, 100, sheetName, new Publisher(publisher, 0), []);
 
-        response.data.payload.forEach((update: string) => {
+        response.data.value.payload.forEach((update: string) => {
           sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
         })
 
