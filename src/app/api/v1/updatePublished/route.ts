@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
         const { publisher, sheet, payload } = await req.json();
 
         if (!publisher || !sheet || !payload) {
-            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+            return NextResponse.json({ success: false, message: 'Missing required fields', value: [] }, { status: 400 });
         }
 
         const foundPublisher = await prisma.publisher.findFirst({
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundPublisher) {
-            return NextResponse.json({ message: 'Publisher not found' }, { status: 404 });
+            return NextResponse.json({ success: false, message: 'Publisher not found', value: [] }, { status: 404 });
         }
 
         const foundSheet = await prisma.sheet.findFirst({
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundSheet) {
-            return NextResponse.json({ message: 'Sheet not found' }, { status: 404 });
+            return NextResponse.json({ success: false, message: 'Sheet not found', value: [] }, { status: 404 });
         }
 
         const updatedSheet = await prisma.sheet.update({
@@ -42,9 +42,8 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        return NextResponse.json({ message: 'Sheet updated successfully' }, { status: 200 });
+        return NextResponse.json({ success: true, message: 'Sheet updated successfully', value: [] }, { status: 200 });
     } catch (error) {
-        console.error('Error updating sheet:', error);
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ success: false, message: 'Internal server error', value: [] }, { status: 500 });
     }
 }

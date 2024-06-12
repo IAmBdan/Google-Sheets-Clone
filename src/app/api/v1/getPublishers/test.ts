@@ -34,10 +34,13 @@ describe('GET /api/v1/getPublishers', () => {
 
         expect(res.status).toBe(200);
         const json = await res.json();
-        expect(json).toEqual([
+        expect(json).toEqual({
+            success: true,
+            message: null,
+            value: [
             { publisher: 'Publisher1' },
             { publisher: 'Publisher2' },
-        ]);
+        ]});
     });
 
     it('should return 500 if there is an internal server error', async () => {
@@ -49,6 +52,6 @@ describe('GET /api/v1/getPublishers', () => {
 
         expect(res.status).toBe(500);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Internal server error' });
+        expect(json).toEqual({ success: false, message: 'server error', value: [] });
     });
 });

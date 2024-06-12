@@ -34,7 +34,7 @@ describe('POST /api/v1/getSheets', () => {
 
         expect(res.status).toBe(400);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Missing required fields' });
+        expect(json).toEqual({ success: false, message: 'Missing required fields', value: [] });
     });
 
     it('should return 404 if publisher is not found', async () => {
@@ -49,7 +49,7 @@ describe('POST /api/v1/getSheets', () => {
 
         expect(res.status).toBe(404);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Publisher not found' });
+        expect(json).toEqual({ success: false, message: 'Publisher not found', value: [] });
     });
 
     it('should return a list of sheets for the given publisher', async () => {
@@ -71,10 +71,13 @@ describe('POST /api/v1/getSheets', () => {
 
         expect(res.status).toBe(200);
         const json = await res.json();
-        expect(json).toEqual([
-            { publisher: 'testPublisher', sheet: 'Sheet1' },
-            { publisher: 'testPublisher', sheet: 'Sheet2' },
-        ]);
+        expect(json).toEqual( {
+            success: true,
+            message: "Sheets retrieved",
+            value: [
+            { id: "1", payload: "", publisher: 'testPublisher', sheet: 'Sheet1' },
+            { id: "2", payload: "", publisher: 'testPublisher', sheet: 'Sheet2' },
+        ]});
     });
 
     it('should return 500 if there is an internal server error', async () => {
@@ -89,6 +92,6 @@ describe('POST /api/v1/getSheets', () => {
 
         expect(res.status).toBe(500);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Internal server error' });
+        expect(json).toEqual({ success: false, message: 'Internal server error', value: [] });
     });
 });

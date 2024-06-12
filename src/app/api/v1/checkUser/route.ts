@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     try {
         const credentials = parseBasicAuth(req);
         if (!credentials) {
-            return NextResponse.json({ message: 'Authorization header is missing or invalid' }, { status: 401 });
+            return NextResponse.json({ success: false, message: 'Authorization header is missing or invalid', value: [] }, { status: 401 });
         }
 
         const { username, password } = credentials;
@@ -35,16 +35,16 @@ export async function GET(req: NextRequest) {
         });
 
         if (!user) {
-            return NextResponse.json({ message: 'User not found' }, { status: 404 });
+            return NextResponse.json({ success: false, message: 'User not found', value: [] }, { status: 404 });
         }
 
         // Compare passwords
         if (user.password !== password) {
-            return NextResponse.json({ message: 'Invalid password' }, { status: 401 });
+            return NextResponse.json({ success: false, message: 'Invalid password', value: [] }, { status: 401 });
         }
 
-        return NextResponse.json({ message: 'User authenticated successfully' }, { status: 200 });
+        return NextResponse.json({ success: true, message: 'User authenticated successfully', value: [] }, { status: 200 });
     } catch (error) {
-        return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+        return NextResponse.json({ success: false, message: "", error: 'An error occurred', value: [] }, { status: 500 });
     }
 }

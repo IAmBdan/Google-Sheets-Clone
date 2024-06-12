@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 
 // Create a new sheet given publisher and sheet name
 export async function POST(req: NextRequest) {
+    const currentTime = Date.now();
     const { username, password } = await req.json();
     const user = await prisma.user.create({
         data: {
@@ -12,5 +13,13 @@ export async function POST(req: NextRequest) {
             password
         }
     });
-    return NextResponse.json(user, { status: 201 });
+
+    const result = {
+        success: true,
+        message: null,
+        value: user,
+        time: currentTime
+    }
+
+    return NextResponse.json(result, { status: 201 });
 }

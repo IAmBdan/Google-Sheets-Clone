@@ -10,6 +10,7 @@ jest.mock('@prisma/client', () => {
             findFirst: jest.fn(),
         },
         publisher: {
+            findFirst: jest.fn(),
             create: jest.fn(),
         },
     };
@@ -32,7 +33,11 @@ describe('GET /api/v1/register', () => {
 
         expect(res.status).toBe(401);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Missing or invalid Authorization header' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Missing or invalid Authorization header',
+            value: [],
+        });
     });
 
     it('should return 401 if invalid credentials', async () => {
@@ -42,7 +47,7 @@ describe('GET /api/v1/register', () => {
         req = new NextRequest('http://localhost', {
             method: 'GET',
             headers: new Headers({
-                'Authorization': `Basic ${credentials}`
+                'Authorization': `Basic ${credentials}`,
             }),
         });
 
@@ -50,18 +55,46 @@ describe('GET /api/v1/register', () => {
 
         expect(res.status).toBe(401);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Invalid credentials' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Invalid credentials',
+            value: [],
+        });
+    });
+
+    it('should return 409 if publisher already exists', async () => {
+        (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue({ id: '1', username: 'validUser', password: 'validPassword' });
+        (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: '1', name: 'validUser' });
+
+        const credentials = Buffer.from('validUser:validPassword').toString('base64');
+        req = new NextRequest('http://localhost', {
+            method: 'GET',
+            headers: new Headers({
+                'Authorization': `Basic ${credentials}`,
+            }),
+        });
+
+        const res = await GET(req);
+
+        expect(res.status).toBe(409);
+        const json = await res.json();
+        expect(json).toEqual({
+            success: false,
+            message: 'Publisher already exists',
+            value: [],
+        });
     });
 
     it('should create a new publisher and return 201', async () => {
-        (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue({id: '1', username: 'validUser', password: 'validPassword' });
+        (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue({ id: '1', username: 'validUser', password: 'validPassword' });
+        (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue(null);
         (prisma.publisher.create as jest.MockedFunction<typeof prisma.publisher.create>).mockResolvedValue({ id: '1', name: 'validUser' });
 
         const credentials = Buffer.from('validUser:validPassword').toString('base64');
         req = new NextRequest('http://localhost', {
             method: 'GET',
             headers: new Headers({
-                'Authorization': `Basic ${credentials}`
+                'Authorization': `Basic ${credentials}`,
             }),
         });
 
@@ -69,7 +102,11 @@ describe('GET /api/v1/register', () => {
 
         expect(res.status).toBe(201);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Publisher created successfully' });
+        expect(json).toEqual({
+            success: true,
+            message: 'Publisher created successfully',
+            value: [],
+        });
     });
 
     it('should return 500 if there is an internal server error', async () => {
@@ -79,7 +116,7 @@ describe('GET /api/v1/register', () => {
         req = new NextRequest('http://localhost', {
             method: 'GET',
             headers: new Headers({
-                'Authorization': `Basic ${credentials}`
+                'Authorization': `Basic ${credentials}`,
             }),
         });
 
@@ -87,6 +124,10 @@ describe('GET /api/v1/register', () => {
 
         expect(res.status).toBe(500);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Internal server error' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Internal server error',
+            value: [],
+        });
     });
 });

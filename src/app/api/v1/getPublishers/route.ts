@@ -12,9 +12,14 @@ export async function GET(req: NextRequest) {
             publisher: publisher.name
         }));
 
-        return NextResponse.json(response, { status: 200 });
+        const result = {
+            success: true,
+            message: null,
+            value: response,
+        }
+
+        return NextResponse.json(result, { status: 200 });
     } catch (error) {
-        console.error('Error fetching publishers:', error);
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ success: false, message: 'server error', value: [] }, { status: 500 });
     }
 }
