@@ -34,6 +34,7 @@ export default function Dashboard() {
         name: sheetName,
       });
       // This line shouldn't be needed
+      // @ts-ignore
       setSheets([...sheets, response.data]);
       console.log(response.data);
     } catch (error) {
@@ -86,7 +87,7 @@ export default function Dashboard() {
               key={publisher}
               className="relative flex w-full flex-col rounded border border-black p-2"
             >
-              <a href={"/sheet"} className="flex-grow">
+              <a href={`/sheet/${publisher}/${sheet}`} className="flex-grow">
                 <h2 className="text-xl font-bold">{sheet}</h2>
                 <span>{publisher}</span>
               </a>
