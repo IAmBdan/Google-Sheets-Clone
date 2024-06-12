@@ -35,31 +35,31 @@ To start the development server, run:
 
 ## Classes
 
-## cell.ts
+### cell.ts
 The Cell class represents an individual cell in a spreadsheet.
 
 Properties: value, ref, refAsString
 Methods: Get/set value, references, and comparison with other cells.
 
-## ref.ts
+### ref.ts
 The Ref class represents a reference to a cell location.
 
 Properties: column, row
 Methods: Convert to string, get/set column/row, comparison with other references.
 
-## sheet.ts
+### sheet.ts
 The Sheet class represents a spreadsheet.
 
 Properties: cells, sheetTitle, publisher, sheetID, listeners
 Methods: Get/set cell values, evaluate formulas, manage listeners, retrieve sheet size and title.
 
-## sheetGraphManager.ts
+### sheetGraphManager.ts
 The SheetGraphManager class manages the relationships between sheets and publishers.
 
 Properties: sheets, publishers, sheetPublisherMap, sharedUsersMap
 Methods: Add/remove sheets and publishers, manage shared users, retrieve sheets and publishers.
 
-## publisher.ts
+### publisher.ts
 The Publisher class represents the publisher of a sheet.
 
 Properties:
