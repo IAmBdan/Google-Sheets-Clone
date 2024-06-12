@@ -45,6 +45,18 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
   useEffect(() => {
     if (sheet) {
       const interval = setInterval(async () => {
+        const response = await axios.post("/api/v1/getUpdatesForSubscription", {
+          sheet: sheetName,
+          publisher: publisher,
+          id: 0,
+        });
+
+        console.log(response.data);
+
+        response.data.payload.forEach((update: string) => {
+          sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
+        });
+
         const updates = sheet.generateUpdate();
 
         if (updates.length) {
