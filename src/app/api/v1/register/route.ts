@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { Buffer } from 'buffer';
 
 const prisma = new PrismaClient();
+const currentTime = Date.now();
 
 // Helper function to parse basic auth
 function parseBasicAuth(req: NextRequest) {
@@ -27,7 +28,7 @@ export async function GET(req: NextRequest) {
         const credentials = parseBasicAuth(req);
 
         if (!credentials) {
-            return NextResponse.json({ message: 'Missing or invalid Authorization header' }, { status: 401 });
+            return NextResponse.json({ success: false, message: 'Missing or invalid Authorization header', value: [], time: currentTime }, { status: 401 });
         }
 
         const { username, password } = credentials;
@@ -41,7 +42,7 @@ export async function GET(req: NextRequest) {
         });
 
         if (!user) {
-            return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
+            return NextResponse.json({ success: false, message: 'Invalid credentials', value: [], time: currentTime }, { status: 401 });
         }
 
         // Create a new publisher with the username as the name
@@ -52,12 +53,11 @@ export async function GET(req: NextRequest) {
         });
 
         if (existingPublisher) {
-            return NextResponse.json({ message: 'Publisher already exists' }, { status: 409 });
+            return NextResponse.json({ success: false, message: 'Publisher already exists', value: [], time: currentTime }, { status: 409 });
         }
 
-        return NextResponse.json({ message: 'Publisher created successfully' }, { status: 201 });
+        return NextResponse.json({ success: true, message: 'Publisher created successfully', value: [], time: currentTime }, { status: 201 });
     } catch (error) {
-        console.error('Error creating publisher:', error);
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }
 }

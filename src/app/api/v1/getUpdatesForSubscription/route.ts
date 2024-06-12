@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
+const currentTime = Date.now();
 
 // Get updates for a given publisher, sheet, and id
 export async function POST(req: NextRequest) {
@@ -9,7 +10,7 @@ export async function POST(req: NextRequest) {
         const { publisher, sheet, id } = await req.json() as { publisher: string, sheet: string, id: number };
 
         if (publisher === undefined || sheet === undefined || id === undefined) {
-            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+            return NextResponse.json({ success: false, message: 'Missing required fields', value: [], time: currentTime }, { status: 400 });
         }
 
         const foundPublisher = await prisma.publisher.findFirst({
@@ -19,7 +20,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundPublisher) {
-            return NextResponse.json({ message: 'Publisher not found' }, { status: 404 });
+            return NextResponse.json({ success: false, message: 'Publisher not found', value: [], time: currentTime }, { status: 404 });
         }
 
         const foundSheet = await prisma.sheet.findFirst({
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundSheet) {
-            return NextResponse.json({ message: 'Sheet not found' }, { status: 404 });
+            return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
         }
 
 
@@ -54,9 +55,15 @@ export async function POST(req: NextRequest) {
             id: lastId
         };
 
-        return NextResponse.json(response, { status: 200 });
+        const result = {
+            success: true,
+            message: null,
+            value: response,
+            time: currentTime
+        }
+
+        return NextResponse.json(result, { status: 200 });
     } catch (error) {
-        console.error('Error fetching updates:', error);
-        return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }
 }

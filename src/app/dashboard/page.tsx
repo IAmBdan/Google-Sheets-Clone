@@ -16,7 +16,7 @@ export default function Dashboard() {
       const response = await axios.post("/api/v1/getSheets", {
         publisher: client,
       });
-      setSheets(response.data);
+      setSheets(response.data.value);
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching sheets:", error);
@@ -33,9 +33,6 @@ export default function Dashboard() {
         publisher: client,
         name: sheetName,
       });
-      // This line shouldn't be needed
-      // @ts-ignore
-      setSheets([...sheets, response.data]);
       console.log(response.data);
     } catch (error) {
       console.error("Error creating sheet:", error);
@@ -48,7 +45,6 @@ export default function Dashboard() {
         publisher: client,
         name: sheetName,
       });
-      setSheets(sheets.filter((sheet) => sheet !== sheetName));
       console.log(response.data);
     } catch (error) {
       console.error("Error deleting sheet:", error);
