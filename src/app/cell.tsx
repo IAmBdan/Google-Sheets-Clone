@@ -13,12 +13,26 @@ export default function Cell({
   cellRef: Ref;
   sheet: Sheet;
 }) {
-  const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+  const [cellData, setCellData] = useState(() => {
+    const cell = sheet.getCell(cellRef);
+    const value = cell.getValue();
+    return {
+      value,
+      formula: isFormula(value) ? value.formula : "",
+      computedValue: cell.getComputedValue() || "",
+    };
+  });
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const listener = () => {
-      const newValue = sheet.getCell(cellRef).getValue();
-      setValue(newValue);
+      const cell = sheet.getCell(cellRef);
+      const value = cell.getValue();
+      setCellData({
+        value,
+        formula: isFormula(value) ? value.formula : "",
+        computedValue: cell.getComputedValue() || "",
+      });
     };
 
     sheet.addListener(listener);
@@ -27,15 +41,6 @@ export default function Cell({
       sheet.removeListener(listener);
     };
   }, [sheet, cellRef]);
-
-  const stringValue =
-    typeof value === "number"
-      ? String(value)
-      : typeof value === "string"
-        ? value
-        : value?.formula
-          ? value?.formula
-          : "";
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -48,18 +53,37 @@ export default function Cell({
     }
 
     sheet.setCell(cellRef, parsedValue, true);
-    setValue(parsedValue);
+    setCellData((prevData) => ({
+      ...prevData,
+      value: parsedValue,
+      formula: newValue.startsWith("=") ? newValue : prevData.formula,
+    }));
 
     if (newValue.startsWith("=")) {
       sheet.evaluateCellFormula(cellRef);
     }
   };
 
+  const handleDoubleClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+  };
+
   return (
     <input
       className="border border-black"
-      value={stringValue}
+      value={isEditing ? cellData.formula : String(cellData.computedValue)}
       onChange={handleChange}
+      onDoubleClick={handleDoubleClick}
+      onBlur={handleBlur}
     />
   );
+}
+
+// Type guard to check if a value is a formula object
+function isFormula(value: any): value is { formula: string } {
+  return typeof value === "object" && value !== null && "formula" in value;
 }
