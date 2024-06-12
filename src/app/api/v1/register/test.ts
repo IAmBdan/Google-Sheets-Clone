@@ -37,6 +37,7 @@ describe('GET /api/v1/register', () => {
             success: false,
             message: 'Missing or invalid Authorization header',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -59,6 +60,7 @@ describe('GET /api/v1/register', () => {
             success: false,
             message: 'Invalid credentials',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -82,6 +84,7 @@ describe('GET /api/v1/register', () => {
             success: false,
             message: 'Publisher already exists',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -106,6 +109,7 @@ describe('GET /api/v1/register', () => {
             success: true,
             message: 'Publisher created successfully',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -128,6 +132,7 @@ describe('GET /api/v1/register', () => {
             success: false,
             message: 'Internal server error',
             value: [],
+            time: expect.any(Number),
         });
     });
 });

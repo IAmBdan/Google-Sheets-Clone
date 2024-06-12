@@ -39,6 +39,7 @@ describe('POST /api/v1/deleteSheet', () => {
             success: false,
             message: 'Missing required fields',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -58,6 +59,7 @@ describe('POST /api/v1/deleteSheet', () => {
             success: false,
             message: 'Publisher not found',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -79,6 +81,7 @@ describe('POST /api/v1/deleteSheet', () => {
             success: false,
             message: 'Sheet not found',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -111,6 +114,7 @@ describe('POST /api/v1/deleteSheet', () => {
             success: true,
             message: 'Sheet deleted successfully',
             value: [],
+            time: expect.any(Number),
         });
     });
 
@@ -130,6 +134,7 @@ describe('POST /api/v1/deleteSheet', () => {
             success: false,
             message: 'Internal server error',
             value: [],
+            time: expect.any(Number),
         });
     });
 });
