@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 // Update the subscription with the given payload
 export async function POST(req: NextRequest) {
     try {
-        const { publisher, sheet, payload } = await req.json();
+        const { publisher, sheet, payload } = await req.json() as { publisher: string, sheet: string, payload: string };
 
         if (!publisher || !sheet || !payload) {
             return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
@@ -33,19 +33,9 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ message: 'Sheet not found' }, { status: 404 });
         }
 
-        const subscription = await prisma.subscription.findFirst({
-            where: {
-                sheetId: foundSheet.id,
-            }
-        });
-
-        if (!subscription) {
-            return NextResponse.json({ message: 'Subscription not found' }, { status: 404 });
-        }
-
-        const updatedSubscription = await prisma.subscriptionUpdate.create({
+        const updatedSubscription = await prisma.publishedUpdate.create({
             data: {
-                subscriptionId: subscription.id,
+                sheetId: foundSheet.id,
                 payload
             }
         });

@@ -29,16 +29,7 @@ model Sheet {
   publisherId      String
   name             String
   payload          String
-  subscriptions    Subscription[]
   publishedUpdates PublishedUpdate[]
-}
-
-model Subscription {
-  id      String               @id @default(uuid())
-  sheet   Sheet                @relation(fields: [sheetId], references: [id])
-  sheetId String
-  payload String
-  updates SubscriptionUpdate[]
 }
 
 model PublishedUpdate {
@@ -49,10 +40,3 @@ model PublishedUpdate {
   timestamp DateTime @default(now())
 }
 
-model SubscriptionUpdate {
-  id             String       @id @default(uuid())
-  subscription   Subscription @relation(fields: [subscriptionId], references: [id])
-  subscriptionId String
-  payload        String
-  timestamp      DateTime     @default(now())
-}
