@@ -94,28 +94,29 @@ export default function Dashboard() {
           </button>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sheets.map(({ publisher, sheet }) => (
-            <div
-              key={publisher}
-              className="relative flex w-full flex-col rounded border border-black p-2 bg-white bg-opacity-90"
-            >
-              <a href={`/sheet/${publisher}/${sheet}`} className="flex-grow">
-                <h2 className="text-xl font-bold">{sheet}</h2>
-                <span>{publisher}</span>
-              </a>
-              <button
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await deleteSheet(client, sheet);
-                  await fetchSheets();
-                }}
-                className="right-2 top-2 rounded-md bg-red-500 px-2 py-1 text-white transition hover:bg-red-600"
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
+  {sheets.map(({ publisher, sheet }) => (
+    <div
+      key={publisher}
+      className="relative flex flex-col items-center justify-center rounded border border-black p-2 bg-white bg-opacity-90"
+    >
+      <a href={`/sheet/${publisher}/${sheet}`} className="flex-grow text-center">
+        <h2 className="text-xl font-bold">{sheet}</h2>
+        <span>{publisher}</span>
+      </a>
+      <button
+        onClick={async (e) => {
+          e.preventDefault();
+          await deleteSheet(client, sheet);
+          await fetchSheets();
+        }}
+        className="rounded-md bg-red-500 px-2 py-1 text-white transition hover:bg-red-600"
+      >
+        Delete
+      </button>
+    </div>
+  ))}
+</div>
+
 
         {isModalOpen && (
           <div className="fixed inset-0 flex items-center justify-center bg-gray-600 bg-opacity-50">
