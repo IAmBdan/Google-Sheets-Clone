@@ -47,7 +47,7 @@ export default function Cell({
       parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
     }
 
-    sheet.setCell(cellRef, parsedValue);
+    sheet.setCell(cellRef, parsedValue, true);
     setValue(parsedValue);
 
     if (newValue.startsWith("=")) {

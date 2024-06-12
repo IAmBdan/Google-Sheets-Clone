@@ -19,6 +19,7 @@ type CellValue = number | string | { formula: string } | null;
     private publisher: Publisher;
     private sheetID: number;
    private listeners: (() => void)[] = [];
+   private updates = new Map<Ref, Term>();
 
   constructor(
     numColumns: number,
@@ -40,7 +41,7 @@ type CellValue = number | string | { formula: string } | null;
     this.publisher = new Publisher(publisher.name, publisher.id);
     this.sheetID = NaN;
   }
-   
+
   //returns the cell at the given reference
   getCell(ref: Ref): Cell {
     const columnIndex = ref.getColumnIndex() - 1;
@@ -111,7 +112,7 @@ type CellValue = number | string | { formula: string } | null;
     return this.sheetTitle;
   }
 
-    
+
   addListener(listener: () => void): void {
     this.listeners.push(listener);
   }
@@ -126,10 +127,14 @@ type CellValue = number | string | { formula: string } | null;
     }
   }
 
-  setCell(ref: Ref, value: Term): void {
+  setCell(ref: Ref, value: Term, isClientUpdate: boolean): void {
     if (ref && value) {
       const cell = this.getCell(ref);
       cell.setValue(value);
+
+      if (isClientUpdate) {
+        this.updates.set(ref, value);
+      }
 
       this.listeners.forEach((l) => l());
     }
@@ -151,9 +156,9 @@ type CellValue = number | string | { formula: string } | null;
         }
         return cellValue;
       };
-  
+
       const result = evaluateFormula(value, getCellValue);
-      this.setCell(ref, result as Term);
+      this.setCell(ref, result as Term, false);
     }
   }
 
@@ -178,7 +183,7 @@ type CellValue = number | string | { formula: string } | null;
   getId(): number {
     return this.sheetID;
   }
-   
+
   setId(id: number): void {
     if (id < 0 || id === -Infinity || id === Infinity || Number.isNaN(id)) {
       throw new Error("Invalid id");
@@ -244,10 +249,10 @@ type CellValue = number | string | { formula: string } | null;
         const numCols = this.cells[0]?.length ?? 0;
         const columnLabels = Array.from({ length: numCols }, (_, i) => numberToColumnLabel(i + 1).padStart(3, ' '));
         const columnHeader = '    ' + columnLabels.join(' | ') + '\n';
-    
+
         cellDisplay.push(header);
         cellDisplay.push(columnHeader);
-    
+
         for (let rowIndex = 0; rowIndex < this.cells.length; rowIndex++) {
             const row = this.cells[rowIndex];
             const rowLabel = (rowIndex + 1).toString().padStart(3, ' ');
@@ -262,13 +267,13 @@ type CellValue = number | string | { formula: string } | null;
                     return value.toString().padStart(3, ' ');
                 }
             }).join(' | ');
-    
+
             cellDisplay.push(`${rowLabel} | ${rowValues}`);
         }}
-    
+
         return cellDisplay.join('\n');
     }
-    
+
     //returns a string representation of the sheet with the given range
     singleUpdate(ref: Ref, value: Term): void {
         this.setCell(ref, value);
@@ -282,7 +287,16 @@ type CellValue = number | string | { formula: string } | null;
     //returns a string representation of the sheet with the given range
     multiUpdate(values: singleUpdate[]): void {
         for (const { ref, term } of values) {
-            this.setCell(ref, term);
+            this.setCell(ref, term, false);
         }
+    }
+
+    generateUpdate(): singleUpdate[] {
+        const updates: singleUpdate[] = [];
+        for (const [ref, term] of this.updates) {
+            updates.push({ ref, term });
+        }
+        this.updates.clear();
+        return updates;
     }
 }
