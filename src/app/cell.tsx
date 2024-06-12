@@ -14,6 +14,7 @@ export default function Cell({
   sheet: Sheet;
 }) {
   const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+  const [referenceMap, setReferenceMap] = useState(new Map<string, Ref[]>());
 
   useEffect(() => {
     const listener = () => {
@@ -51,6 +52,18 @@ export default function Cell({
     setValue(parsedValue);
 
     if (newValue.startsWith("=")) {
+      console.log(cellRef);
+      const references = parseCellReferences(newValue);
+      console.log("References", references);
+      references.forEach(ref => {
+        if (!referenceMap.has(ref)) {
+          referenceMap.set(ref, []);
+        }
+        if (!referenceMap.get(ref)?.includes(cellRef)) {
+          referenceMap.get(ref)?.push(cellRef);
+        }
+      });
+      console.log("ReferenceMap", referenceMap);
       sheet.evaluateCellFormula(cellRef);
     }
   };
@@ -62,4 +75,12 @@ export default function Cell({
       onChange={handleChange}
     />
   );
+}
+
+// Parse cell references from formula
+function parseCellReferences(formula: string): string[] {
+  // Regular expression to match cell references
+  const cellReferencePattern = /\$?[A-Z]+\$?\d+/g;
+  const matches = formula.match(cellReferencePattern);
+  return matches ? matches : [];
 }

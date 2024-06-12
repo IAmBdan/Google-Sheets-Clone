@@ -44,6 +44,7 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
 
   useEffect(() => {
     if (sheet) {
+      // on each interval, show a popup message saying saved
       const interval = setInterval(async () => {
         const updates = sheet.generateUpdate();
 
