@@ -20,13 +20,9 @@ Husksheets is a collaborative spreadsheet application designed to allow multiple
 - PlanetScale account
 
 ## Installation 
-|
-|
-|
-|
-|
-|
-|
+- npm install
+- make
+- npm run dev
 
 
 ## Running the Project
