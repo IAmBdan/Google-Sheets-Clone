@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 // Chris
 import { type NextRequest, NextResponse } from 'next/server';
+=======
+// @author Chris
+import { NextRequest, NextResponse } from 'next/server';
+>>>>>>> eec46011e15ec35b8cd5862aff71714472524ef7
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -44,6 +49,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true, message: 'Subscription update recorded successfully', value: [], time: currentTime }, { status: 200 });
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }
 }

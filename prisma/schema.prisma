@@ -1,5 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider     = "mysql"
@@ -7,13 +8,9 @@ datasource db {
   relationMode = "prisma"
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 model User {
-  id       String   @id @default(uuid())
-  username String   @unique
+  id       String @id @default(uuid())
+  username String @unique
   password String
 }
 
@@ -25,18 +22,17 @@ model Publisher {
 
 model Sheet {
   id               String            @id @default(uuid())
-  publisher        Publisher         @relation(fields: [publisherId], references: [id])
   publisherId      String
-  sheet             String
+  sheet            String
   payload          String
+  publisher        Publisher         @relation(fields: [publisherId], references: [id])
   publishedUpdates PublishedUpdate[]
 }
 
 model PublishedUpdate {
   id        String   @id @default(uuid())
-  sheet     Sheet    @relation(fields: [sheetId], references: [id])
   sheetId   String
   payload   String
   timestamp DateTime @default(now())
+  sheet     Sheet    @relation(fields: [sheetId], references: [id])
 }
-

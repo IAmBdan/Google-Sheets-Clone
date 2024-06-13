@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { type Ref } from "~/classes/ref";
 import { type Term } from "~/types/term";
 import { type Sheet } from "~/classes/sheets";
-
 /**
  * Renders a single cell in the grid.
  */
@@ -13,8 +12,31 @@ export default function Cell({
   cellRef: Ref;
   sheet: Sheet;
 }) {
+  const [draftValue, setDraftValue] = useState("");
   const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+<<<<<<< HEAD
   const [referenceMap] = useState(new Map<string, Ref[]>());
+=======
+  const [isFocused, setIsFocused] = useState(false);
+
+  const displayValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value
+        : value?.formula
+          ? value?.value
+          : "";
+
+  const editValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value
+        : value?.formula
+          ? value?.formula
+          : "";
+>>>>>>> eec46011e15ec35b8cd5862aff71714472524ef7
 
   useEffect(() => {
     const listener = () => {
@@ -29,20 +51,12 @@ export default function Cell({
     };
   }, [sheet, cellRef]);
 
-  const stringValue =
-    typeof value === "number"
-      ? String(value)
-      : typeof value === "string"
-        ? value
-        : value?.formula
-          ? value?.formula
-          : "";
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+  const handleChange = (newValue: string) => {
     let parsedValue: Term;
 
-    if (newValue === "") {
+    if (newValue.startsWith("=")) {
+      parsedValue = { formula: newValue };
+    } else if (newValue === "") {
       parsedValue = null;
     } else {
       parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
@@ -50,37 +64,21 @@ export default function Cell({
 
     sheet.setCell(cellRef, parsedValue, true);
     setValue(parsedValue);
-
-    if (newValue.startsWith("=")) {
-      console.log(cellRef);
-      const references = parseCellReferences(newValue);
-      console.log("References", references);
-      references.forEach(ref => {
-        if (!referenceMap.has(ref)) {
-          referenceMap.set(ref, []);
-        }
-        if (!referenceMap.get(ref)?.includes(cellRef)) {
-          referenceMap.get(ref)?.push(cellRef);
-        }
-      });
-      console.log("ReferenceMap", referenceMap);
-      sheet.evaluateCellFormula(cellRef);
-    }
   };
 
   return (
     <input
       className="border border-black"
-      value={stringValue}
-      onChange={handleChange}
+      value={isFocused ? draftValue : displayValue}
+      onChange={(e) => setDraftValue(e.currentTarget.value)}
+      onFocus={() => {
+        setIsFocused(true);
+        setDraftValue(editValue);
+      }}
+      onBlur={() => {
+        setIsFocused(false);
+        handleChange(draftValue);
+      }}
     />
   );
-}
-
-// Parse cell references from formula
-function parseCellReferences(formula: string): string[] {
-  // Regular expression to match cell references
-  const cellReferencePattern = /\$?[A-Z]+\$?\d+/g;
-  const matches = formula.match(cellReferencePattern);
-  return matches ? matches : [];
 }

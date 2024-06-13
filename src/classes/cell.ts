@@ -2,10 +2,10 @@
 import { Ref } from "./ref";
 
 export { Cell };
-  
+
     // Cell class that represents a cell in a sheet
     class Cell {
-        value: number | string | { formula: string } | null;
+        value: number | string | { formula: string, value?: string | number } | null;
         ref?: Ref | undefined;
         refAsString?: string;
 
@@ -37,7 +37,7 @@ export { Cell };
             this.ref = ref;
             this.refAsString = ref.toString();
         }
-        
+
         //  Setters
         setRefAsString(refAsString: string): void {
             this.refAsString = refAsString;

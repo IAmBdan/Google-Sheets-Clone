@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+=======
+// @author giastina
+>>>>>>> eec46011e15ec35b8cd5862aff71714472524ef7
 "use client";
-// NEW Giastina
+
 import React from "react";
 import {
   Avatar,

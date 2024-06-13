@@ -1,3 +1,3 @@
 //Brian Daniels
 //type for term
-export type Term = number | string | { formula: string } | null;
+export type Term = number | string | { formula: string, value?: number } | null;

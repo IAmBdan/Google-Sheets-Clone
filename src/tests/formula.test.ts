@@ -1,7 +1,9 @@
+// @author giastina
 //all tests work
 
 import { evaluateFormula } from '../utils/formula';
-
+  
+// Mock function to simulate fetching cell values
 describe('evaluateFormula', () => {
   const mockGetCellValue = (ref: string): string | number | null => {
     const mockSheet: Record<string, string | number> = {
@@ -16,6 +18,7 @@ describe('evaluateFormula', () => {
     return mockSheet[ref] ?? null;
   };
 
+    // Test cases for evaluateFormula function
   it('should evaluate a simple number', () => {
     expect(evaluateFormula('1', mockGetCellValue)).toBe(1);
   });

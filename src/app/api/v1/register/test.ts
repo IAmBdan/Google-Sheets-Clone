@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Chris
 import { NextRequest } from 'next/server';
+=======
+// @author Chris
+import { NextRequest, NextResponse } from 'next/server';
+>>>>>>> eec46011e15ec35b8cd5862aff71714472524ef7
 import { PrismaClient } from '@prisma/client';
 import { Buffer } from 'buffer';
 import { GET } from './route';

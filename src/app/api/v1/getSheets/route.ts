@@ -7,6 +7,8 @@ const currentTime = Date.now();
 
 // Get all sheets for a given publisher
 export async function POST(req: NextRequest) {
+    console.log("getSheets");
+
     try {
         const { publisher } = await req.json();
 
@@ -30,11 +32,15 @@ export async function POST(req: NextRequest) {
             }
         });
 
+<<<<<<< HEAD
         const response = sheets.map((sheet: {id: string, publisherId: string, sheet: string, payload: string}) => ({
+=======
+        const response = sheets.map(({ sheet, id, payload }) => ({
+>>>>>>> eec46011e15ec35b8cd5862aff71714472524ef7
             publisher: foundPublisher.name,
-            sheet: sheet.sheet,
-            id: sheet.id,
-            payload: sheet.payload
+            sheet,
+            id,
+            payload
         }));
 
         const result = {
@@ -46,6 +52,7 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }
 }
