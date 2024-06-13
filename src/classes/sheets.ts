@@ -9,7 +9,15 @@ import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 import { evaluateFormula } from "../utils/formula";
 import { singleUpdate } from "../types/singleUpdate";
 
-type CellValue = number | string | { formula: string } | null;
+
+// Parse cell references from formula
+function parseCellReferences(formula: string): string[] {
+  // Regular expression to match cell references
+  const cellReferencePattern = /\$?[A-Z]+\$?\d+/g;
+  const matches = formula.match(cellReferencePattern);
+  return matches ? matches : [];
+}
+
 
 //Sheet class that has a 2D array of cells and a title and a publisher
  export class Sheet {
@@ -20,6 +28,7 @@ type CellValue = number | string | { formula: string } | null;
     private sheetID: number;
    private listeners: (() => void)[] = [];
    private updates = new Map<Ref, Term>();
+   private references = new Map<string, string[]>();
 
   constructor(
     numColumns: number,
@@ -136,15 +145,50 @@ type CellValue = number | string | { formula: string } | null;
         this.updates.set(ref, value);
       }
 
+      // causing recursiin? lol
+
+      if (value.hasOwnProperty("formula")) {
+        value.value = this.evaluateCellFormula(ref);
+
+        const references = parseCellReferences(value.formula);
+        references.forEach((ref2: string) => {
+          console.log("Detected", ref2, "in formula", value.formula);
+          if (!this.references.has(ref2)) {
+            this.references.set(ref2, []);
+          }
+          if (!this.references.get(ref2)?.includes(ref.column + ref.row)) {
+            this.references.get(ref2)?.push(ref.column + ref.row);
+          }
+        })
+
+        console.log("refs", this.references);
+      }
+
+      // look up dependents and update them
+      const dependents = this.references.get(ref.column + ref.row);
+      if (dependents) {
+        dependents.forEach((dependentRef) => {
+          const dependentRefObject = new Ref(/([A-Z]+)(\d+)/.exec(dependentRef)[1], parseInt(/([A-Z]+)(\d+)/.exec(dependentRef)[2]));
+          const cell = this.getCell(dependentRefObject).getValue();
+
+          if (cell?.hasOwnProperty("formula")) {
+            const value = this.evaluateCellFormula(dependentRefObject);
+            if (value != cell.value) {
+              this.setCell(dependentRefObject, { formula: cell.formula, value }, false);
+            }
+          }
+        });
+      }
+
       this.listeners.forEach((l) => l());
     }
   }
 
   //evaluates the formula of the cell at the given reference
-  evaluateCellFormula(ref: Ref): void {
+  evaluateCellFormula(ref: Ref): string | number | null {
     const cell = this.getCell(ref);
     const value = cell.getValue();
-    if (typeof value === "string" && value.startsWith('=')) {
+    if (value?.hasOwnProperty("formula")) {
       const getCellValue = (cellRef: string): string | number | null => {
         const cellRefObj = new Ref(cellRef.slice(1, 2), parseInt(cellRef.slice(2)));
         const cellValue = this.getCell(cellRefObj).getValue();
@@ -152,14 +196,15 @@ type CellValue = number | string | { formula: string } | null;
           throw new Error(`Reference ${cellRef} not found`);
         }
         if (typeof cellValue === "object" && cellValue !== null && 'formula' in cellValue) {
-          return cellValue.formula;
+          return cellValue.value;
         }
         return cellValue;
       };
 
-      const result = evaluateFormula(value, getCellValue);
-      this.setCell(ref, result as Term, false);
+      return evaluateFormula(value.formula, getCellValue);
     }
+
+    return null;
   }
 
   //returns the size of the sheet
@@ -287,15 +332,24 @@ type CellValue = number | string | { formula: string } | null;
     //returns a string representation of the sheet with the given range
     multiUpdate(values: singleUpdate[]): void {
         for (const { ref, term } of values) {
-            this.setCell(ref, term, false);
+            if (term.startsWith("=")) {
+              this.setCell(ref, { formula: term }, false);
+            } else {
+              this.setCell(ref, term, false);
+            }
         }
     }
 
     generateUpdate(): singleUpdate[] {
         const updates: singleUpdate[] = [];
         for (const [ref, term] of this.updates) {
+          if (term?.hasOwnProperty("formula")) {
+            updates.push({ ref, term: term.formula });
+          } else {
             updates.push({ ref, term });
+          }
         }
+        console.log(this.updates);
         this.updates.clear();
         return updates;
     }

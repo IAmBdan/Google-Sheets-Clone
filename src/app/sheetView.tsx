@@ -39,6 +39,18 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
     if (sheet) {
       // on each interval, show a popup message saying saved
       const interval = setInterval(async () => {
+        const response = await axios.post("/api/v1/getUpdatesForSubscription", {
+          sheet: sheetName,
+          publisher: publisher,
+          id: 0,
+        });
+
+        console.log(response.data);
+
+        response.data.value.payload.forEach((update: string) => {
+          sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
+        });
+
         const updates = sheet.generateUpdate();
 
         if (updates.length) {
