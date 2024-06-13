@@ -17,7 +17,7 @@ function makeSheet(content: string | number | { formula: string } | null) {
     [],
   );
 
-  sheet.setCell(new Ref("$A1"), content);
+  sheet.setCell(new Ref("$A1"), content, true);
 
   return sheet;
 }
@@ -65,7 +65,7 @@ describe("Cell component", () => {
     render(<Cell cellRef={new Ref("$A1")} sheet={sheet} />);
 
     act(() => {
-      sheet.setCell(new Ref("$A1"), "Hello World!");
+      sheet.setCell(new Ref("$A1"), "Hello World!", true);
     });
 
     expect(screen.getByDisplayValue("Hello World!")).toBeDefined();
@@ -129,7 +129,7 @@ describe("Grid component", () => {
 
 describe("SheetView component", () => {
   it("renders correctly", () => {
-    const { container } = render(<SheetView />);
+    const { container } = render(<SheetView sheetName="sheet2" publisher="chris" />);
     expect(container).toMatchSnapshot();
   });
 });
