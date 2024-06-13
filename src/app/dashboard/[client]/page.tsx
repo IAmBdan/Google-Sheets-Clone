@@ -4,9 +4,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function Dashboard() {
-  // CIRCLE BACK TO THIS
-  const [client, setClient] = useState("chris");
+export default function Dashboard({
+  params,
+}: {
+  params: {client: string}
+}) {
+  const client = params.client;
   const [sheetName, setSheetName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sheets, setSheets] = useState([]);

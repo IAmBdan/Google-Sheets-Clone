@@ -34,7 +34,7 @@ const Login = () => {
       });
 
       if (response.status === 200) {
-        window.location.href = "/dashboard";
+        window.location.href = `/dashboard/${username}`;
       } else if (response.status === 401 || response.status === 404) {
         setErrorMessage("Invalid username or password");
       } else {

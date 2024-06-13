@@ -9,13 +9,6 @@ import { useEffect } from "react";
 import { parseMultipleUpdate } from "~/utils/parseMultipleUpdate";
 import axios from "axios";
 
-/*
-{
-  ["cell": "A1", "value": "hello!",
-  "cell": "A1", "value": "hello!"]
-}
-*/
-
 export default function SheetView({ sheetName, publisher }: { sheetName: string; publisher: string }) {
   const [sheet, setSheet] = useState<Sheet | undefined>();
 
