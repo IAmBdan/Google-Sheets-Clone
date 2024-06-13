@@ -5,6 +5,8 @@
 Husksheets is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. The project consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
 
 ## Technologies Used
+- We chose T3 for our Husksheets project as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
+
 - T3 Stack
   - Next.js
   - tRPC
@@ -13,7 +15,6 @@ Husksheets is a collaborative spreadsheet application designed to allow multiple
 - TypeScript
 - PlanetScale
 
-
 ## Prerequisites
 - Node.js
 - npm or yarn
@@ -21,7 +22,6 @@ Husksheets is a collaborative spreadsheet application designed to allow multiple
 
 ## Installation 
 - npm install
-- make
 - npm run dev
 
 
@@ -56,13 +56,11 @@ The SheetGraphManager class manages the relationships between sheets and publish
 Properties: sheets, publishers, sheetPublisherMap, sharedUsersMap
 Methods: Add/remove sheets and publishers, manage shared users, retrieve sheets and publishers.
 
-### publisher.ts
-The Publisher class represents the publisher of a sheet.
-
-Properties:
-- Add properties and methods as defined in your actual Publisher class implementation.
 
 ## API Routes Overview
+
+We used husksheets server specifcation as a guideline for our server
+https://docs.google.com/document/d/1nWItOJFxdtYZNevAjCwZpr4hy0_rXr9A0sEDuyQV2As/edit 
 
 Our project includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
 
