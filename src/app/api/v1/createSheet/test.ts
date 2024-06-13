@@ -51,7 +51,7 @@ describe("POST /api/v1/createSheet", () => {
 
     req = new NextRequest("http://localhost", {
       method: "POST",
-      body: JSON.stringify({ publisher: "testPublisher", name: "testSheet" }),
+      body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });
 
     const res = await POST(req);
@@ -77,13 +77,13 @@ describe("POST /api/v1/createSheet", () => {
     ).mockResolvedValue({
       id: "testSheetId",
       publisherId: "testPublisherId",
-      name: "testSheet",
+      sheet: "testSheet",
       payload: "",
     });
 
     req = new NextRequest("http://localhost", {
       method: "POST",
-      body: JSON.stringify({ publisher: "testPublisher", name: "testSheet" }),
+      body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });
 
     const res = await POST(req);
@@ -107,7 +107,7 @@ describe("POST /api/v1/createSheet", () => {
 
     req = new NextRequest("http://localhost", {
       method: "POST",
-      body: JSON.stringify({ publisher: "testPublisher", name: "testSheet" }),
+      body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });
 
     const res = await POST(req);

@@ -7,10 +7,10 @@ const currentTime = Date.now();
 // Create a new sheet given publisher and sheet name
 export async function POST(req: NextRequest) {
     try {
-        const { publisher, name } = await req.json();
+        const { publisher, sheet } = await req.json();
         const payload = "";
 
-        if (!publisher || !name) {
+        if (!publisher || !sheet) {
             return NextResponse.json({success: false, message: 'Missing required fields', value: [], time: currentTime }, { status: 400 });
         }
 
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         await prisma.sheet.create({
             data: {
                 publisherId: foundPublisher.id,
-                name,
+                sheet: sheet,
                 payload,
             },
         });

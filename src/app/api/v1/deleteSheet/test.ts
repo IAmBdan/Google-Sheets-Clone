@@ -48,7 +48,7 @@ describe('POST /api/v1/deleteSheet', () => {
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
@@ -91,19 +91,19 @@ describe('POST /api/v1/deleteSheet', () => {
         (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue({
             id: 'testSheetId',
             publisherId: 'testPublisherId',
-            name: 'testSheet',
+            sheet: 'testSheet',
             payload: '',
         });
         (prisma.sheet.delete as jest.MockedFunction<typeof prisma.sheet.delete>).mockResolvedValue({
             id: 'testSheetId',
             publisherId: 'testPublisherId',
-            name: 'testSheet',
+            sheet: 'testSheet',
             payload: '',
         });
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
@@ -123,7 +123,7 @@ describe('POST /api/v1/deleteSheet', () => {
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'ValidPublisher', name: 'SheetToDelete' }),
+            body: JSON.stringify({ publisher: 'ValidPublisher', sheet: 'SheetToDelete' }),
         });
 
         const res = await POST(req);

@@ -27,7 +27,7 @@ model Sheet {
   id               String            @id @default(uuid())
   publisher        Publisher         @relation(fields: [publisherId], references: [id])
   publisherId      String
-  name             String
+  sheet             String
   payload          String
   publishedUpdates PublishedUpdate[]
 }

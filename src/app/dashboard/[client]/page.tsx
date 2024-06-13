@@ -30,7 +30,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     try {
       const response = await axios.post("/api/v1/createSheet", {
         publisher: client,
-        name: sheetName,
+        sheet: sheetName,
       });
       console.log(response.data);
     } catch (error) {
@@ -42,7 +42,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     try {
       const response = await axios.post("/api/v1/deleteSheet", {
         publisher: client,
-        name: sheetName,
+        sheet: sheetName,
       });
       console.log(response.data);
     } catch (error) {

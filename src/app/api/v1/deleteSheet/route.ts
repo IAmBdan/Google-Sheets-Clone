@@ -7,9 +7,9 @@ const currentTime = Date.now();
 // Delete a sheet given publisher and sheet name
 export async function POST(req: NextRequest) {
     try {
-        const { publisher, name } = await req.json();
+        const { publisher, sheet } = await req.json();
 
-        if (!publisher || !name) {
+        if (!publisher || !sheet) {
             return NextResponse.json({ success: false, message: 'Missing required fields', value: [], time: currentTime }, { status: 400 });
         }
 
@@ -23,14 +23,14 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Publisher not found', value: [], time: currentTime }, { status: 404 });
         }
 
-        const sheet = await prisma.sheet.findFirst({
+        const foundSheet = await prisma.sheet.findFirst({
             where: {
                 publisherId: foundPublisher.id,
-                name: name
+                sheet: sheet
             }
         });
 
-        if (!sheet) {
+        if (!foundSheet) {
             return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
         }
 
