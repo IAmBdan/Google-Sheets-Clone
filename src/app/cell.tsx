@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Ref } from "~/classes/ref";
 import { Term } from "~/types/term";
 import { Sheet } from "~/classes/sheets";
@@ -13,7 +13,27 @@ export default function Cell({
   cellRef: Ref;
   sheet: Sheet;
 }) {
+  const [draftValue, setDraftValue] = useState("");
   const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
+  const [isFocused, setIsFocused] = useState(false);
+
+  const displayValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value
+        : value?.formula
+          ? value?.value
+          : "";
+
+  const editValue =
+    typeof value === "number"
+      ? String(value)
+      : typeof value === "string"
+        ? value
+        : value?.formula
+          ? value?.formula
+          : "";
 
   useEffect(() => {
     const listener = () => {
@@ -28,20 +48,12 @@ export default function Cell({
     };
   }, [sheet, cellRef]);
 
-  const stringValue =
-    typeof value === "number"
-      ? String(value)
-      : typeof value === "string"
-        ? value
-        : value?.formula
-          ? value?.formula
-          : "";
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
+  const handleChange = (newValue: string) => {
     let parsedValue: Term;
 
-    if (newValue === "") {
+    if (newValue.startsWith("=")) {
+      parsedValue = { formula: newValue };
+    } else if (newValue === "") {
       parsedValue = null;
     } else {
       parsedValue = isNaN(Number(newValue)) ? newValue : Number(newValue);
@@ -49,17 +61,21 @@ export default function Cell({
 
     sheet.setCell(cellRef, parsedValue, true);
     setValue(parsedValue);
-
-    if (newValue.startsWith("=")) {
-      sheet.evaluateCellFormula(cellRef);
-    }
   };
 
   return (
     <input
       className="border border-black"
-      value={stringValue}
-      onChange={handleChange}
+      value={isFocused ? draftValue : displayValue}
+      onChange={(e) => setDraftValue(e.currentTarget.value)}
+      onFocus={() => {
+        setIsFocused(true);
+        setDraftValue(editValue);
+      }}
+      onBlur={() => {
+        setIsFocused(false);
+        handleChange(draftValue);
+      }}
     />
   );
 }

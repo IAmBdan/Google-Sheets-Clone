@@ -9,13 +9,6 @@ import { useEffect } from "react";
 import { parseMultipleUpdate } from "~/utils/parseMultipleUpdate";
 import axios from "axios";
 
-/*
-{
-  ["cell": "A1", "value": "hello!",
-  "cell": "A1", "value": "hello!"]
-}
-*/
-
 export default function SheetView({ sheetName, publisher }: { sheetName: string; publisher: string }) {
   const [sheet, setSheet] = useState<Sheet | undefined>();
 
@@ -28,11 +21,11 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
           id: 0,
         });
 
-        console.log(response.data);
+        console.log(response.data.value);
 
         const sheet = new Sheet(26, 100, sheetName, new Publisher(publisher, 0), []);
 
-        response.data.payload.forEach((update: string) => {
+        response.data.value.payload.forEach((update: string) => {
           sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
         })
 
@@ -44,7 +37,20 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
 
   useEffect(() => {
     if (sheet) {
+      // on each interval, show a popup message saying saved
       const interval = setInterval(async () => {
+        const response = await axios.post("/api/v1/getUpdatesForSubscription", {
+          sheet: sheetName,
+          publisher: publisher,
+          id: 0,
+        });
+
+        console.log(response.data);
+
+        response.data.value.payload.forEach((update: string) => {
+          sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
+        });
+
         const updates = sheet.generateUpdate();
 
         if (updates.length) {

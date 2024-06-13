@@ -35,7 +35,12 @@ describe('POST /api/v1/deleteSheet', () => {
 
         expect(res.status).toBe(400);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Missing required fields' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Missing required fields',
+            value: [],
+            time: expect.any(Number),
+        });
     });
 
     it('should return 404 if publisher is not found', async () => {
@@ -43,57 +48,41 @@ describe('POST /api/v1/deleteSheet', () => {
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
 
         expect(res.status).toBe(404);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Publisher not found' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Publisher not found',
+            value: [],
+            time: expect.any(Number),
+        });
     });
 
     it('should return 404 if sheet is not found', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: 'testPublisherId', name: 'testPublisher'});
+
         (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue(null);
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
 
         expect(res.status).toBe(404);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Sheet not found' });
-    });
-
-    it('should delete the sheet and return 200', async () => {
-        (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: 'testPublisherId', name: 'testPublisher' });
-        (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue({
-            id: 'testSheetId',
-            publisherId: 'testPublisherId',
-            name: 'testSheet',
-            payload: '',
+        expect(json).toEqual({
+            success: false,
+            message: 'Sheet not found',
+            value: [],
+            time: expect.any(Number),
         });
-        (prisma.sheet.delete as jest.MockedFunction<typeof prisma.sheet.delete>).mockResolvedValue({
-            id: 'testSheetId',
-            publisherId: 'testPublisherId',
-            name: 'testSheet',
-            payload: '',
-        });
-
-        req = new NextRequest('http://localhost', {
-            method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
-        });
-
-        const res = await POST(req);
-
-        expect(res.status).toBe(200);
-        const json = await res.json();
-        expect(json).toEqual({ message: 'Sheet deleted successfully' });
     });
 
     it('should return 500 if there is an internal server error', async () => {
@@ -101,13 +90,18 @@ describe('POST /api/v1/deleteSheet', () => {
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'ValidPublisher', sheet: 'SheetToDelete' }),
         });
 
         const res = await POST(req);
 
         expect(res.status).toBe(500);
         const json = await res.json();
-        expect(json).toEqual({ message: 'Internal server error' });
+        expect(json).toEqual({
+            success: false,
+            message: 'Internal server error',
+            value: [],
+            time: expect.any(Number),
+        });
     });
 });

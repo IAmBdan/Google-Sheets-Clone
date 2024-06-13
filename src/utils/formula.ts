@@ -1,3 +1,4 @@
+// Chris
 type GetCellValue = (ref: string) => string | number | null;
 
 interface ASTNode {
@@ -85,8 +86,8 @@ const evaluateAST = (node: ASTNode, getCellValue: GetCellValue): string | number
 const evaluateFunctionCall = (func: string, args: (string | number | null)[]): string | number | null => {
     switch (func.toUpperCase()) {
         case 'SUM':
-            if (args.some(arg => typeof arg !== 'number')) throw new Error('SUM arguments must be numbers');
-            return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0);
+            // if (args.some(arg => typeof arg !== 'number')) throw new Error('SUM arguments must be numbers');
+            return (args.map(a => Number(a))).reduce((acc, arg) => acc! + (arg as number), 0);
         case 'CONCAT':
             return args.map(arg => (arg !== null ? String(arg) : '')).join('');
         case 'MIN':

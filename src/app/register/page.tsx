@@ -18,10 +18,8 @@ const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  // Function to handle registration
   const handleRegister = async () => {
     try {
-    // Use client-side fetch to send registration data to server
       const response = await fetch("/api/v1/createUser", {
         method: "POST",
         headers: {
@@ -32,10 +30,9 @@ const Register = () => {
       console.log(response.status);
       
       if (response.status === 201) {
-        // Successfully registered, redirect to dashboard
-        window.location.href = "/dashboard";
+        // Successfully registered
+        window.location.href = `/dashboard/${username}`;
       } else {
-        // Handle registration failure
         const data = await response.json();
         alert(data.message || "Registration failed");
       }

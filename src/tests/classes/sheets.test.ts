@@ -52,11 +52,11 @@ import { evaluateFormula } from "~/utils/formula"
     
         test('getCell and setCell', () => {
             const ref = new Ref('$A1');
-            sheet.setCell(ref, 5);
+            sheet.setCell(ref, 5, false);
             const cell = sheet.getCell(ref);
             expect(cell.getValue()).toBe(5);
     
-            sheet.setCell(ref, 'test');
+            sheet.setCell(ref, 'test', false);
             expect(cell.getValue()).toBe('test');
         });
     
