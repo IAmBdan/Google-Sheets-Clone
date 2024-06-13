@@ -1,7 +1,6 @@
 //all tests work
 
 import { Publisher } from "../../classes/publisher"
-import { Sheet } from "../../classes/sheets";
 //Brian Daniels
 describe('Publisher', () => {
    const publisher1Brian = new Publisher('Brian', 1,); //no sheets

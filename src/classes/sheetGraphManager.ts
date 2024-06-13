@@ -1,5 +1,5 @@
-import { Publisher } from './publisher'; 
-import { Sheet } from './sheets';
+import type { Publisher } from './publisher'; 
+import type { Sheet } from './sheets';
 // class that will handle the graph of sheets and publishers using ids to locate them
 //Brian Daniels
 

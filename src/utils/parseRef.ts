@@ -5,7 +5,7 @@ import { Ref } from "../classes/ref"
 export function parseRef(ref: string): Ref {
     const refPattern = /^\$([A-Za-z]+)(\d+)$/;
     const match = ref.match(refPattern);
-    if (!match || !match[1] || !match[2]) {
+    if (!match?.[1] || !match[2]) {
         throw new Error(`Invalid ref: ${ref}`);
     }
 

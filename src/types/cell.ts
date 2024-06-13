@@ -1,5 +1,5 @@
 //Brian Daniels
-import { Term } from "./term";
+import { type Term } from "./term";
 
 
 //type for cell 

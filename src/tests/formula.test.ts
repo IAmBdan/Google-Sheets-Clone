@@ -4,7 +4,7 @@ import { evaluateFormula } from '../utils/formula';
 
 describe('evaluateFormula', () => {
   const mockGetCellValue = (ref: string): string | number | null => {
-    const mockSheet: { [key: string]: string | number } = {
+    const mockSheet: Record<string, string | number> = {
       '$A1': 1,
       '$B1': 2,
       '$C1': 3,
@@ -13,7 +13,7 @@ describe('evaluateFormula', () => {
       '$F1': -1,
       '$G1': 100
     };
-    return mockSheet[ref] || null;
+    return mockSheet[ref] ?? null;
   };
 
   it('should evaluate a simple number', () => {

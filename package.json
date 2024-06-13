@@ -9,7 +9,7 @@
     "db:studio": "prisma studio",
     "dev": "next dev",
     "postinstall": "prisma generate",
-    "lint": "next lint",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",    
     "start": "next start",
     "test": "jest --coverage",
     "test:ui": "vitest --coverage"
@@ -18,7 +18,7 @@
     "@auth/prisma-adapter": "^1.4.0",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.19",
+    "@mui/icons-material": "^5.15.20",
     "@popperjs/core": "^2.11.8",
     "@prisma/client": "^5.15.0",
     "@t3-oss/env-nextjs": "^0.10.1",

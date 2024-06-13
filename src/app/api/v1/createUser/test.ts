@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Chris
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { POST } from './route'; // Update the path to your handler file
 
@@ -39,7 +40,7 @@ describe('POST /api/v1/createUser', () => {
             success: true,
             message: null,
             value: mockUser,
-            time: expect.any(Number), // to verify the time property exists and is a number
+            time: expect.any(Number),
         });
     });
     

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 "use client";
 
 //Landing Page
@@ -23,7 +26,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
   };
 
   useEffect(() => {
-    fetchSheets();
+    void fetchSheets();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const createSheet = async (client: string, sheetName: string) => {

@@ -1,5 +1,5 @@
 //Brian Daniels
-import { singleUpdate } from "../types/singleUpdate";
+import type { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";
 import { parseRef } from "./parseRef";
 
@@ -11,7 +11,7 @@ export function parseSingleCellUpdate(line: string): singleUpdate {
     if (refStr === "" || termStr === "") {
         throw new Error(`Invalid input line: ${line}`);
     }
-    const ref = parseRef(refStr || ''); // Provide a default value for refStr
+    const ref = parseRef(refStr ?? ''); // Provide a default value for refStr
     
     const term = parseTerm(termStr);
     return { ref, term };

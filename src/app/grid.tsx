@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import Cell from "./cell";
-import { Sheet } from "../classes/sheets";
+import { type Sheet } from "../classes/sheets";
 import { Ref } from "../classes/ref";
 import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 

@@ -43,7 +43,7 @@ const evaluateExpression = (expr: string, getCellValue: GetCellValue): string | 
 
 const tokenize = (expr: string): string[] => {
     const regex = /([A-Z]+\(|\)|,|\$[A-Z]+[0-9]+|[0-9.]+|"[^"]*")/gi;
-    return expr.match(regex) || [];
+    return expr.match(regex) ?? [];
 };
 
 const parseTokens = (tokens: string[]): ASTNode => {
@@ -87,7 +87,7 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
     switch (func.toUpperCase()) {
         case 'SUM':
             if (args.some(arg => typeof arg !== 'number')) throw new Error('SUM arguments must be numbers');
-            return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0);
+            return (args as number[]).reduce((acc, arg) => acc + (arg), 0);
         case 'CONCAT':
             return args.map(arg => (arg !== null ? String(arg) : '')).join('');
         case 'MIN':
@@ -98,7 +98,7 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
             return Math.max(...(args as number[]));
         case 'AVG':
             if (args.some(arg => typeof arg !== 'number')) throw new Error('AVG arguments must be numbers');
-            return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0) / args.length;
+            return (args as number[]).reduce((acc, arg) => acc + (arg), 0) / args.length;
         case 'IF':
             if (args.length !== 3) throw new Error('IF function requires 3 arguments');
             const condition = args[0];

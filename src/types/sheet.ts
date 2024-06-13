@@ -1,7 +1,5 @@
-import { Cell } from "./cell";
+import type { Cell } from "./cell";
 
 
-export interface Sheet {
-    [ref: string]: Cell;
-}
+export type Sheet = Record<string, Cell>;
 

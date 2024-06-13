@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Ref } from "~/classes/ref";
-import { Term } from "~/types/term";
-import { Sheet } from "~/classes/sheets";
+import { type Ref } from "~/classes/ref";
+import { type Term } from "~/types/term";
+import { type Sheet } from "~/classes/sheets";
 
 /**
  * Renders a single cell in the grid.
@@ -14,7 +14,7 @@ export default function Cell({
   sheet: Sheet;
 }) {
   const [value, setValue] = useState(() => sheet.getCell(cellRef).getValue());
-  const [referenceMap, setReferenceMap] = useState(new Map<string, Ref[]>());
+  const [referenceMap] = useState(new Map<string, Ref[]>());
 
   useEffect(() => {
     const listener = () => {

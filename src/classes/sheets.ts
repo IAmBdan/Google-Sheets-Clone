@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //Brian Daniels
 //Sheet class that has a 2D array of cells and a title
 import { Cell } from "./cell";
 import { Ref } from "./ref";
-import { Term } from "../types/term";
+import { type Term } from "../types/term";
 import { Publisher } from "./publisher";
 import { columnToNumber } from "../utils/columnToNumber"
 import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 import { evaluateFormula } from "../utils/formula";
-import { singleUpdate } from "../types/singleUpdate";
-
-type CellValue = number | string | { formula: string } | null;
+import { type singleUpdate } from "../types/singleUpdate";
 
 //Sheet class that has a 2D array of cells and a title and a publisher
  export class Sheet {
@@ -26,7 +25,7 @@ type CellValue = number | string | { formula: string } | null;
     numRows: number,
     sheetTitle: string,
     publisher: Publisher,
-    sharedUsers: Publisher[],
+    _sharedUsers: Publisher[],
   ) {
     if (numColumns < 1 || numRows < 1) {
       throw new Error("Invalid sheet dimensions");

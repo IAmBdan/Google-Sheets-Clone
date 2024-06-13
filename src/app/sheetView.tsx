@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 "use client";
 
 import Grid from "./grid";
-import { Ref } from "../classes/ref";
 import { useState } from "react";
 import { Sheet } from "../classes/sheets";
 import { Publisher } from "../classes/publisher";

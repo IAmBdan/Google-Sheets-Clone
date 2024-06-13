@@ -1,5 +1,5 @@
 //Brian Daniels
-import { Term } from "../types/term";
+import type { Term } from "../types/term";
 
 // Parses a term string into a Term object with a number, string, or formula
 export function parseTerm(input: string): Term {

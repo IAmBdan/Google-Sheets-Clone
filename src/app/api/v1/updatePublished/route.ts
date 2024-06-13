@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
         }
 
-        const updatedSheet = await prisma.sheet.update({
+        await prisma.sheet.update({
             where: {
                 id: foundSheet.id
             },

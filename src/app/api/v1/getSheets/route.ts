@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        const response = sheets.map(sheet => ({
+        const response = sheets.map((sheet: {id: string, publisherId: string, sheet: string, payload: string}) => ({
             publisher: foundPublisher.name,
             sheet: sheet.sheet,
             id: sheet.id,

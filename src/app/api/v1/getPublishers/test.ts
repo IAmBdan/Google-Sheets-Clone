@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Chris
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { GET } from "./route";
 
@@ -35,7 +36,7 @@ describe("GET /api/v1/getPublishers", () => {
 
     req = new NextRequest("http://localhost", { method: "GET" });
 
-    const res = await GET(req);
+    const res = await GET();
 
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -56,7 +57,7 @@ describe("GET /api/v1/getPublishers", () => {
 
     req = new NextRequest("http://localhost", { method: "GET" });
 
-    const res = await GET(req);
+    const res = await GET();
 
     expect(res.status).toBe(500);
     const json = await res.json();
