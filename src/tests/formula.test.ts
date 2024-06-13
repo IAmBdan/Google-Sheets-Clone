@@ -1,5 +1,5 @@
+// @author giastina
 //all tests work
-// giastina
 
 import { evaluateFormula } from '../utils/formula';
   

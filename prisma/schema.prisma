@@ -1,3 +1,4 @@
+// @author giastina
 generator client {
   provider = "prisma-client-js"
 }
