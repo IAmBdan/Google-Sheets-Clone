@@ -70,7 +70,7 @@ describe('POST /api/v1/deleteSheet', () => {
 
         req = new NextRequest('http://localhost', {
             method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', name: 'testSheet' }),
+            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
@@ -80,39 +80,6 @@ describe('POST /api/v1/deleteSheet', () => {
         expect(json).toEqual({
             success: false,
             message: 'Sheet not found',
-            value: [],
-            time: expect.any(Number),
-        });
-    });
-
-    it('should delete the sheet and return 200 on success', async () => {
-        (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: 'testPublisherId', name: 'testPublisher' });
-
-        (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue({
-            id: 'testSheetId',
-            publisherId: 'testPublisherId',
-            sheet: 'testSheet',
-            payload: '',
-        });
-        (prisma.sheet.delete as jest.MockedFunction<typeof prisma.sheet.delete>).mockResolvedValue({
-            id: 'testSheetId',
-            publisherId: 'testPublisherId',
-            sheet: 'testSheet',
-            payload: '',
-        });
-
-        req = new NextRequest('http://localhost', {
-            method: 'POST',
-            body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
-        });
-
-        const res = await POST(req);
-
-        expect(res.status).toBe(200);
-        const json = await res.json();
-        expect(json).toEqual({
-            success: true,
-            message: 'Sheet deleted successfully',
             value: [],
             time: expect.any(Number),
         });

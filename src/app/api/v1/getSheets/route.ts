@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
 
         const response = sheets.map(sheet => ({
             publisher: foundPublisher.name,
-            sheet: sheet.name,
+            sheet: sheet.sheet,
             id: sheet.id,
             payload: sheet.payload
         }));

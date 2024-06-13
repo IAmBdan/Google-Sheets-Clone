@@ -69,8 +69,8 @@ describe("POST /api/v1/getSheets", () => {
   it("should return a list of sheets for the given publisher", async () => {
     const mockPublisher = { id: "1", name: "testPublisher" };
     const mockSheets = [
-      { id: "1", publisherId: "1", name: "Sheet1", payload: "" },
-      { id: "2", publisherId: "1", name: "Sheet2", payload: "" },
+      { id: "1", publisherId: "1", sheet: "Sheet1", payload: "" },
+      { id: "2", publisherId: "1", sheet: "Sheet2", payload: "" },
     ];
 
     (

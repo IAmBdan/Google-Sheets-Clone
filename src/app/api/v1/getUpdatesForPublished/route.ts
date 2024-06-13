@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         const foundSheet = await prisma.sheet.findFirst({
             where: {
                 publisherId: foundPublisher.id,
-                name: sheet
+                sheet: sheet
             }
         });
 
