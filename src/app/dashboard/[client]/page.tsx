@@ -26,15 +26,6 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     fetchSheets();
   }, []);
 
-  const register = async () => {
-    try {
-      const response = await axios.get("/api/v1/register");
-      console.log(response.data);
-    } catch (error) {
-      console.error("Error registering:", error);
-    }
-  };
-
   const createSheet = async (client: string, sheetName: string) => {
     try {
       const response = await axios.post("/api/v1/createSheet", {
@@ -90,12 +81,6 @@ export default function Dashboard({ params }: { params: { client: string } }) {
           <h1 className="text-2xl">{client}&apos;s Spreadsheets</h1>
         </div>
         <div className="flex justify-center">
-          <button
-            onClick={register}
-            className="rounded-md bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
-          >
-            Register
-          </button>
           <button
             onClick={handleCreateNewSheet}
             className="rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
