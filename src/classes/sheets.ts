@@ -145,19 +145,14 @@ export class Sheet {
         this.updates.set(ref, value);
       }
 
-      // causing recursiin? lol
-
       if (value.hasOwnProperty("formula")) {
         // @ts-ignore
-
         value.value = this.evaluateCellFormula(ref);
 
         // @ts-ignore
-
         const references = parseCellReferences(value.formula);
         references.forEach((ref2: string) => {
           // @ts-ignore
-
           console.log("Detected", ref2, "in formula", value.formula);
           if (!this.references.has(ref2)) {
             this.references.set(ref2, []);
