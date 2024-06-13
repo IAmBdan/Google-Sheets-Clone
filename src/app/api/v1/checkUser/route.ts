@@ -1,4 +1,4 @@
-// Chris
+// @author Chris
 import { NextRequest, NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
 
     if (!user) {
       return NextResponse.json(
-        { success: false, message: "User not found", value: [] },
+        { success: false, message: "User not found", value: [], time: currentTime },
         { status: 404 },
       );
     }
@@ -56,18 +56,18 @@ export async function GET(req: NextRequest) {
     // Compare passwords
     if (user.password !== password) {
       return NextResponse.json(
-        { success: false, message: "Invalid password", value: [] },
+        { success: false, message: "Invalid password", value: [], time: currentTime },
         { status: 401 },
       );
     }
 
     return NextResponse.json(
-      { success: true, message: "User authenticated successfully", value: [] },
+      { success: true, message: "User authenticated successfully", value: [], time: currentTime },
       { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
-      { success: false, message: "", error: "An error occurred", value: [] },
+      { success: false, message: "", error: "An error occurred", value: [], time: currentTime },
       { status: 500 },
     );
   }

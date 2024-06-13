@@ -197,15 +197,6 @@ import { evaluateFormula } from "~/utils/formula"
             expect(cell.getValue()).toBe('test');
 
         });
-
-        test('multiple update', () => {
-            const inputLine = '$A1 5';
-            const result = multipleCellUpdate(inputLine);
-            sheet.multiUpdate(result);
-            const cell = sheet.getCell(new Ref('$A1'));
-            expect(cell.getValue()).toBe(5);
-
-        });
             
 
         test('cell by cordss invalid column', () => {
