@@ -31,7 +31,7 @@ const Register = () => {
       
       if (response.status === 201) {
         // Successfully registered
-        window.location.href = "/dashboard";
+        window.location.href = `/dashboard/${username}`;
       } else {
         const data = await response.json();
         alert(data.message || "Registration failed");
