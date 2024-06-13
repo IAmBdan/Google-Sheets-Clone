@@ -221,7 +221,7 @@ type CellValue = number | string | { formula: string } | null;
 
     //sets the value of the cell at the given reference
     setCellValueWithRef(ref: Ref, value: Term): void {
-        this.setCell(ref, value);
+        this.setCell(ref, value, false);
     }
 
     //sets the value of the cell at the given coordinates
@@ -276,12 +276,12 @@ type CellValue = number | string | { formula: string } | null;
 
     //returns a string representation of the sheet with the given range
     singleUpdate(ref: Ref, value: Term): void {
-        this.setCell(ref, value);
+        this.setCell(ref, value, false);
     }
 
     //returns a string representation of the sheet with the given range
     singleUpdateWithSingleUpdate(singleUpdate: singleUpdate): void {
-        this.setCell(singleUpdate.ref, singleUpdate.term);
+        this.setCell(singleUpdate.ref, singleUpdate.term, false);
     }
 
     //returns a string representation of the sheet with the given range
