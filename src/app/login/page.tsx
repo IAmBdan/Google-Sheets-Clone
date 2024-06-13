@@ -1,3 +1,4 @@
+//giastina
 "use client";
 
 import { LockOutlined } from "@mui/icons-material";
@@ -18,13 +19,15 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Function to encode username and password into base64
   const encodeCredentials = (username : string, password : string) => {
     return btoa(`${username}:${password}`);
   };
 
+    // Function to handle login button click
   const handleLogin = async () => {
     const credentials = encodeCredentials(username, password);
-
+    // Use client-side fetch to send credentials to server
     try {
       const response = await fetch('/api/v1/checkUser', {
         method: 'GET',
@@ -32,7 +35,7 @@ const Login = () => {
           'Authorization': `Basic ${credentials}`
         }
       });
-
+      // Handle different response statuses
       if (response.status === 200) {
         window.location.href = "/dashboard";
       } else if (response.status === 401 || response.status === 404) {
