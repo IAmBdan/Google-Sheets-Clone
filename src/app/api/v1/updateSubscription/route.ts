@@ -1,5 +1,5 @@
 // @author Chris
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
         }
 
-        const updatedSubscription = await prisma.publishedUpdate.create({
+        await prisma.publishedUpdate.create({
             data: {
                 sheetId: foundSheet.id,
                 payload

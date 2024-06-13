@@ -1,9 +1,5 @@
 //all tests work
 
-import { Publisher } from "../../classes/publisher"
-import { Ref } from "../../classes/ref"
-import { Sheet } from "../../classes/sheets"
-import { Cell } from "../../classes/cell"
 import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
 import parseRef from "../../utils/parseRef"
 import { parseTerm } from "../../utils/parseTerm"

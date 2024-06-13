@@ -1,6 +1,5 @@
 //Brian Daniels
 
-
-import { singleUpdate } from './singleUpdate';
+import { type singleUpdate } from './singleUpdate';
 //type for multiple updates
 type Update = singleUpdate[];

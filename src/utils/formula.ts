@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 // @author Chris
 type GetCellValue = (ref: string) => string | number | null;
 

@@ -1,7 +1,0 @@
-TODO:
-
-- Make file to build the client and test synchronously
-- README.md (how to set up project, etc.)
-- Test routes on Husksheets
-- Implement sheets in backend to save and be able to create/fetch 
-- Implement subscription to a sheet and access on frontend

@@ -1,4 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+// @author Chris
+
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { POST } from './route';
 

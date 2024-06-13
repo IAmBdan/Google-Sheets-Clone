@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //Brian Daniels
 import { Ref } from "./ref";
 
@@ -23,7 +24,9 @@ export { Cell };
         }
 
         // Getters and setters
-        getValue(): number | string | { formula: string } | null {
+        getValue(): number | string | {
+          [x: string]: any; formula: string 
+} | null {
             return this.value;
         }
 

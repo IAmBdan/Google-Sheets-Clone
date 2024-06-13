@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 // @author giastina
 //all tests work
 

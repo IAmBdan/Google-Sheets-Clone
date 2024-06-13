@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 //Brian Daniels
 import { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";

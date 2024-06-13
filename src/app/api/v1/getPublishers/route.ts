@@ -1,12 +1,12 @@
 // @author Chris
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 const currentTime = Date.now();
 
 // Get all registered publishers
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         const publishers = await prisma.publisher.findMany();
 

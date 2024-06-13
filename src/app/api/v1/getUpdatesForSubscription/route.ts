@@ -1,4 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
+// Author: Alan Zhang
+
+import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();

@@ -1,4 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+// Author: Alan Zhang
+
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -36,13 +40,13 @@ export async function POST(req: NextRequest) {
 
         await prisma.publishedUpdate.deleteMany({
             where: {
-                sheetId: sheet.id
+                sheetId: foundSheet.id
             }
         })
 
         await prisma.sheet.delete({
             where: {
-                id: sheet.id
+                id: foundSheet.id
             }
         });
 

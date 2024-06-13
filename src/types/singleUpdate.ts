@@ -1,6 +1,6 @@
 //Brian Daniels
-import { Term } from './term';
-import { Ref } from "/Users/bdan/Desktop/Computer Engineering/computer-serve-code/src/classes/ref"
+import type { Term } from './term';
+import type { Ref } from "../../src/classes/ref"
 
 //type for singleUpdate
 export interface singleUpdate {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { Ref } from "../classes/ref"
 //Brian Daniels
 

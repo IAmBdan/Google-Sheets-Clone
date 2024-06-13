@@ -1,11 +1,7 @@
 //all tests work
 
-import parseRef from "../../utils/parseRef";
-import { parseTerm } from "../../utils/parseTerm";
 import { multipleCellUpdate } from  "../../utils/multipleCellUpdate";
-import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
 
-import { Ref } from "../../classes/ref"
 //Brian Daniels
 
 describe('parse multipleCellUpdate', () => {

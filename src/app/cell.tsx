@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect, useRef, useState } from "react";
 import { Ref } from "~/classes/ref";
 import { Term } from "~/types/term";
@@ -23,7 +24,7 @@ export default function Cell({
       : typeof value === "string"
         ? value
         : value?.formula
-          ? value?.value
+        ? value?.value
           : "";
 
   const editValue =

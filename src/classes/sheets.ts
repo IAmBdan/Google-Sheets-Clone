@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 //Brian Daniels
 //Sheet class that has a 2D array of cells and a title
 import { Cell } from "./cell";
@@ -148,15 +153,15 @@ export class Sheet {
       // causing recursiin? lol
 
       if (value.hasOwnProperty("formula")) {
-        // @ts-ignore
+        // @ts-expect-error type
 
         value.value = this.evaluateCellFormula(ref);
 
-        // @ts-ignore
+        // @ts-expect-error type
 
         const references = parseCellReferences(value.formula);
         references.forEach((ref2: string) => {
-          // @ts-ignore
+          // @ts-expect-error type
 
           console.log("Detected", ref2, "in formula", value.formula);
           if (!this.references.has(ref2)) {
@@ -174,17 +179,17 @@ export class Sheet {
       const dependents = this.references.get(ref.column + ref.row);
       if (dependents) {
         dependents.forEach((dependentRef) => {
-          // @ts-ignore
+        // @ts-expect-error type
 
           const dependentRefObject = new Ref(/([A-Z]+)(\d+)/.exec(dependentRef)[1], parseInt(/([A-Z]+)(\d+)/.exec(dependentRef)[2]));
           const cell = this.getCell(dependentRefObject).getValue();
 
           if (cell?.hasOwnProperty("formula")) {
             const value = this.evaluateCellFormula(dependentRefObject);
-            // @ts-ignore
+        // @ts-expect-error type
 
             if (value != cell.value) {
-              // @ts-ignore
+        // @ts-expect-error type
 
               this.setCell(dependentRefObject, { formula: cell.formula, value }, false);
             }
@@ -208,13 +213,12 @@ export class Sheet {
           throw new Error(`Reference ${cellRef} not found`);
         }
         if (typeof cellValue === "object" && cellValue !== null && 'formula' in cellValue) {
-          // @ts-ignore
           return cellValue.value;
         }
         return cellValue;
       };
-      // @ts-ignore
-      return evaluateFormula(value.formula, getCellValue);
+        // @ts-expect-error type
+        return evaluateFormula(value.formula, getCellValue);
     }
 
     return null;
@@ -346,9 +350,9 @@ export class Sheet {
   //returns a string representation of the sheet with the given range
   multiUpdate(values: singleUpdate[]): void {
     for (const { ref, term } of values) {
-      // @ts-ignore
-      if (term.startsWith("=")) {
-        // @ts-ignore
+        // @ts-expect-error type
+        if (term.startsWith("=")) {
+        // @ts-expect-error type
         this.setCell(ref, { formula: term }, false);
       } else {
         this.setCell(ref, term, false);
@@ -360,7 +364,7 @@ export class Sheet {
     const updates: singleUpdate[] = [];
     for (const [ref, term] of this.updates) {
       if (term?.hasOwnProperty("formula")) {
-        // @ts-ignore
+        // @ts-expect-error type
         updates.push({ ref, term: term.formula });
       } else {
         updates.push({ ref, term });

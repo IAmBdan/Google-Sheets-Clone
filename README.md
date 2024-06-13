@@ -21,13 +21,15 @@ Husksheets is a collaborative spreadsheet application designed to allow multiple
 - PlanetScale account
 
 ## Installation 
-- npm install
-- npm run dev
-
+Use the following commands with the Makefile:
+- make install: Install dependencies (npm install)
+- make build: Build the project (npm run build)
+- make start: Start the server (npm run dev)
+- make test: Run tests (npm test)
 
 ## Running the Project
 To start the development server, run:
-- npm run dev
+- npm run dev OR make start
 
 
 ## Classes
