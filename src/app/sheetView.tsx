@@ -21,10 +21,14 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
   useEffect(() => {
     const fetchSheets = async () => {
 
-        const response = await axios.post("/api/v1/getUpdatesForSubscription", {
+        const response = await axios.post("https://husksheets.fly.dev/api/v1/getUpdatesForSubscription", {
           sheet: sheetName,
           publisher: publisher,
           id: 0,
+        }, {
+          headers: {
+            'Authorization': `Basic ${btoa(`bob:2V56$*BBBB1}mkrl`)}`
+          }
         });
 
         console.log(response.data.value);
@@ -45,7 +49,7 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
     if (sheet) {
       // on each interval, show a popup message saying saved
       const interval = setInterval(async () => {
-        const response = await axios.post("/api/v1/getUpdatesForSubscription", {
+        const response = await axios.post("https://husksheets.fly.dev/api/v1/getUpdatesForSubscription", {
           sheet: sheetName,
           publisher: publisher,
           id: 0,
@@ -60,7 +64,7 @@ export default function SheetView({ sheetName, publisher }: { sheetName: string;
         const updates = sheet.generateUpdate();
 
         if (updates.length) {
-          const response = await axios.post("/api/v1/updateSubscription", {
+          const response = await axios.post("https://husksheets.fly.dev/api/v1/updateSubscription", {
             sheet: sheetName,
             publisher: publisher,
             payload: updates.map(({ ref, term }) => `${ref.toString()} "${term?.toString()}"`).join("\n"),

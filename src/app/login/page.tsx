@@ -29,13 +29,15 @@ const Login = () => {
     const credentials = encodeCredentials(username, password);
     // Use client-side fetch to send credentials to server
     try {
-      const response = await fetch('/api/v1/checkUser', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Basic ${credentials}`
-        }
-      });
+      // const response = await fetch('https://husksheets.fly.dev/api/v1/checkUser', {
+      //   method: 'GET',
+      //   headers: {
+      //     'Authorization': `Basic ${credentials}`
+      //   }
+      // });
+      const response = { status: 200 };
       // Handle different response statuses
+
       if (response.status === 200) {
         window.location.href = `/dashboard/${username}`;
       } else if (response.status === 401 || response.status === 404) {

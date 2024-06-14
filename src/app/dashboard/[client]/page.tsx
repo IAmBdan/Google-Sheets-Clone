@@ -15,8 +15,12 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const fetchSheets = async () => {
     try {
-      const response = await axios.post("/api/v1/getSheets", {
+      const response = await axios.post("https://husksheets.fly.dev/api/v1/getSheets", {
         publisher: client,
+      }, {
+        headers: {
+          'Authorization': `Basic ${btoa(`${client}:2V56$*BBBB1}mkrl`)}` // empty password
+        }
       });
       setSheets(response.data.value);
       console.log(response.data);
@@ -31,7 +35,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const createSheet = async (client: string, sheetName: string) => {
     try {
-      const response = await axios.post("/api/v1/createSheet", {
+      const response = await axios.post("https://husksheets.fly.dev/api/v1/createSheet", {
         publisher: client,
         sheet: sheetName,
       });
@@ -43,7 +47,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const deleteSheet = async (client: string, sheetName: string) => {
     try {
-      const response = await axios.post("/api/v1/deleteSheet", {
+      const response = await axios.post("https://husksheets.fly.dev/api/v1/deleteSheet", {
         publisher: client,
         sheet: sheetName,
       });

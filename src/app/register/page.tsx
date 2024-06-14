@@ -23,7 +23,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("/api/v1/createUser", {
+      const response = await fetch("https://husksheets.fly.dev/api/v1/createUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,7 @@ const Register = () => {
         body: JSON.stringify({ username: username, password: password }),
       });
       console.log(response.status);
-      
+
       if (response.status === 201) {
         // Successfully registered
         window.location.href = `/dashboard/${username}`;
