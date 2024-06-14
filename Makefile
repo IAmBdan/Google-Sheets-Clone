@@ -10,7 +10,7 @@ TEST = npm test
 INSTALL = npm install
 
 # Targets
-.PHONY: install start build test
+.PHONY: install start build test docker
 
 help:
 	@echo "Makefile for $(PROJECT_NAME)"
@@ -20,6 +20,7 @@ help:
 	@echo "  make start        Start the development server"
 	@echo "  make build        Build the project"
 	@echo "  make test         Run tests"
+	@echo "  make docker       Run tests inside a Docker container"
 
 install:
 	$(INSTALL)
