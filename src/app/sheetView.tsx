@@ -54,9 +54,15 @@ export default function SheetView({
         [],
       );
 
-      response.data.value.payload.forEach((update: string) => {
-        sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
-      });
+      if ("payload" in response.data.value) {
+        response.data.value.payload.forEach((update: string) => {
+          sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
+        });
+      } else {
+        response.data.value.forEach((update: { payload: string }) => {
+          sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+        });
+      }
 
       setSheet(sheet);
     };
@@ -85,10 +91,18 @@ export default function SheetView({
 
         console.log(response.data);
 
-        if (response.data.value.payload.length != 0) {
-          response.data.value.payload.forEach((update: string) => {
-            sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
-          });
+        if ("payload" in response.data.value) {
+          if (response.data.value.payload.length != 0) {
+            response.data.value.payload.forEach((update: string) => {
+              sheet.multiUpdate(parseMultipleUpdate(update, "\n"));
+            });
+          }
+        } else {
+          if (response.data.value.length != 0) {
+            response.data.value.forEach((update: { payload: string }) => {
+              sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+            });
+          }
         }
 
         const updates = sheet.generateUpdate();
