@@ -20,23 +20,24 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   // Function to encode username and password into base64
-  const encodeCredentials = (username : string, password : string) => {
+  const encodeCredentials = (username: string, password: string) => {
     return btoa(`${username}:${password}`);
   };
 
-    // Function to handle login button click
+  // Function to handle login button click
   const handleLogin = async () => {
     const credentials = encodeCredentials(username, password);
     // Use client-side fetch to send credentials to server
     try {
-      // const response = await fetch('https://husksheets.fly.dev/api/v1/checkUser', {
-      //   method: 'GET',
-      //   headers: {
-      //     'Authorization': `Basic ${credentials}`
-      //   }
-      // });
-      const response = { status: 200 };
-      // Handle different response statuses
+      const response = await fetch(
+        "http://localhost:3000/api/v1/checkUser",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Basic ${credentials}`,
+          },
+        },
+      );
 
       if (response.status === 200) {
         window.location.href = `/dashboard/${username}`;

@@ -21,7 +21,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
       const response = await axios.post(
         `${url}/getSheets`,
         {
-          publisher: "team19",
+          publisher: client,
         },
         {
           auth: {
@@ -37,6 +37,27 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     }
   };
 
+  const fetchSheetByPublisher = async (publisher: string) => {
+    try {
+      const response = await axios.post(
+        `${url}/getSheets`,
+        {
+          publisher: publisher,
+        },
+        {
+          auth: {
+            username: "team19",
+            password: "HDqSU5L28!;X$OzA",
+          },
+        },
+      );
+      setSheets(response.data.value);
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching sheets:", error);
+    }
+  }
+
   useEffect(() => {
     void fetchSheets();
   }, []);
@@ -46,8 +67,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
       const response = await axios.post(
         `${url}/createSheet`,
         {
-          publisher: "team19",
-          sheet: "sheetnamesheetname",
+          publisher: client,
+          sheet: sheetName,
         },
         {
           auth: {
@@ -67,7 +88,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
       const response = await axios.post(
         `${url}/deleteSheet`,
         {
-          publisher: "team19",
+          publisher: client,
           sheet: sheetName,
         },
         {
@@ -99,6 +120,13 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     setSheetName("");
   };
 
+  const handleFetchByPublisher = async () => {
+    const publisher = prompt("Enter publisher name:");
+    if (publisher) {
+      await fetchSheetByPublisher(publisher);
+    }
+  };
+
   return (
     <div
       style={{
@@ -113,18 +141,24 @@ export default function Dashboard({ params }: { params: { client: string } }) {
         <div className="text-center">
           <h1 className="text-2xl">{client}&apos;s Spreadsheets</h1>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-4">
           <button
             onClick={handleCreateNewSheet}
             className="rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
           >
             Create New Sheet
           </button>
+          <button
+            onClick={handleFetchByPublisher}
+            className="rounded-md bg-green-500 px-4 py-2 text-white transition hover:bg-green-600"
+          >
+            Fetch Sheets by Publisher
+          </button>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sheets.map(({ publisher, sheet }) => (
             <div
-              key={publisher}
+              key={`${publisher}-${sheet}`}
               className="relative flex flex-col items-center justify-center rounded border border-black bg-white bg-opacity-90 p-2"
             >
               <a
