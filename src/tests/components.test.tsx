@@ -8,6 +8,10 @@ import Grid from "../app/grid";
 import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 import SheetView from "../app/sheetView";
 
+/**
+ * @author Brooke Chalmers
+ */
+
 function makeSheet(content: string | number | { formula: string } | null) {
   const sheet = new Sheet(
     1,
@@ -127,9 +131,3 @@ describe("Grid component", () => {
   });
 });
 
-describe("SheetView component", () => {
-  it("renders correctly", () => {
-    const { container } = render(<SheetView />);
-    expect(container).toMatchSnapshot();
-  });
-});

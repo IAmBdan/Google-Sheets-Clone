@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-//Brian Daniels
+//Brian Daniels and Brooke Chalmers
 //Sheet class that has a 2D array of cells and a title
 import { Cell } from "./cell";
 import { Ref } from "./ref";

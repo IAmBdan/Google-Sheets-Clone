@@ -8,9 +8,13 @@ import { useState } from "react";
 import { Sheet } from "../classes/sheets";
 import { Publisher } from "../classes/publisher";
 import { useEffect } from "react";
-import { parseMultipleUpdate } from "~/utils/parseMultipleUpdate";
+import { parseMultipleUpdate } from "../utils/parseMultipleUpdate";
 import axios from "axios";
 
+/**
+ * Renders a sheet grid and syncs updates with the server.
+ * @author Brooke Chalmers
+ */
 export default function SheetView({ sheetName, publisher }: { sheetName: string; publisher: string }) {
   const [sheet, setSheet] = useState<Sheet | undefined>();
 
