@@ -6,6 +6,9 @@
 //Landing Page
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { env } from "process";
+
+const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 
 export default function Dashboard({ params }: { params: { client: string } }) {
   const client = params.client;
@@ -16,7 +19,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
   const fetchSheets = async () => {
     try {
       const response = await axios.post(
-        "https://husksheets.fly.dev/api/v1/getSheets",
+        `${url}/getSheets`,
         {
           publisher: "team19",
         },
@@ -41,7 +44,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
   const createSheet = async (client: string, sheetName: string) => {
     try {
       const response = await axios.post(
-        "https://husksheets.fly.dev/api/v1/createSheet",
+        `${url}/createSheet`,
         {
           publisher: "team19",
           sheet: "sheetnamesheetname",
@@ -62,7 +65,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
   const deleteSheet = async (client: string, sheetName: string) => {
     try {
       const response = await axios.post(
-        "https://husksheets.fly.dev/api/v1/deleteSheet",
+        `${url}/deleteSheet`,
         {
           publisher: "team19",
           sheet: sheetName,

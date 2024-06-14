@@ -17,19 +17,24 @@ import {
 import { LockOutlined } from "@mui/icons-material";
 import { useState } from "react";
 
+const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
+
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("https://husksheets.fly.dev/api/v1/createUser", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${url}/createUser`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: username, password: password }),
         },
-        body: JSON.stringify({ username: username, password: password }),
-      });
+      );
       console.log(response.status);
 
       if (response.status === 201) {
@@ -87,15 +92,15 @@ const Register = () => {
                 />
               </Grid>
             </Grid>
-              <Button
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleRegister}
-                // href={"/dashboard"}
-              >
-                Register
-              </Button>
+            <Button
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleRegister}
+              // href={"/dashboard"}
+            >
+              Register
+            </Button>
             <Grid container justifyContent="flex-end"></Grid>
             <a href={"/login"}>Already have an account? Login</a>
           </Box>
