@@ -60,7 +60,9 @@ export default function SheetView({
         });
       } else {
         response.data.value.forEach((update: { payload: string }) => {
-          sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+          if (update.payload != "") {
+            sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+          }
         });
       }
 
@@ -100,7 +102,9 @@ export default function SheetView({
         } else {
           if (response.data.value.length != 0) {
             response.data.value.forEach((update: { payload: string }) => {
-              sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+              if (update.payload != "") {
+                sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
+              }
             });
           }
         }
