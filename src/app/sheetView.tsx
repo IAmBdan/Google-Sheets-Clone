@@ -123,7 +123,13 @@ export default function SheetView({
         }
 
         const updates = sheet.generateUpdate();
+        console.log("our updates", updates
+          .map(
+            ({ ref, term }) => `${ref.toString()} "${term?.toString()}"`,
+          )
+          .join("\n"),);
 
+          
         if (updates.length) {
           const response = await axios.post(
             `${url}/updateSubscription`,
@@ -134,7 +140,7 @@ export default function SheetView({
                 .map(
                   ({ ref, term }) => `${ref.toString()} "${term?.toString()}"`,
                 )
-                .join("\n"),
+                .join("\n") + "\n",
             },
             {
               auth: {
