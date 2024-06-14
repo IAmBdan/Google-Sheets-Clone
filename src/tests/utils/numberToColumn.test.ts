@@ -1,6 +1,7 @@
 //all tests work
-
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 import { numberToColumnLabel } from '../../utils/numberToColumnLabel';
 
 describe('numberToColumnLabel', () => {

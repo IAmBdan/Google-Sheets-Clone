@@ -6,7 +6,9 @@ import { multipleCellUpdate } from  "../../utils/multipleCellUpdate";
 import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
 
 import { Ref } from "../../classes/ref"
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 
 describe('parse multipleCellUpdate', () => {
 

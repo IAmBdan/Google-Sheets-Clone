@@ -1,7 +1,9 @@
 //all tests work
 
 import { parseRef } from '../../utils/parseRef';
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 describe('parseRef', () => {
     test('parses A correctly', () => { expect(parseRef('$A1')).toEqual({column: 'A', row: 1});
 });

@@ -1,5 +1,7 @@
 import { Ref } from "../classes/ref"
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 
 // Parses a reference string into a Ref object with a column and row
 export function parseRef(ref: string): Ref {

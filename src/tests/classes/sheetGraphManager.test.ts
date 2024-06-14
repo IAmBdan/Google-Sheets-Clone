@@ -3,8 +3,9 @@
 import { Publisher } from "../../classes/publisher"
 import { SheetGraphManager } from "../../classes/sheetGraphManager"
 import { Sheet } from "../../classes/sheets"
-
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 // Utility function to create a new Sheet with a publisher
 const createSheet = (id: number, title: string, publisher: Publisher, numCols = 3, numRows = 3) => {
     const sheet = new Sheet(numCols, numRows, title, publisher, []);

@@ -1,4 +1,6 @@
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 import { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";
 import { parseRef } from "./parseRef";

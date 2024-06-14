@@ -1,7 +1,9 @@
 //all tests work
 
 //test ref and all ref methods
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 import { Ref } from "../../classes/ref"
 
 describe('Ref', () => {

@@ -1,4 +1,9 @@
-//Brian Daniels
+
+
+/** 
+    @author Brian Daniels
+    //Publisher class that creates a publisher object with a name and id
+     * */
 
 import { hasSpecialChar } from "../utils/hasSpecialChar";
 export class Publisher {

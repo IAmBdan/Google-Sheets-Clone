@@ -1,4 +1,6 @@
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 // Purpose: Contains the Ref class which is used to represent a cell reference in a spreadsheet
 
 // Ref class that represents a cell reference in a spreadsheet 

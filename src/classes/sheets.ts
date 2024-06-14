@@ -1,4 +1,6 @@
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 //Sheet class that has a 2D array of cells and a title
 import { Cell } from "./cell";
 import { Ref } from "./ref";

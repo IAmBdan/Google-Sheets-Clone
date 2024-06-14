@@ -6,8 +6,9 @@ import { Ref } from "../../classes/ref"
 import { multipleCellUpdate } from "../../utils/multipleCellUpdate"
 import { Cell } from "../../classes/cell"
 import { evaluateFormula } from "~/utils/formula"
-
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
     
     describe('Sheet', () => {
         const publisher = new Publisher('John Doe', 1);

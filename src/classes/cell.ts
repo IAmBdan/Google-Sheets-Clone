@@ -1,9 +1,15 @@
-//Brian Daniels
+
 import { Ref } from "./ref";
 
+    /** 
+     * // Cell class that represents a cell in a sheet
+    @author Brian Daniels
+     * */
+
+    
+    
 export { Cell };
   
-    // Cell class that represents a cell in a sheet
     class Cell {
         value: number | string | { formula: string } | null;
         ref?: Ref | undefined;

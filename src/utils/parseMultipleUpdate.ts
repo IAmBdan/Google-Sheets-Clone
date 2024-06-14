@@ -1,5 +1,7 @@
 // Purpose: Parse a string of multiple updates into an array of single updates.
-//Brian Daniels
+/** 
+    @author Brian Daniels
+     * */
 import { singleUpdate } from "../types/singleUpdate";
 import { parseSingleCellUpdate } from "../utils/singleCellUpdate";
 
