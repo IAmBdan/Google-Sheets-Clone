@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 //Brian Daniels
-import { singleUpdate } from "../types/singleUpdate";
+import type { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";
 import { parseRef } from "./parseRef";
 
@@ -13,8 +13,7 @@ export function parseSingleCellUpdate(line: string): singleUpdate {
         throw new Error(`Invalid input line: ${line}`);
     }
     const ref = parseRef(refStr || ''); // Provide a default value for refStr
-    
+
     const term = parseTerm(termStr);
     return { ref, term };
 }
- 

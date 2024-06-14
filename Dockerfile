@@ -18,23 +18,14 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Install lint
-RUN npm run lint
+# Generate Prisma
+RUN npx prisma generate
 
 # Compile TypeScript to JavaScript
 RUN npm run build
-
-# Generate Prisma
-RUN npx prisma generate
 
 # Expose the port for the server
 EXPOSE 3000
 
 # Start the server
-CMD ["node", "./dist/index.js"]
-
-# Run the server
-RUN npm run dev
-
-# Run tests
-RUN npm test
+CMD ["npm", "run", "start"]

@@ -8,7 +8,7 @@ START = npm run dev
 BUILD = npm run build
 TEST = npm test
 INSTALL = npm install
- 
+
 # Targets
 .PHONY: install start build test
 
@@ -20,15 +20,19 @@ help:
 	@echo "  make start        Start the development server"
 	@echo "  make build        Build the project"
 	@echo "  make test         Run tests"
- 
+
 install:
 	$(INSTALL)
- 
+
 start:
 	$(START)
- 
+
 build:
 	$(BUILD)
- 
+
 test:
 	$(TEST)
+
+docker:
+	docker build -t computer-serve .
+	docker run -p 3000:3000 computer-serve

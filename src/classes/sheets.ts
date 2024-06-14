@@ -175,8 +175,7 @@ export class Sheet {
       const dependents = this.references.get(ref.column + ref.row);
       if (dependents) {
         dependents.forEach((dependentRef) => {
-        // @ts-expect-error type
-
+          // @ts-expect-error type
           const dependentRefObject = new Ref(/([A-Z]+)(\d+)/.exec(dependentRef)[1], parseInt(/([A-Z]+)(\d+)/.exec(dependentRef)[2]));
           const cell = this.getCell(dependentRefObject).getValue();
 

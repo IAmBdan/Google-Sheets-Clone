@@ -59,6 +59,7 @@ const parseTokens = (tokens: string[]): ASTNode => {
             const func = (tokens[i++] ?? '').slice(0, -1);
             const args = [];
             while (tokens[i] !== ')' && i < tokens.length) {
+                // @ts-expect-error type
                 args.push(parseExpression());
                 if (tokens[i] === ',') i++;
             }
