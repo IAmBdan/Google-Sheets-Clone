@@ -15,13 +15,18 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const fetchSheets = async () => {
     try {
-      const response = await axios.post("https://husksheets.fly.dev/api/v1/getSheets", {
-        publisher: client,
-      }, {
-        headers: {
-          'Authorization': `Basic ${btoa(`${client}:2V56$*BBBB1}mkrl`)}` // empty password
-        }
-      });
+      const response = await axios.post(
+        "https://husksheets.fly.dev/api/v1/getSheets",
+        {
+          publisher: "team19",
+        },
+        {
+          auth: {
+            username: "team19",
+            password: "HDqSU5L28!;X$OzA",
+          },
+        },
+      );
       setSheets(response.data.value);
       console.log(response.data);
     } catch (error) {
@@ -35,10 +40,19 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const createSheet = async (client: string, sheetName: string) => {
     try {
-      const response = await axios.post("https://husksheets.fly.dev/api/v1/createSheet", {
-        publisher: client,
-        sheet: sheetName,
-      });
+      const response = await axios.post(
+        "https://husksheets.fly.dev/api/v1/createSheet",
+        {
+          publisher: "team19",
+          sheet: "sheetnamesheetname",
+        },
+        {
+          auth: {
+            username: "team19",
+            password: "HDqSU5L28!;X$OzA",
+          },
+        },
+      );
       console.log(response.data);
     } catch (error) {
       console.error("Error creating sheet:", error);
@@ -47,10 +61,19 @@ export default function Dashboard({ params }: { params: { client: string } }) {
 
   const deleteSheet = async (client: string, sheetName: string) => {
     try {
-      const response = await axios.post("https://husksheets.fly.dev/api/v1/deleteSheet", {
-        publisher: client,
-        sheet: sheetName,
-      });
+      const response = await axios.post(
+        "https://husksheets.fly.dev/api/v1/deleteSheet",
+        {
+          publisher: "team19",
+          sheet: sheetName,
+        },
+        {
+          auth: {
+            username: "team19",
+            password: "HDqSU5L28!;X$OzA",
+          },
+        },
+      );
       console.log(response.data);
     } catch (error) {
       console.error("Error deleting sheet:", error);
