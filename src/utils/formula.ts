@@ -96,11 +96,10 @@ const evaluateFunctionCall = (func: string, args: (string | number | null)[]): s
             if (args.some(arg => typeof arg !== 'number')) throw new Error('MIN arguments must be numbers');
             return Math.min(...(args as number[]));
         case 'MAX':
-            if (args.some(arg => typeof arg !== 'number')) throw new Error('MAX arguments must be numbers');
             return Math.max(...(args as number[]));
         case 'AVG':
-            if (args.some(arg => typeof arg !== 'number')) throw new Error('AVG arguments must be numbers');
-            return (args as number[]).reduce((acc, arg) => acc! + (arg as number), 0) / args.length;
+            // if (args.some(arg => typeof arg !== 'number')) throw new Error('AVG arguments must be numbers');
+            return (args.map(a => Number(a))).reduce((acc, arg) => acc! + (arg as number), 0) / args.length;
         case 'IF':
             if (args.length !== 3) throw new Error('IF function requires 3 arguments');
             const condition = args[0];

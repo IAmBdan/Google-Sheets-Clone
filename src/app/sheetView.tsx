@@ -14,6 +14,17 @@ import process from "process";
 
 const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 
+const getEndpoint = (url: string | undefined) => {
+  if (url === "https://husksheets.fly.dev/api/v1") {
+    return "getUpdatesForPublished";
+  } else if (url === "http://localhost:3000/api/v1") {
+    return "getUpdatesForSubscription";
+  }
+  return "";
+};
+
+const endpoint = getEndpoint(url);
+
 /**
  * Renders a sheet grid and syncs updates with the server.
  * @author Brooke Chalmers
@@ -30,7 +41,7 @@ export default function SheetView({
   useEffect(() => {
     const fetchSheets = async () => {
       const response = await axios.post(
-        `${url}/getUpdatesForSubscription`,
+        `${url}/${endpoint}`,
         {
           sheet: sheetName,
           publisher: publisher,
@@ -60,6 +71,7 @@ export default function SheetView({
         });
       } else {
         response.data.value.forEach((update: { payload: string }) => {
+          console.log("Server response data", response.data.value);
           if (update.payload != "") {
             sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
           }
@@ -77,7 +89,7 @@ export default function SheetView({
       // on each interval, show a popup message saying saved
       const interval = setInterval(async () => {
         const response = await axios.post(
-          `${url}/getUpdatesForSubscription`,
+          `${url}/${endpoint}`,
           {
             sheet: sheetName,
             publisher: publisher,
@@ -101,6 +113,7 @@ export default function SheetView({
           }
         } else {
           if (response.data.value.length != 0) {
+            console.log("Server response data", response.data.value);
             response.data.value.forEach((update: { payload: string }) => {
               if (update.payload != "") {
                 sheet.multiUpdate(parseMultipleUpdate(update.payload, "\n"));
