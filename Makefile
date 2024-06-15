@@ -36,4 +36,6 @@ test:
 
 docker:
 	docker build -t computer-serve .
+	docker run -p 3000:3000 computer-serve npm run test
+	docker run -p 3000:3000 computer-serve npm run test:ui
 	docker run -p 3000:3000 computer-serve
