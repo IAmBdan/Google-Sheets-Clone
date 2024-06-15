@@ -5,12 +5,10 @@
 Husksheets is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. The project consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
 
 ## Technologies Used
-- We chose T3 for our Husksheets project as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
+- We chose TypeScript and NextJS for our Husksheets project as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
 
-- T3 Stack
-  - Next.js
-  - tRPC
-  - Prisma
+- Next.js
+- Prisma
 - React
 - TypeScript
 - PlanetScale
