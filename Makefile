@@ -6,7 +6,7 @@ DATABASE_URL = mysql://jkici60lj45ssgs8rkmr:pscale_pw_iG2LjcCBBgQuVi57gqJpbxJCAr
 # Commands
 START = npm run dev
 BUILD = npm run build
-TEST = npm test
+TEST = npm test; npm run test:ui
 INSTALL = npm install
 
 # Targets
