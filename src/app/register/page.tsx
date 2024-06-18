@@ -37,7 +37,7 @@ const Register = () => {
       );
       console.log(response.status);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         // Successfully registered
         window.location.href = `/dashboard/${username}`;
       } else {

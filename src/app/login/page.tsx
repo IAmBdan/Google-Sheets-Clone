@@ -30,7 +30,7 @@ const Login = () => {
     // Use client-side fetch to send credentials to server
     try {
       const response = await fetch(
-        "http://localhost:3000/api/v1/checkUser",
+        "https://localhost:3000/api/v1/checkUser",
         {
           method: "GET",
           headers: {
