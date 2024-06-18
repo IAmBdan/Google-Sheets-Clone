@@ -90,7 +90,7 @@ describe('GET /api/v1/register', () => {
         });
     });
 
-    it('should create a new publisher and return 201', async () => {
+    it('should create a new publisher and return 200', async () => {
         (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue({ id: '1', username: 'validUser', password: 'validPassword' });
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue(null);
         (prisma.publisher.create as jest.MockedFunction<typeof prisma.publisher.create>).mockResolvedValue({ id: '1', name: 'validUser' });
@@ -105,7 +105,7 @@ describe('GET /api/v1/register', () => {
 
         const res = await GET(req);
 
-        expect(res.status).toBe(201);
+        expect(res.status).toBe(200);
         const json = await res.json();
         expect(json).toEqual({
             success: true,

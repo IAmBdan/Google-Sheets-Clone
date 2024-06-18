@@ -29,5 +29,5 @@ export async function POST(req: NextRequest) {
         time: currentTime
     }
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(result, { status: 200 });
 }

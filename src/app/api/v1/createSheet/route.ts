@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
             },
         });
 
-        return NextResponse.json({success: true, message: null, value: [], time: currentTime}, { status: 201 });
+        return NextResponse.json({success: true, message: null, value: [], time: currentTime}, { status: 200 });
     } catch (error) {
         return NextResponse.json({success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }

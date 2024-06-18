@@ -69,7 +69,7 @@ describe("POST /api/v1/createSheet", () => {
     });
   });
 
-  it("should create a new sheet and return 201", async () => {
+  it("should create a new sheet and return 200", async () => {
     (
       prisma.publisher.findFirst as jest.MockedFunction<
         typeof prisma.publisher.findFirst
@@ -91,7 +91,7 @@ describe("POST /api/v1/createSheet", () => {
 
     const res = await POST(req);
 
-    expect(res.status).toBe(201);
+    expect(res.status).toBe(200);
     const json = await res.json();
     expect(json).toEqual({
       message: null,

@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Publisher already exists', value: [], time: currentTime }, { status: 409 });
         }
 
-        return NextResponse.json({ success: true, message: 'Publisher created successfully', value: [], time: currentTime }, { status: 201 });
+        return NextResponse.json({ success: true, message: 'Publisher created successfully', value: [], time: currentTime }, { status: 200 });
     } catch (error) {
         return NextResponse.json({ success: false, message: 'Internal server error', value: [], time: currentTime }, { status: 500 });
     }

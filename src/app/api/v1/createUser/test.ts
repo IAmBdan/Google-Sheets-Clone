@@ -27,7 +27,7 @@ describe('POST /api/v1/createUser', () => {
         jest.clearAllMocks();
     });
 
-    it('should create a new user and return 201', async () => {
+    it('should create a new user and return 200', async () => {
         const mockUser = { id: '1', username: 'testuser', password: 'password' };
         (prisma.user.create as jest.MockedFunction<typeof prisma.user.create>).mockResolvedValue(mockUser);
         (prisma.publisher.create as jest.MockedFunction<typeof prisma.publisher.create>).mockResolvedValue({ id: '1', name: 'testuser' });
@@ -39,7 +39,7 @@ describe('POST /api/v1/createUser', () => {
 
         const res = await POST(req);
 
-        expect(res.status).toBe(201);
+        expect(res.status).toBe(200);
         const json = await res.json();
         expect(json).toEqual({
             success: true,
