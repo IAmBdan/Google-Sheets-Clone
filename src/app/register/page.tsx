@@ -41,6 +41,8 @@ const Register = () => {
 
       if (response.status === 200) {
         // Successfully registered
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('password', password);
         window.location.href = `/dashboard`;
       } else {
         const data = await response.json();
