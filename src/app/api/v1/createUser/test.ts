@@ -32,7 +32,7 @@ describe('POST /api/v1/createUser', () => {
         (prisma.user.create as jest.MockedFunction<typeof prisma.user.create>).mockResolvedValue(mockUser);
         (prisma.publisher.create as jest.MockedFunction<typeof prisma.publisher.create>).mockResolvedValue({ id: '1', name: 'testuser' });
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ username: 'testuser', password: 'password' }),
         });

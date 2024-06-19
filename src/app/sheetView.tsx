@@ -23,7 +23,7 @@ const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 const getEndpoint = (url: string | undefined) => {
   if (url === "https://husksheets.fly.dev/api/v1") {
     return "getUpdatesForPublished";
-  } else if (url === "http://localhost:3000/api/v1") {
+  } else if (url === "https://localhost:3000/api/v1") {
     return "getUpdatesForSubscription";
   }
   return "";

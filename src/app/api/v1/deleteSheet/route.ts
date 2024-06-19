@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundSheet) {
-            return NextResponse.json({ success: false, message: 'Sheet not found', value: [], time: currentTime }, { status: 404 });
+            return NextResponse.json({ success: false, message: `Sheet does not exist: ${sheet}`, value: [], time: currentTime }, { status: 200 });
         }
 
         await prisma.publishedUpdate.deleteMany({

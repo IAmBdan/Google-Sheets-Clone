@@ -29,7 +29,7 @@ describe('GET /api/v1/register', () => {
     });
 
     it('should return 401 if missing or invalid authorization header', async () => {
-        req = new NextRequest('http://localhost', { method: 'GET' });
+        req = new NextRequest('https://localhost', { method: 'GET' });
 
         const res = await GET(req);
 
@@ -47,7 +47,7 @@ describe('GET /api/v1/register', () => {
         (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue(null);
 
         const credentials = Buffer.from('invalidUser:invalidPassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -71,7 +71,7 @@ describe('GET /api/v1/register', () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: '1', name: 'validUser' });
 
         const credentials = Buffer.from('validUser:validPassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -96,7 +96,7 @@ describe('GET /api/v1/register', () => {
         (prisma.publisher.create as jest.MockedFunction<typeof prisma.publisher.create>).mockResolvedValue({ id: '1', name: 'validUser' });
 
         const credentials = Buffer.from('validUser:validPassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -119,7 +119,7 @@ describe('GET /api/v1/register', () => {
         (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockRejectedValue(new Error('Internal server error'));
 
         const credentials = Buffer.from('validUser:validPassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,

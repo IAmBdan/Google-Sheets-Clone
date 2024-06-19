@@ -29,7 +29,7 @@ describe('POST /api/v1/deleteSheet', () => {
     });
 
     it('should return 400 if required fields are missing', async () => {
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({}),
         });
@@ -49,7 +49,7 @@ describe('POST /api/v1/deleteSheet', () => {
     it('should return 404 if publisher is not found', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue(null);
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
@@ -66,19 +66,19 @@ describe('POST /api/v1/deleteSheet', () => {
         });
     });
 
-    it('should return 404 if sheet is not found', async () => {
+    it('should return 200 if sheet is not found', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: 'testPublisherId', name: 'testPublisher'});
 
         (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue(null);
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }),
         });
 
         const res = await POST(req);
 
-        expect(res.status).toBe(404);
+        expect(res.status).toBe(200);
         const json = await res.json();
         expect(json).toEqual({
             success: false,
@@ -91,7 +91,7 @@ describe('POST /api/v1/deleteSheet', () => {
     it('should return 500 if there is an internal server error', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockRejectedValue(new Error('Internal server error'));
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'ValidPublisher', sheet: 'SheetToDelete' }),
         });

@@ -36,10 +36,12 @@ const Register = () => {
         },
       );
       console.log(response.status);
+      console.log("Username: ", username);
+      console.log("Password: ", password);
 
       if (response.status === 200) {
         // Successfully registered
-        window.location.href = `/dashboard/${username}`;
+        window.location.href = `/dashboard`;
       } else {
         const data = await response.json();
         alert(data.message || "Registration failed");

@@ -25,7 +25,7 @@ describe("GET /api/checkUser", () => {
     });
 
     it("should return 401 if authorization header is missing", async () => {
-        req = new NextRequest("http://localhost", { method: "GET" });
+        req = new NextRequest("https://localhost", { method: "GET" });
 
         const res = await GET(req);
 
@@ -43,7 +43,7 @@ describe("GET /api/checkUser", () => {
         (prisma.user.findUnique as jest.MockedFunction<typeof prisma.user.findUnique>).mockResolvedValue(null);
 
         const credentials = Buffer.from('nonexistentuser:password').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -70,7 +70,7 @@ describe("GET /api/checkUser", () => {
         });
 
         const credentials = Buffer.from('testuser:wrongpassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -97,7 +97,7 @@ describe("GET /api/checkUser", () => {
         });
 
         const credentials = Buffer.from('testuser:correctpassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,
@@ -121,7 +121,7 @@ describe("GET /api/checkUser", () => {
         (prisma.user.findUnique as jest.MockedFunction<typeof prisma.user.findUnique>).mockRejectedValue(new Error('Internal server error'));
 
         const credentials = Buffer.from('testuser:correctpassword').toString('base64');
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'GET',
             headers: new Headers({
                 'Authorization': `Basic ${credentials}`,

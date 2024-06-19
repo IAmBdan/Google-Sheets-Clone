@@ -16,12 +16,6 @@ export async function POST(req: NextRequest) {
         }
     });
 
-    await prisma.publisher.create({
-        data: {
-            name: username,
-        }
-    });
-
     const result = {
         success: true,
         message: null,

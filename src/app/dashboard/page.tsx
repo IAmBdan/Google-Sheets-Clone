@@ -6,17 +6,38 @@
 //Landing Page
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { env } from "process";
 
 const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 
-export default function Dashboard({ params }: { params: { client: string } }) {
-  const client = params.client;
+export default function Dashboard() {
+  const client = sessionStorage.getItem('username');
+  const password = sessionStorage.getItem('password');
   const [sheetName, setSheetName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sheets, setSheets] = useState([]);
+  const credentials = Buffer.from(`${client}:${password}`).toString("base64");
+
+  const handleRegister = async () => {
+    try {
+      await axios.get(`${url}/register`, {
+        headers: {
+          Authorization: `Basic ${credentials}`,
+        },
+        auth: {
+          username: client ?? "",
+          password: password ?? "",
+        },
+      });
+    } catch (error) {
+      console.log("Error registering", error);
+    }
+  };
 
   const fetchSheets = async () => {
+    const semicolon = ";";
+    console.log(client);
+    console.log("Password: ", password);
+    console.log("Test: ", semicolon);
     try {
       const response = await axios.post(
         `${url}/getSheets`,
@@ -24,9 +45,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
           publisher: client,
         },
         {
-          auth: {
-            username: "team19",
-            password: "HDqSU5L28!;X$OzA",
+          headers: {
+            Authorization: `Basic ${credentials}`,
           },
         },
       );
@@ -46,8 +66,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
         },
         {
           auth: {
-            username: "team19",
-            password: "HDqSU5L28!;X$OzA",
+            username: client ?? "",
+            password: password ?? "",
           },
         },
       );
@@ -56,7 +76,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
     } catch (error) {
       console.error("Error fetching sheets:", error);
     }
-  }
+  };
 
   useEffect(() => {
     void fetchSheets();
@@ -72,8 +92,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
         },
         {
           auth: {
-            username: "team19",
-            password: "HDqSU5L28!;X$OzA",
+            username: client,
+            password: password ?? "",
           },
         },
       );
@@ -93,8 +113,8 @@ export default function Dashboard({ params }: { params: { client: string } }) {
         },
         {
           auth: {
-            username: "team19",
-            password: "HDqSU5L28!;X$OzA",
+            username: client,
+            password: password ?? "",
           },
         },
       );
@@ -109,7 +129,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
   };
 
   const handleModalSubmit = async () => {
-    await createSheet(client, sheetName);
+    await createSheet(client ?? "", sheetName);
     await fetchSheets();
     setSheetName("");
     setIsModalOpen(false);
@@ -143,6 +163,13 @@ export default function Dashboard({ params }: { params: { client: string } }) {
         </div>
         <div className="flex justify-center gap-4">
           <button
+            onClick={handleRegister}
+            className="rounded-md bg-red-500 px-4 py-2 text-white transition hover:bg-red-600"
+          >
+            Register as a Publisher
+          </button>
+
+          <button
             onClick={handleCreateNewSheet}
             className="rounded-md bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600"
           >
@@ -171,7 +198,7 @@ export default function Dashboard({ params }: { params: { client: string } }) {
               <button
                 onClick={async (e) => {
                   e.preventDefault();
-                  await deleteSheet(client, sheet);
+                  await deleteSheet(client ?? "", sheet);
                   await fetchSheets();
                 }}
                 className="rounded-md bg-red-500 px-2 py-1 text-white transition hover:bg-red-600"

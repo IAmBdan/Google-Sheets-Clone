@@ -39,8 +39,13 @@ const Login = () => {
         },
       );
 
+      console.log("Username: ", username);
+      console.log("Password: ", password);
+
       if (response.status === 200) {
-        window.location.href = `/dashboard/${username}`;
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('password', password);
+        window.location.href = `/dashboard`;
       } else if (response.status === 401 || response.status === 404) {
         setErrorMessage("Invalid username or password");
       } else {

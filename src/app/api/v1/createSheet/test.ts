@@ -28,7 +28,7 @@ describe("POST /api/v1/createSheet", () => {
   });
 
   it("should return 400 if required fields are missing", async () => {
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({}),
     });
@@ -52,7 +52,7 @@ describe("POST /api/v1/createSheet", () => {
       >
     ).mockResolvedValue(null);
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });
@@ -84,7 +84,7 @@ describe("POST /api/v1/createSheet", () => {
       payload: "",
     });
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });
@@ -108,7 +108,7 @@ describe("POST /api/v1/createSheet", () => {
       >
     ).mockRejectedValue(new Error("Internal server error"));
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher", sheet: "testSheet" }),
     });

@@ -45,15 +45,24 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ success: false, message: 'Invalid credentials', value: [], time: currentTime }, { status: 401 });
         }
 
-        // Create a new publisher with the username as the name
+        // Check if the publisher already exists
         const existingPublisher = await prisma.publisher.findFirst({
             where: {
                 name: username
             }
         });
 
+        // If there is already a publisher named that, return an error
         if (existingPublisher) {
-            return NextResponse.json({ success: false, message: 'Publisher already exists', value: [], time: currentTime }, { status: 409 });
+            console.log("Publisher already exists");
+            return NextResponse.json({ success: false, message: 'Publisher already exists', value: [], time: currentTime }, { status: 200 });
+        } else {
+            // otherwise, create the publisher using the given name
+            await prisma.publisher.create({
+                data: {
+                    name: username
+                }
+            })
         }
 
         return NextResponse.json({ success: true, message: 'Publisher created successfully', value: [], time: currentTime }, { status: 200 });

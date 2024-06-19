@@ -28,7 +28,7 @@ describe("POST /api/v1/getSheets", () => {
   });
 
   it("should return 400 if required fields are missing", async () => {
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({}),
     });
@@ -52,7 +52,7 @@ describe("POST /api/v1/getSheets", () => {
       >
     ).mockResolvedValue(null);
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher" }),
     });
@@ -85,7 +85,7 @@ describe("POST /api/v1/getSheets", () => {
       prisma.sheet.findMany as jest.MockedFunction<typeof prisma.sheet.findMany>
     ).mockResolvedValue(mockSheets);
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher" }),
     });
@@ -112,7 +112,7 @@ describe("POST /api/v1/getSheets", () => {
       >
     ).mockRejectedValue(new Error("Internal server error"));
 
-    req = new NextRequest("http://localhost", {
+    req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({ publisher: "testPublisher" }),
     });

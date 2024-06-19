@@ -24,7 +24,8 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundPublisher) {
-            return NextResponse.json({success: false, message: 'Publisher not found', value: [], time: currentTime}, { status: 404 });
+            console.log("User is not a publisher");
+            return NextResponse.json({success: false, message: 'Publisher not found', value: [], time: currentTime}, { status: 200 });
         }
 
         await prisma.sheet.create({

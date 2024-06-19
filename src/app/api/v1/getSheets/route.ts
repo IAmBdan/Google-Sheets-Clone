@@ -9,13 +9,12 @@ const currentTime = Date.now();
 
 // Get all sheets for a given publisher
 export async function POST(req: NextRequest) {
-    console.log("getSheets");
-
     try {
         const { publisher } = await req.json();
 
         if (!publisher) {
-            return NextResponse.json({ success: false, message: 'Missing required fields', value: [], time: currentTime}, { status: 400 });
+            console.log("Missing required fields");
+            return NextResponse.json({ success: false, message: 'Missing required fields', value: [], time: currentTime}, { status: 200 });
         }
 
         const foundPublisher = await prisma.publisher.findFirst({
@@ -25,7 +24,8 @@ export async function POST(req: NextRequest) {
         });
 
         if (!foundPublisher) {
-            return NextResponse.json({ success: false, message: 'Publisher not found', value: [], time: currentTime }, { status: 404 });
+            console.log("Publisher not found");
+            return NextResponse.json({ success: false, message: 'Publisher not found', value: [], time: currentTime }, { status: 200 });
         }
 
         const sheets = await prisma.sheet.findMany({

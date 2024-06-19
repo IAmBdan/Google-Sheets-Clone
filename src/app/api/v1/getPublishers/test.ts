@@ -34,7 +34,7 @@ describe("GET /api/v1/getPublishers", () => {
       >
     ).mockResolvedValue(mockPublishers);
 
-    req = new NextRequest("http://localhost", { method: "GET" });
+    req = new NextRequest("https://localhost", { method: "GET" });
 
     const res = await GET();
 
@@ -55,7 +55,7 @@ describe("GET /api/v1/getPublishers", () => {
       >
     ).mockRejectedValue(new Error("Internal server error"));
 
-    req = new NextRequest("http://localhost", { method: "GET" });
+    req = new NextRequest("https://localhost", { method: "GET" });
 
     const res = await GET();
 

@@ -28,7 +28,7 @@ describe('POST /api/v1/updateSheet', () => {
     });
 
     it('should return 400 if required fields are missing', async () => {
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet' }), // payload is missing
         });
@@ -48,7 +48,7 @@ describe('POST /api/v1/updateSheet', () => {
     it('should return 404 if publisher is not found', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue(null);
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet', payload: 'newPayload' }),
         });
@@ -70,7 +70,7 @@ describe('POST /api/v1/updateSheet', () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue(mockPublisher);
         (prisma.sheet.findFirst as jest.MockedFunction<typeof prisma.sheet.findFirst>).mockResolvedValue(null);
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet', payload: 'newPayload' }),
         });
@@ -98,7 +98,7 @@ describe('POST /api/v1/updateSheet', () => {
             payload: 'newPayload'
         });
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet', payload: 'newPayload' }),
         });
@@ -118,7 +118,7 @@ describe('POST /api/v1/updateSheet', () => {
     it('should return 500 if there is an internal server error', async () => {
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockRejectedValue(new Error('Internal server error'));
 
-        req = new NextRequest('http://localhost', {
+        req = new NextRequest('https://localhost', {
             method: 'POST',
             body: JSON.stringify({ publisher: 'testPublisher', sheet: 'testSheet', payload: 'newPayload' }),
         });
