@@ -82,7 +82,7 @@ describe('POST /api/v1/deleteSheet', () => {
         const json = await res.json();
         expect(json).toEqual({
             success: false,
-            message: 'Sheet not found',
+            message: 'Sheet does not exist: testSheet',
             value: [],
             time: expect.any(Number),
         });

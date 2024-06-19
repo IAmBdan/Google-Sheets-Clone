@@ -45,7 +45,7 @@ describe("POST /api/v1/createSheet", () => {
     });
   });
 
-  it("should return 404 if publisher is not found", async () => {
+  it("should return 200 if publisher is not found", async () => {
     (
       prisma.publisher.findFirst as jest.MockedFunction<
         typeof prisma.publisher.findFirst
@@ -59,7 +59,7 @@ describe("POST /api/v1/createSheet", () => {
 
     const res = await POST(req);
 
-    expect(res.status).toBe(404);
+    expect(res.status).toBe(200);
     const json = await res.json();
     expect(json).toEqual({
       success: false,

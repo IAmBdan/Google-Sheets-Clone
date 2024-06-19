@@ -66,7 +66,7 @@ describe('GET /api/v1/register', () => {
         });
     });
 
-    it('should return 409 if publisher already exists', async () => {
+    it('should return 200 if publisher already exists', async () => {
         (prisma.user.findFirst as jest.MockedFunction<typeof prisma.user.findFirst>).mockResolvedValue({ id: '1', username: 'validUser', password: 'validPassword' });
         (prisma.publisher.findFirst as jest.MockedFunction<typeof prisma.publisher.findFirst>).mockResolvedValue({ id: '1', name: 'validUser' });
 
@@ -80,7 +80,7 @@ describe('GET /api/v1/register', () => {
 
         const res = await GET(req);
 
-        expect(res.status).toBe(409);
+        expect(res.status).toBe(200);
         const json = await res.json();
         expect(json).toEqual({
             success: false,

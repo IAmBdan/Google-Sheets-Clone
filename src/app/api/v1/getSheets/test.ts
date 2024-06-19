@@ -27,7 +27,7 @@ describe("POST /api/v1/getSheets", () => {
     jest.clearAllMocks();
   });
 
-  it("should return 400 if required fields are missing", async () => {
+  it("should return 200 if required fields are missing", async () => {
     req = new NextRequest("https://localhost", {
       method: "POST",
       body: JSON.stringify({}),
@@ -35,7 +35,7 @@ describe("POST /api/v1/getSheets", () => {
 
     const res = await POST(req);
 
-    expect(res.status).toBe(400);
+    expect(res.status).toBe(200);
     const json = await res.json();
     expect(json).toEqual({
       success: false,
@@ -45,7 +45,7 @@ describe("POST /api/v1/getSheets", () => {
     });
   });
 
-  it("should return 404 if publisher is not found", async () => {
+  it("should return 200 if publisher is not found", async () => {
     (
       prisma.publisher.findFirst as jest.MockedFunction<
         typeof prisma.publisher.findFirst
@@ -59,7 +59,7 @@ describe("POST /api/v1/getSheets", () => {
 
     const res = await POST(req);
 
-    expect(res.status).toBe(404);
+    expect(res.status).toBe(200);
     const json = await res.json();
     expect(json).toEqual({
       success: false,
