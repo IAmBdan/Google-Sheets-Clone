@@ -16,23 +16,6 @@ import process from "process";
 const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 
 /**
- * Determines the endpoint based on the provided URL.
- * @param url The URL to determine the endpoint for.
- * @returns The appropriate endpoint based on the URL.
- */
-const getEndpoint = (url: string | undefined) => {
-  if (url === "https://husksheets.fly.dev/api/v1") {
-    return "getUpdatesForPublished";
-  } else if (url === "https://localhost:3000/api/v1") {
-    return "getUpdatesForSubscription";
-  }
-  return "";
-};
-
-// Determine the endpoint using the URL
-const endpoint = getEndpoint(url);
-
-/**
  * Renders a sheet grid and syncs updates with the server.
  * @param sheetName The name of the sheet to be displayed.
  * @param publisher The publisher of the sheet.
@@ -47,6 +30,40 @@ export default function SheetView({
 }) {
   // State to hold the sheet data
   const [sheet, setSheet] = useState<Sheet | undefined>();
+  const username = sessionStorage.getItem("username");
+  const password = sessionStorage.getItem("password");
+  const fetchedPublisher = sessionStorage.getItem("publisher");
+
+  /**
+   * Determines the endpoint.
+   * @returns The appropriate endpoint based on the URL.
+   */
+  const getEndpoint = () => {
+    console.log(username);
+    console.log(fetchedPublisher);
+    //If the client is the same as the sheet's publisher, then this is a published sheet
+    if (username === fetchedPublisher) {
+      return "getUpdatesForPublished";
+    } else {
+      //otherwise, it must be a subscription
+      //here is the problem: only will work if we use getUpdatesForSubscription, but that is broken
+      return "getUpdatesForPublished";
+    }
+  };
+
+  const getUpdateEndpoint = () => {
+    if (username === fetchedPublisher) {
+      return "updatePublished";
+    } else {
+      //otherwise, it must be a subscription
+      return "updateSubscription";
+    }
+  };
+
+  // Determine the endpoint based on whether or not the logged in client is the same as the sheet publisher
+  const endpoint = getEndpoint();
+  const updateEndpoint = getUpdateEndpoint();
+  console.log(updateEndpoint);
 
   // Effect to fetch sheet data when component mounts or when sheetName/publisher changes
   useEffect(() => {
@@ -61,8 +78,8 @@ export default function SheetView({
         },
         {
           auth: {
-            username: "team19",
-            password: "HDqSU5L28!;X$OzA",
+            username: username ?? "",
+            password: password ?? "",
           },
         },
       );
@@ -114,8 +131,8 @@ export default function SheetView({
           },
           {
             auth: {
-              username: "team19",
-              password: "HDqSU5L28!;X$OzA",
+              username: username ?? "",
+              password: password ?? "",
             },
           },
         );
@@ -165,8 +182,8 @@ export default function SheetView({
             },
             {
               auth: {
-                username: "team19",
-                password: "HDqSU5L28!;X$OzA",
+                username: username ?? "",
+                password: password ?? "",
               },
             },
           );
