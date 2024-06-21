@@ -52,10 +52,9 @@ export async function GET(req: NextRequest) {
             }
         });
 
-        // If there is already a publisher named that, return an error
+        // If there is already a publisher named that, no problem man
         if (existingPublisher) {
-            console.log("Publisher already exists");
-            return NextResponse.json({ success: false, message: 'Publisher already exists', value: [], time: currentTime }, { status: 200 });
+            return NextResponse.json({ success: true, message: null, value: [], time: currentTime }, { status: 200 });
         } else {
             // otherwise, create the publisher using the given name
             await prisma.publisher.create({

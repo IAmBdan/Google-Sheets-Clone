@@ -10,12 +10,22 @@ import { useState, useEffect } from "react";
 const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
 
 export default function Dashboard() {
-  const client = sessionStorage.getItem('username');
-  const password = sessionStorage.getItem('password');
+  const [client, setClient] = useState<string | null>(null);
+  const [password, setPassword] = useState<string | null>(null);
   const [sheetName, setSheetName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [sheets, setSheets] = useState([]);
-  const credentials = Buffer.from(`${client}:${password}`).toString("base64");
+  const [credentials, setCredentials] = useState<string | null>(null);
+
+  useEffect(() => {
+    const username = sessionStorage.getItem('username');
+    const pwd = sessionStorage.getItem('password');
+    setClient(username);
+    setPassword(pwd);
+    if (username && pwd) {
+      setCredentials(Buffer.from(`${username}:${pwd}`).toString("base64"));
+    }
+  }, []);
 
   const handleRegister = async () => {
     try {
@@ -34,10 +44,6 @@ export default function Dashboard() {
   };
 
   const fetchSheets = async () => {
-    const semicolon = ";";
-    console.log(client);
-    console.log("Password: ", password);
-    console.log("Test: ", semicolon);
     try {
       const response = await axios.post(
         `${url}/getSheets`,
@@ -79,8 +85,10 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    void fetchSheets();
-  }, []);
+    if (client && password && credentials) {
+      void fetchSheets();
+    }
+  }, [client, password, credentials]);
 
   const createSheet = async (client: string, sheetName: string) => {
     try {
@@ -142,6 +150,7 @@ export default function Dashboard() {
 
   const handleFetchByPublisher = async () => {
     const publisher = prompt("Enter publisher name:");
+    console.log("Publisher: ", publisher);
     if (publisher) {
       await fetchSheetByPublisher(publisher);
     }
@@ -190,6 +199,8 @@ export default function Dashboard() {
             >
               <a
                 href={`/sheet/${publisher}/${sheet}`}
+                //we want to keep track of the publisher for published vs subscription distinctions
+                onClick={() => sessionStorage.setItem('publisher', publisher)}
                 className="flex-grow text-center"
               >
                 <h2 className="text-xl font-bold">{sheet}</h2>
