@@ -1,6 +1,9 @@
 ## Project Overview
 This is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. It consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
 
+## Demo Video
+Short Demo video Highlighting the most important features https://drive.google.com/file/d/1JEswipeA0dSWzSxQk1hccOMtneH005Sr/view?usp=sharing
+
 ## Technologies Used
 - We chose TypeScript and NextJS as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
 
