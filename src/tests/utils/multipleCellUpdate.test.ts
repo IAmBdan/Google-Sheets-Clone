@@ -1,6 +1,6 @@
 
 import { multipleCellUpdate } from '../../utils/multipleCellUpdate';
-//Brian Daniels
+
 
 describe ('multiple cell update', () => {
 

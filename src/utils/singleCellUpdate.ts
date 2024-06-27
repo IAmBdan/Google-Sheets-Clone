@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
-//Brian Daniels
+
 import type { singleUpdate } from "../types/singleUpdate";
 import { parseTerm } from "./parseTerm";
 import { parseRef } from "./parseRef";

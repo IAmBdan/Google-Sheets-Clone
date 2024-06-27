@@ -2,7 +2,7 @@
 
 import { multipleCellUpdate } from  "../../utils/multipleCellUpdate";
 
-//Brian Daniels
+
 
 describe('parse multipleCellUpdate', () => {
 

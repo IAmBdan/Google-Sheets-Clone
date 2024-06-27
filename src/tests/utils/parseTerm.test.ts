@@ -1,7 +1,7 @@
 //all tests work
 
 import { parseTerm } from  "../../utils/parseTerm";
-//Brian Daniels
+
 describe('parseTerm', () => {
     test('parses integer numbers', () => {
         expect(parseTerm('123')).toBe(123);

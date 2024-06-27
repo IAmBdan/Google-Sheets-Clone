@@ -1,4 +1,4 @@
-# Author: Alan Zhang
+
 
 # Variables
 DATABASE_URL = mysql://jkici60lj45ssgs8rkmr:pscale_pw_iG2LjcCBBgQuVi57gqJpbxJCArbGRWlTIoOePBorp4X@aws.connect.psdb.cloud/computer-serve?sslaccept=strict

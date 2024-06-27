@@ -1,4 +1,4 @@
-//Brian Daniels
+
 
 import { hasSpecialChar } from "../utils/hasSpecialChar";
 export class Publisher {

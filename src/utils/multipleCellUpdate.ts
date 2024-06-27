@@ -1,4 +1,4 @@
-//Brian Daniels
+
 import { type singleUpdate } from "../types/singleUpdate";
 import { parseSingleCellUpdate } from "./singleCellUpdate";
 

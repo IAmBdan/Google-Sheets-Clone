@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-// @author giastina
+
 import axios from 'axios';
 
 // Constants for server URL and authentication

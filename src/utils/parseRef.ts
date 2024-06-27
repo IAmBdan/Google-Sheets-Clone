@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { Ref } from "../classes/ref"
-//Brian Daniels
+
 
 // Parses a reference string into a Ref object with a column and row
 export function parseRef(ref: string): Ref {

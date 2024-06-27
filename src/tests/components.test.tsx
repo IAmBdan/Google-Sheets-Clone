@@ -8,9 +8,7 @@ import Grid from "../app/grid";
 import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 import SheetView from "../app/sheetView";
 
-/**
- * @author Brooke Chalmers
- */
+
 
 function makeSheet(content: string | number | { formula: string } | null) {
   const sheet = new Sheet(

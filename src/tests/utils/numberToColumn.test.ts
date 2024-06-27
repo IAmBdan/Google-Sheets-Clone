@@ -1,6 +1,6 @@
 //all tests work
 
-//Brian Daniels
+
 import { numberToColumnLabel } from '../../utils/numberToColumnLabel';
 
 describe('numberToColumnLabel', () => {

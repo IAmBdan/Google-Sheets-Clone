@@ -1,4 +1,4 @@
-// Author: Alan Zhang
+
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */

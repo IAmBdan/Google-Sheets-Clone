@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-//Brian Daniels
+
 import { Ref } from "./ref";
 
 export { Cell };

@@ -19,7 +19,6 @@ const url = process.env.NEXT_PUBLIC_HUSKSHEET_URL;
  * Renders a sheet grid and syncs updates with the server.
  * @param sheetName The name of the sheet to be displayed.
  * @param publisher The publisher of the sheet.
- * @author Brooke Chalmers
  */
 export default function SheetView({
   sheetName,

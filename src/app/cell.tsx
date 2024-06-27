@@ -4,10 +4,7 @@ import { Ref } from "~/classes/ref";
 import { Term } from "~/types/term";
 import { Sheet } from "~/classes/sheets";
 
-/**
- * Renders a single cell in the grid.
- * @author Brooke Chalmers
- */
+
 export default function Cell({
   cellRef,
   sheet,

@@ -1,4 +1,4 @@
-//Brian Daniels
+
 
 // Check if the string contains any special characters
 export function hasSpecialChar(string: string): boolean {

@@ -1,4 +1,4 @@
-// Author: Alan Zhang
+
 
 import { type NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';

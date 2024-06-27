@@ -6,7 +6,6 @@ import { numberToColumnLabel } from "../utils/numberToColumnLabel";
 
 /**
  * Renders a grid of cells, including row and column headers.
- * @author Brooke Chalmers
  */
 export default function Grid({ sheet }: { sheet: Sheet }) {
   const { columns, rows } = sheet.getSize();

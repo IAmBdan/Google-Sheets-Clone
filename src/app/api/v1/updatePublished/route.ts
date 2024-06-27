@@ -1,4 +1,4 @@
-// Author: Alan Zhang
+
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { type NextRequest, NextResponse } from 'next/server';

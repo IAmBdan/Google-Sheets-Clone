@@ -11,7 +11,7 @@ export const metadata = {
 
 /**
  * Root layout for the application.
- * @author Brooke Chalmers
+
  */
 export default function RootLayout({
   children,

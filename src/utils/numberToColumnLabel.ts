@@ -1,4 +1,4 @@
-//Brian Daniels
+
 
 // Convert a number to a column label ie: 1=A, 2=B, 27=AA, 28=AB, etc
 export function numberToColumnLabel(number: number): string {

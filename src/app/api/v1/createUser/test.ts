@@ -1,4 +1,4 @@
-// @author Chris
+
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { NextRequest } from 'next/server';

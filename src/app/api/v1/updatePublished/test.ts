@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// @author Giastina
+
 import { NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { POST } from './route';

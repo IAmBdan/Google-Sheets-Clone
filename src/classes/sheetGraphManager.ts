@@ -1,7 +1,7 @@
 import { type Publisher } from './publisher'; 
 import { type Sheet } from './sheets';
 // class that will handle the graph of sheets and publishers using ids to locate them
-//Brian Daniels
+
 
 // SheetGraphManager class that manages the relationships between sheets and publishers
 export class SheetGraphManager {

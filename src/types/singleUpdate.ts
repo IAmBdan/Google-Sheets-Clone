@@ -1,4 +1,4 @@
-//Brian Daniels
+
 import type { Term } from './term';
 import type { Ref } from "../../src/classes/ref"
 

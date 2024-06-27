@@ -1,7 +1,7 @@
 //all tests work
 
 //test all cell methods
-//Brian Daniels
+
 
 import { Cell } from "../../classes/cell"
 import  { Ref } from "../../classes/ref"

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// @author Chris
+
 import { NextRequest } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { Buffer } from 'buffer';

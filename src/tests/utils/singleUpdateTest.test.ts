@@ -4,7 +4,7 @@ import { parseSingleCellUpdate } from "../../utils/singleCellUpdate"
 import parseRef from "../../utils/parseRef"
 import { parseTerm } from "../../utils/parseTerm"
 
-//Brian Daniels
+
 jest.mock("../../utils/parseRef");
 jest.mock("../../utils/parseTerm");
 
