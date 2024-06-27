@@ -1,11 +1,8 @@
-@author giastina
-# Husksheets
-
 ## Project Overview
-Husksheets is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. The project consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
+This is a collaborative spreadsheet application designed to allow multiple users to create, edit, and share spreadsheets in real-time. It consists of a server with a persistent store, a client for managing spreadsheets, and a user interface for editing and displaying sheets.
 
 ## Technologies Used
-- We chose TypeScript and NextJS for our Husksheets project as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
+- We chose TypeScript and NextJS as it has strong computing power and smart resource handling, which helps our spreadsheets run smoothly even with lots of data. The intergration of Prisma into our repo allows us to have consistent type safety across the program, as well as seamless database schema editing and mock data entry. 
 
 - Next.js
 - Prisma
@@ -60,9 +57,9 @@ Methods: Add/remove sheets and publishers, manage shared users, retrieve sheets 
 ## API Routes Overview
 
 We used husksheets server specifcation as a guideline for our server
-https://docs.google.com/document/d/1nWItOJFxdtYZNevAjCwZpr4hy0_rXr9A0sEDuyQV2As/edit 
+https://docs.google.com/document/d/1lmZ38t138qlNYoICaZBOCGyA6eMRQ0MY1XGV3WJbKL0/edit?usp=sharing
 
-Our project includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
+Includes various API routes structured under `/api/v1/` for managing sheets and publishers, such as creating (`POST /createSheet`), fetching (`GET /getSheets`), updating (`PUT /updatePublished`), and deleting (`DELETE /deleteSheet`). Routes are accessed via standard HTTP methods and return appropriate status codes and responses. Authentication may be required for certain endpoints to ensure secure access.
 
 ## User Interface Overview
 
